@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Admin — Velmira Orders</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --primary: #2563eb; --primary-dark: #1d4ed8;
+      --success: #16a34a; --warn: #d97706; --danger: #dc2626;
+      --dark: #1a202c; --dark-light: #64748b;
+      --border: #e2e8f0; --bg: #f8fafc; --white: #fff;
+      --radius: 8px; --shadow: 0 1px 3px rgba(0,0,0,.1);
+      --font: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    }
+    body { margin:0; font-family:var(--font); background:var(--bg); color:var(--dark); overflow-x:hidden; }
+
+    /* ── PIN GATE ── */
+    #pinGate {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg,#0f1724,#1e3a5f);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    }
+    .pin-box {
+      background: var(--white); border-radius: 16px;
+      padding: 40px 36px; text-align: center;
+      width: min(400px, 90vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .pin-logo { font-size: 28px; font-weight: 300; letter-spacing: .05em; color: var(--dark); margin-bottom: 6px; }
+    .pin-logo span { color: var(--primary); }
+    .pin-box h2 { font-size: 15px; font-weight: 600; color: var(--dark-light); margin: 0 0 28px; text-transform:uppercase; letter-spacing:.06em; }
+    .pin-input {
+      width: 100%; padding: 14px 16px; font-size: 20px; letter-spacing:.3em;
+      text-align: center; border: 2px solid var(--border); border-radius: var(--radius);
+      font-family: monospace; outline: none; color: var(--dark);
+      transition: border-color .2s;
+    }
+    .pin-input:focus { border-color: var(--primary); }
+    .pin-input.shake { animation: shake .3s; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+    .pin-btn {
+      width: 100%; margin-top: 16px; padding: 14px;
+      background: var(--primary); color: #fff; border: none; border-radius: var(--radius);
+      font-size: 14px; font-weight: 700; letter-spacing:.05em;
+      cursor: pointer; transition: background .2s;
+    }
+    .pin-btn:hover { background: var(--primary-dark); }
+    .pin-error { color: #dc2626; font-size: 12px; margin-top: 10px; height: 16px; font-weight: 500; }
+
+    /* ── LOADING / ERROR BANNER ── */
+    #loadingBanner {
+      display: none; align-items: center; justify-content: center; gap: 10px;
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius);
+      padding: 12px 18px; margin-bottom: 16px; font-size: 13px; color: var(--primary);
+    }
+    #loadingBanner.error { background: #fff1f2; border-color: #fecdd3; color: var(--danger); }
+    #loadingBanner .spinner {
+      width: 16px; height: 16px; border: 2px solid #bfdbfe; border-top-color: var(--primary);
+      border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0;
+    }
+    #loadingBanner.error .spinner { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .retry-btn {
+      margin-left: 10px; padding: 4px 10px; background: var(--danger); color: #fff;
+      border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;
+    }
+
+    /* ── HEADER ── */
+    #adminPanel { display: none; min-height: 100vh; }
+    .admin-header {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: var(--shadow);
+    }
+    .admin-brand { font-size: 20px; font-weight: 700; color: var(--dark); }
+    .admin-brand span { color: var(--primary); }
+    .admin-header-right { display: flex; align-items: center; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 16px; border: none; border-radius: var(--radius); font-size: 13px;
+      font-weight: 600; cursor: pointer; transition: all .2s; font-family: var(--font);
+      text-decoration: none; white-space: nowrap; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--white); color: var(--dark); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg); }
+    .btn-success { background: #dcfce7; color: var(--success); border: 1px solid #bbf7d0; }
+    .btn-success:hover { background: #bbf7d0; }
+    .btn-danger { background: #fff1f2; color: var(--danger); border: 1px solid #fecdd3; }
+    .btn-danger:hover { background: #fecdd3; }
+    .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+    /* ── MAIN CONTENT ── */
+    .admin-main { max-width: 1400px; margin: 0 auto; padding: 24px 20px; }
+
+    /* ── STATS ── */
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px; text-align: center; transition: box-shadow .2s;
+    }
+    .stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing:.06em; color: var(--dark-light); margin-bottom: 8px; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--dark); line-height: 1; }
+    .stat-card.revenue .stat-value { color: var(--primary); font-size: 22px; }
+    .stat-card.pending-card .stat-value { color: var(--warn); }
+    .stat-card.done-card .stat-value { color: var(--success); }
+
+    /* ── TOOLBAR ── */
+    .admin-toolbar {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 16px; margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .filter-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+    .filter-tab {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: 1.5px solid transparent; transition: all .15s;
+      color: var(--dark-light); background: var(--bg);
+    }
+    .filter-tab:hover { background: #eff6ff; color: var(--primary); }
+    .filter-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .filter-tab .tab-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.2); border-radius: 10px;
+      min-width: 20px; height: 18px; padding: 0 5px;
+      font-size: 10px; margin-left: 4px;
+    }
+    .filter-tab:not(.active) .tab-count { background: var(--border); color: var(--dark-light); }
+    .toolbar-right { display: flex; align-items: center; gap: 10px; }
+    .admin-search {
+      padding: 8px 14px; border: 1.5px solid var(--border); border-radius: 20px;
+      font-size: 13px; font-family: var(--font); outline: none; color: var(--dark);
+      width: 220px; transition: border-color .2s;
+    }
+    .admin-search:focus { border-color: var(--primary); }
+
+    /* ── TABLE ── */
+    .table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: var(--bg); border-bottom: 2px solid var(--border); }
+    th {
+      padding: 12px 14px; text-align: left; font-size: 11px; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase; color: var(--dark-light); white-space: nowrap;
+    }
+    th.sortable { cursor: pointer; user-select: none; }
+    th.sortable:hover { color: var(--primary); }
+    td { padding: 13px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbff; }
+    .order-id { font-weight: 700; color: var(--primary); font-family: monospace; font-size: 12px; }
+    .customer-name { font-weight: 600; color: var(--dark); }
+    .customer-phone { font-size: 11px; color: var(--dark-light); margin-top: 2px; }
+    .items-count { font-size: 12px; }
+    .order-total { font-weight: 700; color: var(--dark); }
+    .payment-badge {
+      font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 10px;
+      background: #fef3c7; color: #92400e; text-transform: uppercase; letter-spacing:.04em;
+    }
+    .payment-badge.card { background: #eff6ff; color: var(--primary); }
+    .order-date { font-size: 11px; color: var(--dark-light); white-space: nowrap; }
+    .status-select {
+      padding: 5px 10px; border-radius: 20px; border: 1.5px solid var(--border);
+      font-size: 11px; font-weight: 700; font-family: var(--font);
+      cursor: pointer; outline: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 8px center;
+      padding-right: 26px; min-width: 110px;
+    }
+    .status-select.confirmed  { background-color:#eff6ff; color:var(--primary); border-color:#bfdbfe; }
+    .status-select.processing { background-color:#fefce8; color:#a16207; border-color:#fde68a; }
+    .status-select.dispatched { background-color:#f0fdf4; color:#166534; border-color:#bbf7d0; }
+    .status-select.done       { background-color:#f0fdf4; color:var(--success); border-color:#86efac; }
+    .status-select.cancelled  { background-color:#fff1f2; color:var(--danger); border-color:#fecdd3; }
+    .actions-cell { display: flex; gap: 6px; align-items: center; }
+    .expand-btn { background: none; border: 1.5px solid var(--border); border-radius: 6px; width: 28px; height: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; color: var(--dark-light); }
+    .expand-btn:hover { border-color: var(--primary); color: var(--primary); background: #eff6ff; }
+
+    /* ── EXPANDED ROW ── */
+    .order-detail-row { display: none; }
+    .order-detail-row.open { display: table-row; }
+    .order-detail-cell { background: #fafbff; border-bottom: 1px solid var(--border); padding: 0; }
+    .order-detail-inner { padding: 20px 16px 20px 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .detail-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing:.06em; color: var(--dark-light); margin: 0 0 10px; }
+    .detail-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+    .detail-row .label { color: var(--dark-light); }
+    .detail-row .value { font-weight: 600; color: var(--dark); text-align: right; max-width: 60%; }
+    .detail-items { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .detail-item { display: flex; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--border); align-items: center; font-size: 12px; }
+    .detail-item:last-child { border-bottom: none; }
+    .detail-item-name { flex: 1; font-weight: 500; color: var(--dark); }
+    .detail-item-qty { color: var(--dark-light); }
+    .detail-item-price { font-weight: 700; color: var(--primary); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align: center; padding: 80px 20px; color: var(--dark-light); }
+    .empty-state .emoji { font-size: 48px; margin-bottom: 14px; }
+    .empty-state h3 { font-size: 18px; color: var(--dark); margin-bottom: 8px; }
+    .empty-state p { font-size: 14px; line-height: 1.6; }
+
+    /* ── TOAST ── */
+    .admin-toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--dark); color: #fff;
+      padding: 12px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2); z-index: 9998;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(16px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .admin-main { padding: 16px 12px; }
+      .admin-header { flex-wrap: wrap; gap: 10px; }
+      .admin-header-right { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+      .admin-toolbar { align-items: flex-start; }
+      .toolbar-right { width: 100%; flex-wrap: wrap; }
+      .admin-search { width: 100%; max-width: 220px; }
+      th:nth-child(5), td:nth-child(5),
+      th:nth-child(3), td:nth-child(3) { display: none; }
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 760px; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .admin-header { padding: 12px 14px; }
+      .admin-brand { font-size: 16px; }
+      .filter-tab span:not(.tab-count) { display: none; }
+      .filter-tabs { gap: 6px; }
+      th:nth-child(6), td:nth-child(6) { display: none; }
+      .admin-search { width: 100%; max-width: 100%; font-size: 12px; }
+      .order-detail-inner { grid-template-columns: 1fr; padding: 16px; }
+      .btn-sm { width: 100%; justify-content: center; }
+    }
+  
+/* ── Mobile search icon button ── */
+.mobile-search-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--dark, #1a1a1a);
+  padding: 6px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+@media (max-width: 768px) {
+  .mobile-search-btn { display: flex; }
+  .nav-right .search-wrapper { display: none; }
+}
+/* ── Mobile search overlay ── */
+.mobile-search-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: var(--white, #fff);
+  padding: 10px 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  align-items: center;
+  gap: 8px;
+  height: 58px;
+}
+.mobile-search-overlay.open { display: flex; }
+.mobile-search-overlay input {
+  flex: 1;
+  border: 1.5px solid var(--border, #e0e0e0);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  outline: none;
+  background: var(--light-gray, #f5f5f5);
+  color: var(--dark, #1a1a1a);
+  font-family: inherit;
+  min-width: 0;
+}
+.mobile-search-overlay input:focus { border-color: var(--primary); }
+.mobile-search-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--dark-light, #777); padding: 4px 6px; line-height: 1;
+  font-size: 24px; flex-shrink: 0; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-search-results {
+  position: fixed;
+  top: 58px; left: 0; right: 0;
+  z-index: 9998;
+  background: var(--white, #fff);
+  border-top: 1px solid var(--border, #e0e0e0);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  max-height: calc(100vh - 58px);
+  overflow-y: auto;
+  display: none;
+}
+.mobile-search-results.open { display: block; }
+body.dark-mode .mobile-search-overlay { background: var(--white); }
+body.dark-mode .mobile-search-overlay input { background: var(--light-gray); color: var(--dark); }
+body.dark-mode .mobile-search-results { background: var(--white); }
+body.dark-mode {
+  --dark: #f3f4f6;
+  --dark-light: #9fb0c0;
+  --border: rgba(126, 200, 255, 0.2);
+  --bg: #0f1724;
+  --white: #111827;
+}
+body.dark-mode {
+  background: var(--bg);
+  color: var(--dark);
+}
+body.dark-mode #pinGate { background: linear-gradient(135deg, #020617, #0f1724); }
+body.dark-mode .pin-box,
+body.dark-mode .admin-header,
+body.dark-mode .stat-card,
+body.dark-mode .admin-toolbar,
+body.dark-mode .table-wrap,
+body.dark-mode .order-detail-cell,
+body.dark-mode .detail-items {
+  background: var(--white);
+  border-color: var(--border);
+  color: var(--dark);
+}
+body.dark-mode .pin-box { box-shadow: 0 20px 60px rgba(0,0,0,.55); }
+body.dark-mode .pin-logo,
+body.dark-mode .admin-brand,
+body.dark-mode .customer-name,
+body.dark-mode .order-total,
+body.dark-mode .detail-item-name,
+body.dark-mode .empty-state h3 {
+  color: #ffffff;
+}
+body.dark-mode .pin-box h2,
+body.dark-mode .pin-input,
+body.dark-mode .stat-label,
+body.dark-mode .customer-phone,
+body.dark-mode .detail-row .label,
+body.dark-mode .empty-state p,
+body.dark-mode .order-date,
+body.dark-mode .admin-brand span {
+  color: var(--dark-light);
+}
+body.dark-mode .pin-input,
+body.dark-mode .admin-search,
+body.dark-mode .status-select {
+  background: #0f1724;
+  color: var(--dark);
+  border-color: var(--border);
+}
+body.dark-mode .filter-tab:not(.active) {
+  background: #1f2937;
+  color: #cbd5e1;
+}
+body.dark-mode .filter-tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+body.dark-mode .status-select.confirmed { background-color: rgba(37,99,235,.16); color: #93c5fd; border-color: rgba(59,130,246,.3); }
+body.dark-mode .status-select.processing { background-color: rgba(245,158,11,.15); color: #fcd34d; border-color: rgba(245,158,11,.25); }
+body.dark-mode .status-select.dispatched { background-color: rgba(22,163,74,.16); color: #86efac; border-color: rgba(22,163,74,.25); }
+body.dark-mode .status-select.done { background-color: rgba(22,163,74,.16); color: #86efac; border-color: rgba(22,163,74,.25); }
+body.dark-mode .status-select.cancelled { background-color: rgba(220,38,38,.16); color: #fda4af; border-color: rgba(220,38,38,.25); }
+body.dark-mode .detail-row .value,
+body.dark-mode .detail-item-qty {
+  color: #e5e7eb;
+}
+body.dark-mode .detail-item-price {
+  color: #7ec8ff;
+}
+body.dark-mode .admin-toast { background: #0f1724; color: #f8fafc; }
+@media (max-width: 768px) {
+  body.dark-mode .admin-header,
+  body.dark-mode .admin-toolbar {
+    background: #111827;
+  }
+  body.dark-mode .admin-search {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+@media (max-width: 480px) {
+  body.dark-mode .admin-header,
+  body.dark-mode .admin-toolbar {
+    background: #111827;
+  }
+  body.dark-mode .filter-tab {
+    background: #1f2937;
+    color: #cbd5e1;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ── PIN GATE ──────────────────────────────── -->
+<div id="pinGate">
+  <div class="pin-box">
+    <div class="pin-logo">Vel<span>m</span>ira</div>
+    <h2>Admin Panel</h2>
+    <input type="password" id="pinInput" class="pin-input" placeholder="• • • • • • • •" maxlength="20" autocomplete="current-password">
+    <button class="pin-btn" id="pinSubmit">Enter Admin</button>
+    <p class="pin-error" id="pinError"></p>
+  </div>
+</div>
+
+<!-- ── ADMIN PANEL ───────────────────────────── -->
+<div id="adminPanel">
+
+  <header class="admin-header">
+    <div class="admin-brand">Vel<span>m</span>ira <span style="font-size:12px;font-weight:400;color:var(--dark-light);margin-left:6px;">Admin</span></div>
+    <div class="admin-header-right">
+      <a href="admin-products.html" class="btn btn-secondary btn-sm">Products</a>
+      <button class="btn btn-secondary btn-sm" id="exportCsvBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+      <a href="index.html" class="btn btn-secondary btn-sm">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Store
+      </a>
+      <button class="btn btn-danger btn-sm" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <!-- Loading / Error Banner -->
+    <div id="loadingBanner">
+      <div class="spinner"></div>
+      <span id="loadingMsg">Connecting to database…</span>
+      <button class="retry-btn" id="retryBtn" style="display:none" onclick="retryConnection()">Retry</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card pending-card">
+        <div class="stat-label">Pending / Active</div>
+        <div class="stat-value" id="statPending">0</div>
+      </div>
+      <div class="stat-card done-card">
+        <div class="stat-label">Completed</div>
+        <div class="stat-value" id="statDone">0</div>
+      </div>
+      <div class="stat-card revenue">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value" id="statRevenue">৳0</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="admin-toolbar">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-status="all">All <span class="tab-count" id="cnt-all">0</span></button>
+        <button class="filter-tab" data-status="confirmed">New <span class="tab-count" id="cnt-confirmed">0</span></button>
+        <button class="filter-tab" data-status="processing">Processing <span class="tab-count" id="cnt-processing">0</span></button>
+        <button class="filter-tab" data-status="dispatched">Dispatched <span class="tab-count" id="cnt-dispatched">0</span></button>
+        <button class="filter-tab" data-status="done">Done <span class="tab-count" id="cnt-done">0</span></button>
+        <button class="filter-tab" data-status="cancelled">Cancelled <span class="tab-count" id="cnt-cancelled">0</span></button>
+      </div>
+      <div class="toolbar-right">
+        <input type="text" class="admin-search" id="adminSearch" placeholder="Search orders…">
+        <button class="btn btn-danger btn-sm" id="deleteAllDoneBtn" title="Delete all completed orders">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+          Clear Done
+        </button>
+      </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="sortable" data-col="orderId">Order ID</th>
+            <th class="sortable" data-col="customer">Customer</th>
+            <th>Items</th>
+            <th class="sortable" data-col="total">Total</th>
+            <th>Payment</th>
+            <th class="sortable" data-col="date">Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="emoji">📦</div>
+        <h3>No orders yet</h3>
+        <p>Orders placed through checkout will appear here.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  try {
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
+  } catch (e) {}
+</script>
+
+<script type="module">
+'use strict';
+
+/* ── Config ────────────────────────────── */
+const ADMIN_PIN   = 'VELM2026';
+const SESSION_KEY = 'velmira_admin_session';
+const STATUS_ORDER = ['confirmed','processing','dispatched','done','cancelled'];
+
+/* ── PIN Gate ──────────────────────────── */
+function checkSession() {
+  return sessionStorage.getItem(SESSION_KEY) === '1';
+}
+function unlockPanel() {
+  document.getElementById('pinGate').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  renderAll();
+}
+
+if (checkSession()) { unlockPanel(); }
+
+document.getElementById('pinSubmit').addEventListener('click', tryPin);
+document.getElementById('pinInput').addEventListener('keydown', e => { if (e.key === 'Enter') tryPin(); });
+
+function tryPin() {
+  const val = document.getElementById('pinInput').value.trim();
+  const err = document.getElementById('pinError');
+  if (val === ADMIN_PIN) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    err.textContent = '';
+    unlockPanel();
+  } else {
+    err.textContent = 'Incorrect PIN. Please try again.';
+    const inp = document.getElementById('pinInput');
+    inp.classList.add('shake');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('shake'), 400);
+  }
+}
+
+/* ── Shared state (declared early to avoid hoisting errors) ── */
+var _db = null, _fsModule = null;
+var _ordersCache = [];
+var _unsubscribe = null;
+
+/* ── Logout ────────────────────────────── */
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  if (_unsubscribe) { _unsubscribe(); _unsubscribe = null; }
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+});
+
+/* ── Loading banner helpers ────────────── */
+function showLoading(msg) {
+  const b = document.getElementById('loadingBanner');
+  b.className = '';
+  b.style.display = 'flex';
+  document.getElementById('loadingMsg').textContent = msg || 'Connecting to database…';
+  document.getElementById('retryBtn').style.display = 'none';
+}
+function showError(msg) {
+  const b = document.getElementById('loadingBanner');
+  b.className = 'error';
+  b.style.display = 'flex';
+  document.getElementById('loadingMsg').textContent = msg;
+  document.getElementById('retryBtn').style.display = 'inline-block';
+}
+function hideLoading() {
+  document.getElementById('loadingBanner').style.display = 'none';
+}
+
+/* ── Firestore ────────────────────────── */
+
+async function getFirebase() {
+  if (_db) return { db: _db, fs: _fsModule };
+  const FIREBASE_VERSION = '11.10.0';
+  const CDN = 'https://www.gstatic.com/firebasejs/' + FIREBASE_VERSION;
+  const [{ initializeApp }, fs] = await Promise.all([
+    import(CDN + '/firebase-app.js'),
+    import(CDN + '/firebase-firestore.js')
+  ]);
+  const firebaseConfig = {
+    apiKey: "AIzaSyC4iYs-YUnvPTzd0Ut8Gc6yaoeopOzuxUQ",
+    authDomain: "velmira-6bed5.firebaseapp.com",
+    projectId: "velmira-6bed5",
+    storageBucket: "velmira-6bed5.firebasestorage.app",
+    messagingSenderId: "929543908982",
+    appId: "1:929543908982:web:2a374ce24fd53815bbf957",
+    measurementId: "G-SW2DGKE3BH"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = fs.getFirestore(app);
+  _db = db;
+  _fsModule = fs;
+  return { db: _db, fs: _fsModule };
+}
+
+function getOrders() { return _ordersCache; }
+
+async function startRealtimeListener() {
+  if (_unsubscribe) { _unsubscribe(); _unsubscribe = null; }
+
+  showLoading('Connecting to database…');
+
+  let db, fs;
+  try {
+    ({ db, fs } = await getFirebase());
+    console.log('[Velmira] Firebase loaded OK');
+  } catch(e) {
+    console.error('[Velmira] Firebase import failed:', e);
+    showError('Firebase failed to load: ' + (e.message || e));
+    throw e;
+  }
+
+  // ── First do a one-time getDocs so we show data immediately even if
+  //    onSnapshot has index/permission issues
+  try {
+    const snap = await fs.getDocs(fs.collection(db, 'orders'));
+    console.log('[Velmira] getDocs returned', snap.size, 'docs');
+    _ordersCache = snap.docs.map(d => ({ _docId: d.id, ...d.data() }));
+    // sort by date/createdAt descending in JS — no index needed
+    _ordersCache.sort((a, b) => {
+      const ta = (a.createdAt?.toMillis?.() || new Date(a.date||0).getTime());
+      const tb = (b.createdAt?.toMillis?.() || new Date(b.date||0).getTime());
+      return tb - ta;
+    });
+    renderStats(_ordersCache);
+    renderCounts(_ordersCache);
+    renderTable(_ordersCache);
+    hideLoading();
+  } catch(e) {
+    console.error('[Velmira] getDocs failed:', e);
+    showError('Could not read orders: ' + (e.message || e));
+    throw e;
+  }
+
+  // ── Then set up real-time listener (no orderBy = no index requirement)
+  return new Promise((resolve, reject) => {
+    let resolved = false;
+
+    _unsubscribe = fs.onSnapshot(
+      fs.collection(db, 'orders'),
+      (snap) => {
+        console.log('[Velmira] onSnapshot fired,', snap.size, 'docs');
+        _ordersCache = snap.docs.map(d => ({ _docId: d.id, ...d.data() }));
+        _ordersCache.sort((a, b) => {
+          const ta = (a.createdAt?.toMillis?.() || new Date(a.date||0).getTime());
+          const tb = (b.createdAt?.toMillis?.() || new Date(b.date||0).getTime());
+          return tb - ta;
+        });
+        renderStats(_ordersCache);
+        renderCounts(_ordersCache);
+        renderTable(_ordersCache);
+        hideLoading();
+        if (!resolved) { resolved = true; resolve(); }
+      },
+      (err) => {
+        console.error('[Velmira] onSnapshot error:', err);
+        // Don't overwrite a successful getDocs load with an error banner
+        if (!resolved) {
+          showError('Live updates failed: ' + (err.message || err));
+          resolved = true;
+          reject(err);
+        }
+      }
+    );
+  });
+}
+
+async function updateOrderStatus(docId, newStatus) {
+  try {
+    const { db, fs } = await getFirebase();
+    await fs.updateDoc(fs.doc(db, 'orders', docId), { status: newStatus });
+    const o = _ordersCache.find(o => o._docId === docId);
+    if (o) o.status = newStatus;
+  } catch(e) { console.error('Status update failed:', e); toast('Failed to update status'); }
+}
+
+async function deleteOrder(docId) {
+  try {
+    const { db, fs } = await getFirebase();
+    await fs.deleteDoc(fs.doc(db, 'orders', docId));
+    _ordersCache = _ordersCache.filter(o => o._docId !== docId);
+  } catch(e) { console.error('Delete failed:', e); toast('Failed to delete order'); }
+}
+
+async function deleteAllDone() {
+  const done = _ordersCache.filter(o => o.status === 'done');
+  try {
+    const { db, fs } = await getFirebase();
+    await Promise.all(done.map(o => fs.deleteDoc(fs.doc(db, 'orders', o._docId))));
+    _ordersCache = _ordersCache.filter(o => o.status !== 'done');
+  } catch(e) { console.error('Bulk delete failed:', e); toast('Some orders could not be deleted'); }
+  return done.length;
+}
+
+/* ── Retry (exposed to inline onclick) ── */
+async function retryConnection() {
+  try {
+    await renderAll();
+  } catch(e) {
+    showError('Still failing: ' + (e.message || e));
+  }
+}
+window.retryConnection = retryConnection;
+
+/* ── Helpers ────────────────────────── */
+function fmt(n) { return '৳' + Number(n).toLocaleString('en-BD'); }
+function fmtDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-BD',{day:'2-digit',month:'short',year:'numeric'})
+      + ' ' + d.toLocaleTimeString('en-BD',{hour:'2-digit',minute:'2-digit'});
+  } catch(e) { return iso || '—'; }
+}
+function totalItems(order) { return (order.items||[]).reduce((s,i)=>s+(i.quantity||1),0); }
+
+/* ── State ──────────────────────────── */
+let currentFilter = 'all';
+let searchQuery = '';
+let sortCol = 'date';
+let sortDir = -1;
+
+/* ── Render ─────────────────────────── */
+async function renderAll() {
+  try {
+    await startRealtimeListener();
+  } catch(e) {
+    console.error('renderAll failed:', e);
+    showError('Failed to connect: ' + (e.message || e));
+  }
+}
+
+function renderStats(orders) {
+  const total = orders.length;
+  const pending = orders.filter(o => !['done','cancelled'].includes(o.status || 'confirmed')).length;
+  const done = orders.filter(o => o.status === 'done').length;
+  const revenue = orders.filter(o => o.status !== 'cancelled').reduce((s,o)=>s+(o.total||0),0);
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statRevenue').textContent = fmt(revenue);
+}
+
+function renderCounts(orders) {
+  const counts = { all: orders.length };
+  STATUS_ORDER.forEach(s => counts[s] = orders.filter(o => (o.status||'confirmed') === s).length);
+  ['all',...STATUS_ORDER].forEach(s => {
+    const el = document.getElementById('cnt-' + s);
+    if (el) el.textContent = counts[s] || 0;
+  });
+}
+
+function filteredOrders(orders) {
+  let list = orders;
+  if (currentFilter !== 'all') list = list.filter(o => (o.status||'confirmed') === currentFilter);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(o => {
+      const c = o.customer || {};
+      return (o.orderId||'').toLowerCase().includes(q)
+        || (c.name||'').toLowerCase().includes(q)
+        || (c.phone||'').includes(q)
+        || (c.email||'').toLowerCase().includes(q);
+    });
+  }
+  list = [...list].sort((a,b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (sortCol === 'customer') { va = (a.customer||{}).name||''; vb = (b.customer||{}).name||''; }
+    if (sortCol === 'date') { va = new Date(a.date||0).getTime(); vb = new Date(b.date||0).getTime(); }
+    if (sortCol === 'total') { va = a.total||0; vb = b.total||0; }
+    if (va < vb) return -sortDir;
+    if (va > vb) return sortDir;
+    return 0;
+  });
+  return list;
+}
+
+function renderTable(orders) {
+  const list = filteredOrders(orders);
+  const tbody = document.getElementById('ordersBody');
+  const empty = document.getElementById('emptyState');
+
+  if (!list.length) {
+    tbody.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = list.map((order, idx) => {
+    const c = order.customer || {};
+    const status = order.status || 'confirmed';
+    const itemCount = totalItems(order);
+    const pmLabel = { cod: 'COD', card: 'Card' }[order.paymentMethod] || 'COD';
+    const itemsHTML = (order.items||[]).map(item => `
+      <div class="detail-item">
+        <div class="detail-item-name">${item.name||'Product'}</div>
+        <div class="detail-item-qty">×${item.quantity||1}</div>
+        <div class="detail-item-price">${fmt((item.price||0)*(item.quantity||1))}</div>
+      </div>`).join('');
+
+    return `
+      <tr data-id="${order.orderId}" class="order-main-row">
+        <td>
+          <button class="expand-btn" data-idx="${idx}" title="Expand details">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </td>
+        <td><div class="order-id">${order.orderId||'—'}</div></td>
+        <td>
+          <div class="customer-name">${c.name||'—'}</div>
+          <div class="customer-phone">${c.phone||''}</div>
+        </td>
+        <td><span class="items-count">${itemCount} item${itemCount!==1?'s':''}</span></td>
+        <td><span class="order-total">${fmt(order.total||0)}</span></td>
+        <td><span class="payment-badge ${order.paymentMethod==='card'?'card':''}">${pmLabel}</span></td>
+        <td><span class="order-date">${fmtDate(order.date)}</span></td>
+        <td>
+          <select class="status-select ${status}" data-id="${order._docId || order.orderId}">
+            <option value="confirmed"   ${status==='confirmed'   ?'selected':''}>New</option>
+            <option value="processing"  ${status==='processing'  ?'selected':''}>Processing</option>
+            <option value="dispatched"  ${status==='dispatched'  ?'selected':''}>Dispatched</option>
+            <option value="done"        ${status==='done'        ?'selected':''}>Done ✓</option>
+            <option value="cancelled"   ${status==='cancelled'   ?'selected':''}>Cancelled</option>
+          </select>
+        </td>
+        <td>
+          <div class="actions-cell">
+            <button class="btn btn-success btn-sm mark-done-btn" data-id="${order._docId || order.orderId}" title="Mark as done">✓</button>
+            <button class="btn btn-danger btn-sm delete-btn" data-id="${order._docId || order.orderId}" title="Delete order">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr class="order-detail-row" id="detail-${idx}">
+        <td class="order-detail-cell" colspan="9">
+          <div class="order-detail-inner">
+            <div class="detail-section">
+              <h4>Customer &amp; Delivery</h4>
+              <div class="detail-row"><span class="label">Email</span><span class="value">${c.email||'—'}</span></div>
+              <div class="detail-row"><span class="label">Address</span><span class="value">${[c.address1,c.address2].filter(Boolean).join(', ')||'—'}</span></div>
+              <div class="detail-row"><span class="label">City</span><span class="value">${c.city||'—'}, ${c.division||''} ${c.postal||''}</span></div>
+              ${c.notes?`<div class="detail-row"><span class="label">Notes</span><span class="value">${c.notes}</span></div>`:''}
+              <div class="detail-row"><span class="label">Subtotal</span><span class="value">${fmt(order.subtotal||0)}</span></div>
+              <div class="detail-row"><span class="label">Shipping</span><span class="value">${order.shipping===0?'Free':fmt(order.shipping||120)}</span></div>
+              <div class="detail-row"><span class="label">Total</span><span class="value" style="color:var(--primary);font-size:15px;">${fmt(order.total||0)}</span></div>
+            </div>
+            <div class="detail-section">
+              <h4>Order Items</h4>
+              <div class="detail-items">${itemsHTML||'<div class="detail-item"><div class="detail-item-name" style="color:var(--dark-light)">No items</div></div>'}</div>
+            </div>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+
+  /* Wire expand buttons */
+  tbody.querySelectorAll('.expand-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.dataset.idx;
+      const row = document.getElementById('detail-' + idx);
+      if (!row) return;
+      const open = row.classList.toggle('open');
+      btn.querySelector('svg').style.transform = open ? 'rotate(180deg)' : '';
+    });
+  });
+
+  /* Wire status selects */
+  tbody.querySelectorAll('.status-select').forEach(sel => {
+    sel.addEventListener('change', async () => {
+      const id = sel.dataset.id;
+      const newStatus = sel.value;
+      await updateOrderStatus(id, newStatus);
+      sel.className = 'status-select ' + newStatus;
+      renderStats(getOrders());
+      renderCounts(getOrders());
+      toast(`Status updated → ${newStatus}`);
+    });
+  });
+
+  /* Wire mark-done buttons */
+  tbody.querySelectorAll('.mark-done-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      await updateOrderStatus(id, 'done');
+      toast('Order marked as done ✓', 'success');
+      renderStats(getOrders());
+      renderCounts(getOrders());
+      renderTable(getOrders());
+    });
+  });
+
+  /* Wire delete buttons */
+  tbody.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      if (!confirm('Delete this order? This cannot be undone.')) return;
+      await deleteOrder(id);
+      toast('Order deleted');
+      renderStats(getOrders());
+      renderCounts(getOrders());
+      renderTable(getOrders());
+    });
+  });
+}
+
+/* ── Filter tabs ─────────────────────── */
+document.getElementById('filterTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.filter-tab');
+  if (!tab) return;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  currentFilter = tab.dataset.status;
+  renderTable(getOrders());
+});
+
+/* ── Search ──────────────────────────── */
+document.getElementById('adminSearch').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  renderTable(getOrders());
+});
+
+/* ── Sort columns ────────────────────── */
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = -1; }
+    document.querySelectorAll('th.sortable').forEach(t => {
+      t.textContent = t.textContent.replace(' ↑','').replace(' ↓','');
+    });
+    th.textContent += sortDir === 1 ? ' ↑' : ' ↓';
+    renderTable(getOrders());
+  });
+});
+
+/* ── Clear done ──────────────────────── */
+document.getElementById('deleteAllDoneBtn').addEventListener('click', async () => {
+  const doneCount = getOrders().filter(o => o.status === 'done').length;
+  if (!doneCount) { toast('No completed orders to clear'); return; }
+  if (!confirm(`Delete all ${doneCount} completed orders?`)) return;
+  const removed = await deleteAllDone();
+  toast(`${removed} completed orders cleared`);
+  renderStats(getOrders());
+  renderCounts(getOrders());
+  renderTable(getOrders());
+});
+
+/* ── Export CSV ──────────────────────── */
+document.getElementById('exportCsvBtn').addEventListener('click', () => {
+  const orders = filteredOrders(getOrders());
+  if (!orders.length) { toast('No orders to export'); return; }
+  const rows = [['Order ID','Customer','Phone','Email','City','Division','Items','Subtotal','Shipping','Total','Payment','Status','Date']];
+  orders.forEach(o => {
+    const c = o.customer||{};
+    rows.push([
+      o.orderId||'', c.name||'', c.phone||'', c.email||'',
+      c.city||'', c.division||'', totalItems(o),
+      o.subtotal||0, o.shipping||0, o.total||0,
+      o.paymentMethod||'cod', o.status||'confirmed', o.date||''
+    ]);
+  });
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'velmira-orders-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+  toast('Exported ' + orders.length + ' orders as CSV');
+});
+
+/* ── Toast ───────────────────────────── */
+function toast(msg, type) {
+  const t = document.createElement('div');
+  t.className = 'admin-toast';
+  if (type === 'success') t.style.background = '#166534';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+</script>
+<!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+  <button class="mobile-search-close" id="mobileSearchClose" aria-label="Close search">&times;</button>
+  <input type="text" id="mobileSearchInput" placeholder="Search products..." autocomplete="off" />
+</div>
+<div class="mobile-search-results" id="mobileSearchResults"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+    
+
+    
+  
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<style id="velmira-navbar-unified-styles">
+  /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 991px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1100;
+      height: auto;
+      min-height: 60px;
+    }
+
+    .nav-container {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 16px !important;
+      flex-wrap: nowrap;
+      overflow: visible;
+    }
+
+    /* Logo stays on left */
+    .nav-logo {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .nav-logo .logo-link {
+      font-size: 22px !important;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+    .nav-right {
+      display: flex !important;
+      align-items: center;
+      gap: 4px !important;
+      margin-left: auto;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .nav-right .search-wrapper {
+      display: none !important;
+    }
+
+    .nav-right .mobile-search-btn {
+      display: inline-flex !important;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .theme-toggle,
+    .nav-right .mobile-search-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .nav-right .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 8px;
+      background: #e74c3c;
+      color: white;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: inline-flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 44px !important;
+      height: 44px !important;
+      padding: 11px 9px !important;
+      margin-left: 4px !important;
+      background: transparent !important;
+      border: none !important;
+      color: #1a1a1a !important;
+      z-index: 1100 !important;
+      position: relative !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: stretch !important;
+      cursor: pointer !important;
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .hamburger {
+      color: #fff !important;
+    }
+
+    .hamburger span {
+      display: block !important;
+      width: 100% !important;
+      height: 2px !important;
+      background: currentColor !important;
+      border-radius: 2px !important;
+      opacity: 1 !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Hamburger animation when menu is open */
+    body.nav-open .hamburger span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg) !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg) !important;
+    }
+
+    /* Off-canvas drawer */
+    .nav-menu {
+      position: fixed !important;
+      top: 0;
+      right: 0;
+      width: min(82vw, 360px);
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      transform: translateX(100%);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s linear 0.45s;
+      z-index: 1090;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      border: none;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    body.dark-mode .nav-menu {
+      background: #1a1a1a;
+    }
+
+    .nav-menu.active,
+    body.nav-open .nav-menu {
+      transform: translateX(0) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s;
+    }
+
+    /* Drawer header: brand + close button */
+    .nav-menu .drawer-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .nav-menu .drawer-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .drawer-brand {
+      color: #fff;
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #1a1a1a;
+      transition: transform 0.2s ease;
+    }
+
+    body.dark-mode .drawer-close {
+      color: #fff;
+    }
+
+    .drawer-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .drawer-close svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navigation links in drawer */
+    .nav-menu .nav-links {
+      list-style: none;
+      padding: 12px 0;
+      margin: 0;
+      flex: 1;
+    }
+
+    .nav-menu .nav-links li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    body.dark-mode .nav-menu .nav-links li {
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-menu .nav-link {
+      display: block;
+      padding: 16px 24px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    body.dark-mode .nav-menu .nav-link {
+      color: #ffffff;
+    }
+
+    .nav-menu .nav-link.active,
+    .nav-menu .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .nav-menu .nav-link.active,
+    body.dark-mode .nav-menu .nav-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* Remove desktop decorative pseudo-elements */
+    .nav-menu::before,
+    .nav-menu::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .nav-menu .nav-link::after {
+      display: none !important;
+    }
+
+    /* Backdrop overlay */
+    .nav-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      z-index: 1080;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    body.nav-open .nav-backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Prevent body scroll when drawer is open */
+    body.nav-open {
+      overflow: hidden !important;
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 380px) {
+    .nav-right .theme-toggle {
+      display: none !important;
+    }
+
+    .nav-container {
+      padding: 10px 12px !important;
+      gap: 4px;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .mobile-search-btn {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  /* Desktop: hide hamburger and drawer, show full menu */
+  @media (min-width: 992px) {
+    .hamburger {
+      display: none !important;
+    }
+
+    .nav-backdrop {
+      display: none !important;
+    }
+
+    .nav-menu {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: none !important;
+      z-index: auto !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+      border: none !important;
+      overflow: visible !important;
+    }
+
+    .nav-menu .drawer-header {
+      display: none !important;
+    }
+
+    .nav-menu .nav-links {
+      display: flex !important;
+      gap: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu .nav-links li {
+      border: none !important;
+    }
+
+    .nav-menu .nav-link {
+      padding: 0 16px;
+      border-bottom: none;
+    }
+
+    .nav-menu .nav-link::after {
+      display: block !important;
+    }
+
+    body.nav-open {
+      overflow: auto !important;
+    }
+  }
+  /* Drawer close button */
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .drawer-close:hover { opacity: 1; }
+  body.dark-mode .drawer-close { color: #fff; }
+
+  /* Body padding for fixed navbar */
+  body { padding-top: 60px; }
+  @media (min-width: 992px) { body { padding-top: 72px; } }
+  /* Remove carousel margin-top since body padding-top handles navbar */
+  .hero-carousel { margin-top: 0 !important; }
+
+  /* Sidebars + overlay always above fixed navbar */
+  .cart-sidebar,
+  .wishlist-sidebar {
+    z-index: 1200 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+  .overlay {
+    z-index: 1150 !important;
+  }
+</style>
+
+<script id="velmira-navbar-unified-js">
+  (function () {
+    "use strict";
+
+    // Wait for DOM to be ready
+    function initNavbar() {
+      const toggle = document.getElementById("menuToggle");
+      const menu = document.getElementById("navMenu");
+
+      if (!toggle || !menu) {
+        console.warn("Navbar elements not found");
+        return;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 1. Create backdrop once
+      // ────────────────────────────────────────────────────────────────────
+      let backdrop = document.querySelector(".nav-backdrop");
+      if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.className = "nav-backdrop";
+        document.body.appendChild(backdrop);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 2. Inject drawer header (brand + close) once, at the start
+      // ────────────────────────────────────────────────────────────────────
+      if (!menu.querySelector(".drawer-header")) {
+        const header = document.createElement("div");
+        header.className = "drawer-header";
+        header.innerHTML =
+          '<span class="drawer-brand">VELMIRA</span>' +
+          '<button type="button" class="drawer-close" aria-label="Close menu">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+          '<line x1="6" y1="6" x2="18" y2="18"/>' +
+          '<line x1="6" y1="18" x2="18" y2="6"/>' +
+          "</svg>" +
+          "</button>";
+        menu.insertBefore(header, menu.firstChild);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 3. Helper functions to open/close drawer
+      // ────────────────────────────────────────────────────────────────────
+      function closeDrawer() {
+        document.body.classList.remove("nav-open");
+        menu.classList.remove("active", "open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      function openDrawer() {
+        document.body.classList.add("nav-open");
+        menu.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+
+      function toggleDrawer(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        }
+        if (document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 4. Clean hamburger button: remove old listeners, set fresh ones
+      // ────────────────────────────────────────────────────────────────────
+      const freshToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(freshToggle, toggle);
+
+      freshToggle.setAttribute("aria-label", "Toggle menu");
+      freshToggle.setAttribute("aria-expanded", "false");
+      freshToggle.setAttribute("type", "button");
+      freshToggle.addEventListener("click", toggleDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 5. Backdrop click to close
+      // ────────────────────────────────────────────────────────────────────
+      backdrop.addEventListener("click", closeDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 6. Close button in drawer header
+      // ────────────────────────────────────────────────────────────────────
+      const closeBtn = menu.querySelector(".drawer-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 7. Nav links click to close drawer
+      // ────────────────────────────────────────────────────────────────────
+      menu.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", closeDrawer);
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 8. Escape key to close
+      // ────────────────────────────────────────────────────────────────────
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.body.classList.contains("nav-open")
+        ) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 9. Resize: close drawer on desktop
+      // ────────────────────────────────────────────────────────────────────
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 991 && document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 10. Set active nav link based on current page
+      // ────────────────────────────────────────────────────────────────────
+      updateActiveLink();
+    }
+
+    function updateActiveLink() {
+      const currentPage = window.location.pathname.split("/").pop() || "index.html";
+      
+      // Remove active from all links
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Add active to matching link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === "" && href === "index.html")) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    // Initialize on DOMContentLoaded or immediately if already loaded
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initNavbar);
+    } else {
+      initNavbar();
+    }
+
+    // Also update active link after a short delay to catch dynamic content
+    setTimeout(updateActiveLink, 100);
+  })();
+</script>
+
+
+</body>
+
+</html>

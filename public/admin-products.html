@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Admin — Velmira Products</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --success: #16a34a;
+        --warn: #d97706;
+        --danger: #dc2626;
+        --dark: #1a202c;
+        --dark-light: #64748b;
+        --border: #e2e8f0;
+        --bg: #f8fafc;
+        --white: #fff;
+        --radius: 8px;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--dark);
+      }
+
+      /* PIN GATE */
+      #pinGate {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #0f1724, #1e3a5f);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      .pin-box {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 40px 36px;
+        text-align: center;
+        width: min(400px, 90vw);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+      .pin-logo {
+        font-size: 28px;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        color: var(--dark);
+        margin-bottom: 6px;
+      }
+      .pin-logo span {
+        color: var(--primary);
+      }
+      .pin-box h2 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--dark-light);
+        margin: 0 0 28px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .pin-input {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 20px;
+        letter-spacing: 0.3em;
+        text-align: center;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        font-family: monospace;
+        outline: none;
+        color: var(--dark);
+        transition: border-color 0.2s;
+      }
+      .pin-input:focus {
+        border-color: var(--primary);
+      }
+      .pin-input.shake {
+        animation: shake 0.3s;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-8px);
+        }
+        75% {
+          transform: translateX(8px);
+        }
+      }
+      .pin-btn {
+        width: 100%;
+        margin-top: 16px;
+        padding: 14px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .pin-btn:hover {
+        background: var(--primary-dark);
+      }
+      .pin-error {
+        color: #dc2626;
+        font-size: 12px;
+        margin-top: 10px;
+        height: 16px;
+        font-weight: 500;
+      }
+
+      #adminPanel {
+        display: none;
+        min-height: 100vh;
+      }
+      .admin-header {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: var(--shadow);
+      }
+      .admin-brand {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      .admin-brand span {
+        color: var(--primary);
+      }
+      .admin-header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: var(--font);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--primary-dark);
+      }
+      .btn-secondary {
+        background: var(--white);
+        color: var(--dark);
+        border: 1px solid var(--border);
+      }
+      .btn-secondary:hover {
+        background: var(--bg);
+      }
+      .btn-success {
+        background: #dcfce7;
+        color: var(--success);
+        border: 1px solid #bbf7d0;
+      }
+      .btn-success:hover {
+        background: #bbf7d0;
+      }
+      .btn-danger {
+        background: #fff1f2;
+        color: var(--danger);
+        border: 1px solid #fecdd3;
+      }
+      .btn-danger:hover {
+        background: #fecdd3;
+      }
+      .btn-sm {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+
+      .admin-main {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 24px 20px;
+      }
+
+      #loadingBanner {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: var(--radius);
+        padding: 12px 18px;
+        margin-bottom: 16px;
+        font-size: 13px;
+        color: var(--primary);
+      }
+      #loadingBanner.error {
+        background: #fff1f2;
+        border-color: #fecdd3;
+        color: var(--danger);
+      }
+      #loadingBanner .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #bfdbfe;
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+      }
+      #loadingBanner.error .spinner {
+        display: none;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .panel {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .panel h2 {
+        margin: 0 0 4px;
+        font-size: 16px;
+      }
+      .panel .sub {
+        color: var(--dark-light);
+        font-size: 13px;
+        margin: 0 0 16px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .form-grid .full {
+        grid-column: 1 / -1;
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--dark-light);
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      input[type="text"],
+      input[type="number"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 9px 11px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family: var(--font);
+        font-size: 14px;
+        color: var(--dark);
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--primary);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+      .hint {
+        font-size: 11px;
+        color: var(--dark-light);
+        margin-top: 4px;
+      }
+      .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .table-wrap {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 820px;
+      }
+      th,
+      td {
+        padding: 10px 12px;
+        text-align: left;
+        font-size: 13px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      th {
+        background: var(--bg);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--dark-light);
+      }
+      td.prod-img img {
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+      }
+      .tag {
+        display: inline-block;
+        background: #eff6ff;
+        color: var(--primary);
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-size: 11px;
+        margin: 1px 3px 1px 0;
+      }
+      .price-old {
+        text-decoration: line-through;
+        color: var(--dark-light);
+        font-size: 12px;
+        margin-right: 6px;
+      }
+      .price-new {
+        font-weight: 700;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--dark-light);
+      }
+      .row-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .stock-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .stock-badge.in {
+        background: #dcfce7;
+        color: var(--success);
+      }
+      .stock-badge.out {
+        background: #fff1f2;
+        color: var(--danger);
+      }
+      .stock-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .toolbar input[type="text"] {
+        max-width: 260px;
+      }
+      .toolbar select {
+        max-width: 180px;
+      }
+      .toolbar .hint {
+        margin-left: auto;
+      }
+      .btn-toggle-stock {
+        min-width: 118px;
+      }
+      .star-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        padding: 2px;
+        color: #cbd5e1;
+        transition:
+          color 0.15s,
+          transform 0.15s;
+      }
+      .star-toggle:hover {
+        transform: scale(1.15);
+      }
+      .star-toggle.active {
+        color: #f5a623;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- PIN GATE -->
+    <div id="pinGate">
+      <div class="pin-box">
+        <div class="pin-logo">Vel<span>m</span>ira</div>
+        <h2>Product Manager Access</h2>
+        <input
+          type="password"
+          id="pinInput"
+          class="pin-input"
+          placeholder="• • • • • • • •"
+          maxlength="20"
+          autocomplete="current-password"
+        />
+        <button class="pin-btn" id="pinBtn">Unlock</button>
+        <div class="pin-error" id="pinErr"></div>
+      </div>
+    </div>
+
+    <div id="adminPanel">
+      <div class="admin-header">
+        <div class="admin-brand">
+          Vel<span>m</span>ira
+          <span
+            style="color: var(--dark-light); font-weight: 400; font-size: 14px"
+            >/ Product Manager</span
+          >
+        </div>
+        <div class="admin-header-right">
+          <a href="admin.html" class="btn btn-secondary btn-sm"
+            >Orders Dashboard</a
+          >
+          <a href="shop.html" class="btn btn-secondary btn-sm">View Shop</a>
+        </div>
+      </div>
+
+      <div class="admin-main">
+        <div id="loadingBanner">
+          <div class="spinner"></div>
+          <span id="loadingMsg">Connecting to database…</span>
+        </div>
+
+        <div class="panel">
+          <h2>Starter Catalog</h2>
+          <p class="sub">
+            First time here? Import the current 21-product catalog into
+            Firestore so it becomes editable. Safe to run more than once — it
+            only fills in products that don't already exist, using merge (it
+            won't overwrite anything you've already edited).
+          </p>
+          <button class="btn btn-success" id="seedBtn">
+            Import Starter Catalog (21 products)
+          </button>
+          <span id="seedStatus" class="hint" style="margin-left: 10px"></span>
+        </div>
+
+        <div class="panel">
+          <h2 id="formTitle">Add a Product</h2>
+          <p class="sub">
+            Fields marked with a comma-separated hint accept multiple values,
+            e.g. <code>oily, acne, pore</code>.
+          </p>
+          <form id="productForm">
+            <input type="hidden" id="f-id" />
+            <div class="form-grid">
+              <div>
+                <label>Product Name</label>
+                <input type="text" id="f-name" required />
+              </div>
+              <div>
+                <label>Category</label>
+                <select id="f-category" required>
+                  <option value="">— Select a category —</option>
+                  <option value="cleanser">Cleanser</option>
+                  <option value="moisturizer">Moisturizer</option>
+                  <option value="serum">Serum</option>
+                  <option value="sunscreen">Sunscreen</option>
+                  <option value="eye-care">Eye Care</option>
+                  <option value="mask">Mask</option>
+                  <option value="toner">Toner</option>
+                  <option value="treatment">Treatment</option>
+                  <option value="hair-care">Hair Care</option>
+                  <option value="combo">Combo &amp; Sets</option>
+                </select>
+                <div class="hint">
+                  Controls which shop filter &amp; homepage category tile
+                  this product appears under.
+                </div>
+              </div>
+              <div>
+                <label>Badge</label>
+                <input
+                  type="text"
+                  id="f-badge"
+                  placeholder="Sale / Best Seller / New / Combo"
+                />
+              </div>
+              <div>
+                <label>Price (৳)</label>
+                <input type="number" id="f-price" required min="0" />
+              </div>
+              <div>
+                <label>Original Price (৳) — optional</label>
+                <input type="number" id="f-originalPrice" min="0" />
+              </div>
+              <div>
+                <label>Rating (0–5)</label>
+                <input
+                  type="number"
+                  id="f-rating"
+                  step="0.1"
+                  min="0"
+                  max="5"
+                  value="4.7"
+                />
+              </div>
+              <div>
+                <label>Stock Status</label>
+                <select id="f-inStock">
+                  <option value="true">In Stock</option>
+                  <option value="false">Out of Stock</option>
+                </select>
+              </div>
+              <div>
+                <label>Best Sellers Section</label>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-weight: 400;
+                    text-transform: none;
+                    font-size: 14px;
+                    color: var(--dark);
+                    margin-top: 9px;
+                  "
+                >
+                  <input
+                    type="checkbox"
+                    id="f-bestSeller"
+                    style="width: auto"
+                  />
+                  Feature this product on the homepage Best Sellers section
+                </label>
+              </div>
+              <div>
+                <label>Image Path</label>
+                <input
+                  type="text"
+                  id="f-image"
+                  placeholder="/assets/your-image.webp"
+                  required
+                />
+                <div class="hint">
+                  Upload the .webp file to /public/assets/ when you redeploy,
+                  then reference its path here.
+                </div>
+              </div>
+              <div>
+                <label
+                  >Skin Types <span class="hint">(comma-separated)</span></label
+                >
+                <input
+                  type="text"
+                  id="f-skinType"
+                  placeholder="all, oily, dry, sensitive, combination"
+                />
+              </div>
+              <div>
+                <label
+                  >Concerns <span class="hint">(comma-separated)</span></label
+                >
+                <input
+                  type="text"
+                  id="f-concern"
+                  placeholder="acne, dry, brightening, oily, aging, sensitive, protection, spots, pore, hair"
+                />
+              </div>
+              <div class="full">
+                <label>Description</label>
+                <textarea id="f-description"></textarea>
+              </div>
+              <div>
+                <label
+                  >Ingredients
+                  <span class="hint">(comma-separated)</span></label
+                >
+                <input
+                  type="text"
+                  id="f-ingredients"
+                  placeholder="Niacinamide, Squalane, ..."
+                />
+              </div>
+              <div>
+                <label>Usage</label>
+                <input
+                  type="text"
+                  id="f-usage"
+                  placeholder="Apply morning and night..."
+                />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="saveBtn">
+                Save Product
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="cancelEditBtn"
+                style="display: none"
+              >
+                Cancel Edit
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h2>Live Catalog <span id="prodCount" class="hint"></span></h2>
+          <p class="sub">
+            This is what's actually in Firestore right now — exactly what
+            shoppers see on the site.
+          </p>
+          <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="Search by name…" />
+            <select id="stockFilter">
+              <option value="all">All Stock Statuses</option>
+              <option value="in">In Stock Only</option>
+              <option value="out">Out of Stock Only</option>
+            </select>
+            <select id="categoryFilter">
+              <option value="all">All Categories</option>
+              <option value="cleanser">Cleanser</option>
+              <option value="moisturizer">Moisturizer</option>
+              <option value="serum">Serum</option>
+              <option value="sunscreen">Sunscreen</option>
+              <option value="eye-care">Eye Care</option>
+              <option value="mask">Mask</option>
+              <option value="toner">Toner</option>
+              <option value="treatment">Treatment</option>
+              <option value="hair-care">Hair Care</option>
+              <option value="combo">Combo &amp; Sets</option>
+            </select>
+            <select id="bestSellerFilter">
+              <option value="all">All Products</option>
+              <option value="featured">Best Sellers Only</option>
+              <option value="not-featured">Not Featured</option>
+            </select>
+            <span class="hint" id="filterCount"></span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Badge</th>
+                  <th>Concern / Skin Type</th>
+                  <th>Stock</th>
+                  <th>Featured</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsBody">
+                <tr>
+                  <td colspan="10" class="empty-state">Loading…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      const ADMIN_PIN = "VELM2026";
+
+      document.getElementById("pinBtn").addEventListener("click", tryPin);
+      document.getElementById("pinInput").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") tryPin();
+      });
+      function tryPin() {
+        const val = document.getElementById("pinInput").value.trim();
+        if (val === ADMIN_PIN) {
+          document.getElementById("pinGate").style.display = "none";
+          document.getElementById("adminPanel").style.display = "block";
+          boot();
+        } else {
+          const err = document.getElementById("pinErr");
+          err.textContent = "Incorrect PIN. Please try again.";
+          const inp = document.getElementById("pinInput");
+          inp.classList.add("shake");
+          setTimeout(() => inp.classList.remove("shake"), 300);
+        }
+      }
+
+      const STARTER_CATALOG = [
+        {
+          id: 1,
+          category: "serum",
+          name: "Hydra Luxe Serum",
+          price: 2800,
+          originalPrice: 3500,
+          rating: 4.8,
+          badge: "Best Seller",
+          skinType: ["dry", "sensitive"],
+          concern: ["dry", "aging"],
+          description:
+            "Ultra-hydrating serum infused with hyaluronic acid and peptides. Perfect for all skin types.",
+          ingredients: ["Hyaluronic Acid", "Peptides", "Vitamin E", "Squalane"],
+          usage:
+            "Apply 2–3 drops to clean skin morning and night. Follow with moisturizer.",
+          image: "/assets/g3.webp",
+          inStock: true,
+        },
+        {
+          id: 2,
+          category: "moisturizer",
+          name: "Clarity Control Cream",
+          price: 2200,
+          originalPrice: 2900,
+          rating: 4.6,
+          badge: "New",
+          skinType: ["oily"],
+          concern: ["acne", "oily"],
+          description:
+            "Lightweight gel cream formulated to balance oil production and minimize pores.",
+          ingredients: [
+            "Niacinamide",
+            "Tea Tree Oil",
+            "Salicylic Acid",
+            "Green Tea Extract",
+          ],
+          usage:
+            "Use morning and night on clean skin. Non-comedogenic formula.",
+          image: "/assets/g2.webp",
+          inStock: true,
+        },
+        {
+          id: 3,
+          category: "mask",
+          name: "Radiance Night Mask",
+          price: 3200,
+          originalPrice: null,
+          rating: 4.9,
+          badge: "Premium",
+          skinType: ["all"],
+          concern: ["brightening", "aging"],
+          description:
+            "Overnight restorative mask packed with antioxidants and brightening agents.",
+          ingredients: ["Vitamin C", "AHA/BHA", "Retinol", "Rosehip Oil"],
+          usage:
+            "Apply generously before bed. Leave on overnight or use as weekly mask.",
+          image: "/assets/g3.webp",
+          inStock: true,
+        },
+        {
+          id: 4,
+          category: "sunscreen",
+          name: "SPF Silk Shield",
+          price: 1800,
+          originalPrice: 2500,
+          rating: 4.7,
+          badge: "UV Protection",
+          skinType: ["all"],
+          concern: ["protection"],
+          description:
+            "Silky smooth SPF 50+ daily sunscreen. Weightless, reef-safe formula.",
+          ingredients: [
+            "Zinc Oxide",
+            "Titanium Dioxide",
+            "Aloe Vera",
+            "Vitamin E",
+          ],
+          usage:
+            "Apply liberally 15 minutes before sun exposure. Reapply every 2 hours.",
+          image: "/assets/g4.webp",
+          inStock: true,
+        },
+        {
+          id: 5,
+          category: "cleanser",
+          name: "Gentle Enzyme Cleanser",
+          price: 1500,
+          originalPrice: 1900,
+          rating: 4.5,
+          badge: null,
+          skinType: ["dry", "sensitive"],
+          concern: ["brightening"],
+          description:
+            "Creamy enzymatic cleanser that gently exfoliates while maintaining skin barrier.",
+          ingredients: [
+            "Papaya Enzyme",
+            "Chamomile",
+            "Aloe Vera",
+            "Coconut Oil",
+          ],
+          usage:
+            "Massage onto damp skin, rinse thoroughly with lukewarm water.",
+          image: "/assets/g5.webp",
+          inStock: true,
+        },
+        {
+          id: 6,
+          category: "treatment",
+          name: "Spot Treatment Elixir",
+          price: 1350,
+          originalPrice: 1800,
+          rating: 4.4,
+          badge: "Sale",
+          skinType: ["oily"],
+          concern: ["acne", "spots"],
+          description:
+            "Targeted treatment for acne spots and blemishes. Fast-acting formula.",
+          ingredients: [
+            "Salicylic Acid",
+            "Sulfur",
+            "Tea Tree Oil",
+            "Benzoyl Peroxide",
+          ],
+          usage:
+            "Apply directly to blemishes. Use up to twice daily. May cause dryness.",
+          image: "/assets/g1.webp",
+          inStock: true,
+        },
+        {
+          id: 7,
+          category: "eye-care",
+          name: "Luxury Eye Contour",
+          price: 2500,
+          originalPrice: 3200,
+          rating: 4.8,
+          badge: "Bestseller",
+          skinType: ["sensitive", "dry"],
+          concern: ["aging"],
+          description:
+            "Intensive eye cream targeting fine lines, dark circles, and puffiness.",
+          ingredients: ["Peptides", "Retinol", "Caffeine", "Hyaluronic Acid"],
+          usage:
+            "Gently tap around orbital bone with ring finger. Use morning and night.",
+          image: "/assets/g2.webp",
+          inStock: true,
+        },
+        {
+          id: 8,
+          category: "moisturizer",
+          name: "Barrier Repair Balm",
+          price: 2700,
+          originalPrice: 3500,
+          rating: 4.9,
+          badge: "Premium",
+          skinType: ["dry", "sensitive"],
+          concern: ["dry"],
+          description:
+            "Rich restorative balm with ceramides and natural oils for compromised skin.",
+          ingredients: [
+            "Ceramides",
+            "Centella Asiatica",
+            "Jojoba Oil",
+            "Shea Butter",
+          ],
+          usage:
+            "Apply to damp skin as final step. Can be used on body as well.",
+          image: "/assets/g3.webp",
+          inStock: true,
+        },
+        {
+          id: 9,
+          category: "serum",
+          name: "Vitamin C Booster",
+          price: 3300,
+          originalPrice: 4200,
+          rating: 4.7,
+          badge: "New",
+          skinType: ["all"],
+          concern: ["brightening", "spots"],
+          description:
+            "Stabilized Vitamin C powder that brightens and protects skin.",
+          ingredients: [
+            "L-Ascorbic Acid",
+            "Ferulic Acid",
+            "Vitamin E",
+            "Hyaluronic Acid",
+          ],
+          usage:
+            "Mix with serum or moisturizer. Shelf life after mixing: 24 hours.",
+          image: "/assets/g3.webp",
+          inStock: true,
+        },
+        {
+          id: 10,
+          category: "serum",
+          name: "Firming Sleep Serum",
+          price: 3500,
+          originalPrice: 4500,
+          rating: 4.8,
+          badge: "Bestseller",
+          skinType: ["all"],
+          concern: ["aging"],
+          description:
+            "Overnight firming serum with retinol and collagen-boosting peptides.",
+          ingredients: ["Retinol", "Peptides", "Bakuchiol", "Squalane"],
+          usage:
+            "Apply before bed. Introduce gradually to minimize irritation.",
+          image: "/assets/g3.webp",
+          inStock: true,
+        },
+        {
+          id: 11,
+          category: "treatment",
+          name: "Healing Concentrate",
+          price: 2900,
+          originalPrice: 3500,
+          rating: 4.6,
+          badge: null,
+          skinType: ["sensitive", "dry"],
+          concern: ["sensitive", "dry"],
+          description:
+            "Calming concentrate for reactive and irritated skin. Soothes redness.",
+          ingredients: ["Centella Asiatica", "Cica", "Panthenol", "Allantoin"],
+          usage:
+            "Mix into moisturizer or use alone. 1–2 pumps per application.",
+          image: "/assets/g4.webp",
+          inStock: true,
+        },
+        {
+          id: 12,
+          category: "toner",
+          name: "Pore Minimizer Toner",
+          price: 1700,
+          originalPrice: 2200,
+          rating: 4.5,
+          badge: "Sale",
+          skinType: ["oily"],
+          concern: ["oily", "acne"],
+          description:
+            "Lightweight toner that minimizes pores and balances oil production.",
+          ingredients: [
+            "Niacinamide",
+            "Witch Hazel",
+            "Salicylic Acid",
+            "Glycerin",
+          ],
+          usage: "Apply with cotton pad after cleansing. Morning and evening.",
+          image: "/assets/g1.webp",
+          inStock: true,
+        },
+        {
+          id: 13,
+          category: "serum",
+          name: "The Ordinary Niacinamide 10% + Zinc 1%",
+          price: 1080,
+          originalPrice: 1200,
+          rating: 4.7,
+          badge: "Sale",
+          skinType: ["oily", "combination", "all"],
+          concern: ["oily", "acne", "pore"],
+          description:
+            "High-strength vitamin and mineral blemish formula that visibly minimizes the look of congestion and shine while balancing oil production.",
+          ingredients: ["Niacinamide 10%", "Zinc PCA", "Vitamin B3"],
+          usage:
+            "Apply a few drops to the face morning and evening before heavier creams.",
+          image: "/assets/product-ordinary-niacinamide.webp",
+          inStock: true,
+        },
+        {
+          id: 14,
+          category: "moisturizer",
+          name: "Dr. Althea 345 Relief Cream",
+          price: 1850,
+          originalPrice: 2000,
+          rating: 4.8,
+          badge: "Sale",
+          skinType: ["all", "sensitive", "dry"],
+          concern: ["sensitive", "dry", "acne"],
+          description:
+            "A calming, blemish-friendly relief cream with ceramide NP, panthenol and centella asiatica that soothes, hydrates and supports barrier repair.",
+          ingredients: [
+            "Ceramide NP",
+            "Panthenol",
+            "Centella Asiatica",
+            "Madecassoside",
+          ],
+          usage:
+            "Smooth over face as the last step of your routine, morning and night.",
+          image: "/assets/product-dr-althea-345.webp",
+          inStock: true,
+        },
+        {
+          id: 15,
+          category: "hair-care",
+          name: "The Ordinary Multi-Peptide Serum for Hair Density",
+          price: 2890,
+          originalPrice: 3200,
+          rating: 4.6,
+          badge: "Sale",
+          skinType: ["all"],
+          concern: ["hair"],
+          description:
+            "A concentrated leave-in serum with multi-peptides and redensifying actives for hair that looks denser, fuller and healthier over time.",
+          ingredients: [
+            "Multi-Peptide Complex",
+            "Biotinoyl Tripeptide",
+            "Redensyl",
+          ],
+          usage: "Apply to towel-dried scalp daily. Do not rinse out.",
+          image: "/assets/product-ordinary-hair-serum.webp",
+          inStock: true,
+        },
+        {
+          id: 16,
+          category: "combo",
+          name: "Velmira Korean Skincare Combo Set (4-Piece)",
+          price: 5280,
+          originalPrice: null,
+          rating: 4.7,
+          badge: "Combo",
+          skinType: ["all"],
+          concern: ["acne", "oily", "sensitive", "dry", "brightening"],
+          description:
+            "A curated 4-piece bundle featuring Dr. Althea 345 Relief Cream, COSRX Salicylic Acid Daily Gentle Cleanser, The Ordinary Niacinamide 10% + Zinc 1%, and a bonus treatment — a complete routine at a bundled price.",
+          ingredients: [
+            "Niacinamide",
+            "Salicylic Acid",
+            "Ceramide NP",
+            "Centella Asiatica",
+          ],
+          usage:
+            "Follow the included routine card: cleanse, treat, then moisturize morning and night.",
+          image: "/assets/product-combo-4pc.webp",
+          inStock: true,
+        },
+        {
+          id: 17,
+          category: "combo",
+          name: "Rice Water Bright Combo (Cleanser + Cream)",
+          price: 2100,
+          originalPrice: 2500,
+          rating: 4.6,
+          badge: "Combo",
+          skinType: ["all"],
+          concern: ["brightening", "dry"],
+          description:
+            "A gentle rice-powered duo — Rice Water Bright Foaming Cleanser and Rice Ceramide Moisturizing Cream — that cleanses and nourishes for a naturally brighter, softer complexion.",
+          ingredients: ["Rice Extract", "Rice Bran Water", "Ceramides"],
+          usage:
+            "Cleanse morning and night, then follow with the cream as your final moisturizing step.",
+          image: "/assets/product-rice-combo.webp",
+          inStock: true,
+        },
+        {
+          id: 18,
+          category: "cleanser",
+          name: "COSRX Salicylic Acid Daily Gentle Cleanser",
+          price: 1080,
+          originalPrice: 1200,
+          rating: 4.7,
+          badge: "Sale",
+          skinType: ["oily", "combination"],
+          concern: ["acne", "oily"],
+          description:
+            "A gentle daily foaming cleanser with 0.5% salicylic acid and botanical extracts that whisks away excess sebum and impurities without stripping the skin.",
+          ingredients: [
+            "Salicylic Acid 0.5%",
+            "Betaine Salicylate",
+            "Tea Tree Leaf Water",
+          ],
+          usage:
+            "Massage onto damp skin morning and night, then rinse thoroughly.",
+          image: "/assets/product-cosrx-cleanser.webp",
+          inStock: true,
+        },
+        {
+          id: 19,
+          category: "sunscreen",
+          name: "Beauty of Joseon Relief Sun SPF50+ PA++++",
+          price: 1480,
+          originalPrice: 1600,
+          rating: 4.8,
+          badge: "Sale",
+          skinType: ["all"],
+          concern: ["protection"],
+          description:
+            "A lightweight, glow-giving daily sunscreen with rice extract and probiotics that protects against UVA/UVB rays while leaving a dewy, hydrated finish.",
+          ingredients: ["Rice Extract", "Probiotics", "Niacinamide"],
+          usage:
+            "Apply generously as the last step of your morning routine. Reapply every 2 hours of sun exposure.",
+          image: "/assets/product-boj-relief-sun.webp",
+          inStock: true,
+        },
+        {
+          id: 20,
+          category: "moisturizer",
+          name: "COSRX Advanced Snail 92 All-In-One Cream",
+          price: 1580,
+          originalPrice: 1700,
+          rating: 4.8,
+          badge: "Sale",
+          skinType: ["dry", "sensitive", "all"],
+          concern: ["dry", "brightening", "aging"],
+          description:
+            "A multi-tasking cream formulated with 92% snail secretion filtrate that deeply hydrates, repairs, and helps skin achieve a healthy, appealing glow.",
+          ingredients: [
+            "Snail Secretion Filtrate 92%",
+            "Betaine",
+            "Sodium Hyaluronate",
+          ],
+          usage: "Apply as the last step of your routine, morning and night.",
+          image: "/assets/product-cosrx-snail92.webp",
+          inStock: true,
+        },
+        {
+          id: 21,
+          category: "serum",
+          name: "AXIS-Y Dark Spot Correcting Glow Serum",
+          price: 1120,
+          originalPrice: null,
+          rating: 4.6,
+          badge: "Sale",
+          skinType: ["all"],
+          concern: ["spots", "brightening"],
+          description:
+            "An activated niacinamide and squalane serum that targets the appearance of dark spots and uneven tone while locking in moisture for an all-day glow.",
+          ingredients: [
+            "Niacinamide 5%",
+            "Squalane",
+            "Hippophae Rhamnoides Fruit Extract",
+          ],
+          usage:
+            "Apply 2–3 drops to clean skin morning and night before moisturizer.",
+          image: "/assets/product-axisy-darkspot.webp",
+          inStock: true,
+        },
+      ];
+
+      function showLoading(msg, isError) {
+        const el = document.getElementById("loadingBanner");
+        el.style.display = "flex";
+        el.classList.toggle("error", !!isError);
+        document.getElementById("loadingMsg").textContent = msg;
+      }
+      function hideLoading() {
+        document.getElementById("loadingBanner").style.display = "none";
+      }
+
+      let db, fsApi;
+
+      async function boot() {
+        showLoading("Connecting to database…");
+        try {
+          const [{ initializeApp }, fs] = await Promise.all([
+            import("https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"),
+            import("https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js"),
+          ]);
+          const firebaseConfig = {
+            apiKey: "AIzaSyC4iYs-YUnvPTzd0Ut8Gc6yaoeopOzuxUQ",
+            authDomain: "velmira-6bed5.firebaseapp.com",
+            projectId: "velmira-6bed5",
+            storageBucket: "velmira-6bed5.firebasestorage.app",
+            messagingSenderId: "929543908982",
+            appId: "1:929543908982:web:2a374ce24fd53815bbf957",
+          };
+          const app = initializeApp(firebaseConfig);
+          db = fs.getFirestore(app);
+          fsApi = fs;
+          hideLoading();
+          await loadProducts();
+        } catch (e) {
+          console.error(e);
+          showLoading(
+            "Could not connect to Firestore. Check your internet connection or Firestore security rules, then retry.",
+            true,
+          );
+        }
+      }
+
+      let allProducts = [];
+
+      async function loadProducts() {
+        const tbody = document.getElementById("productsBody");
+        tbody.innerHTML =
+          '<tr><td colspan="10" class="empty-state">Loading…</td></tr>';
+        const snap = await fsApi.getDocs(fsApi.collection(db, "products"));
+        if (snap.empty) {
+          allProducts = [];
+          tbody.innerHTML =
+            '<tr><td colspan="10" class="empty-state">No products in Firestore yet. Click "Import Starter Catalog" above to get started.</td></tr>';
+          document.getElementById("prodCount").textContent = "";
+          document.getElementById("filterCount").textContent = "";
+          return;
+        }
+        allProducts = snap.docs
+          .map((d) => ({ docId: d.id, ...d.data() }))
+          .sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+        document.getElementById("prodCount").textContent =
+          `(${allProducts.length} product${allProducts.length === 1 ? "" : "s"})`;
+        renderTable();
+      }
+
+      function getFilteredProducts() {
+        const q = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        const stockFilter = document.getElementById("stockFilter").value;
+        const categoryFilter = document.getElementById("categoryFilter").value;
+        const bsFilter = document.getElementById("bestSellerFilter").value;
+        return allProducts.filter((p) => {
+          const matchesSearch = !q || (p.name || "").toLowerCase().includes(q);
+          const inStock = p.inStock !== false;
+          const matchesStock =
+            stockFilter === "all" ||
+            (stockFilter === "in" && inStock) ||
+            (stockFilter === "out" && !inStock);
+          const matchesCategory =
+            categoryFilter === "all" || p.category === categoryFilter;
+          const isFeatured = p.bestSeller === true;
+          const matchesBs =
+            bsFilter === "all" ||
+            (bsFilter === "featured" && isFeatured) ||
+            (bsFilter === "not-featured" && !isFeatured);
+          return matchesSearch && matchesStock && matchesCategory && matchesBs;
+        });
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById("productsBody");
+        const products = getFilteredProducts();
+        const filterCountEl = document.getElementById("filterCount");
+        filterCountEl.textContent =
+          products.length === allProducts.length
+            ? ""
+            : `Showing ${products.length} of ${allProducts.length}`;
+
+        if (!products.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="10" class="empty-state">No products match your search/filter.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = products
+          .map((p) => {
+            const inStock = p.inStock !== false;
+            const isFeatured = p.bestSeller === true;
+            return `
+    <tr>
+      <td class="prod-img"><img src="${p.image || ""}" alt="" onerror="this.style.opacity=0.2"></td>
+      <td>${p.id ?? ""}</td>
+      <td><strong>${escapeHtml(p.name || "")}</strong></td>
+      <td><span class="tag">${categoryLabel(p.category)}</span></td>
+      <td>
+        ${p.originalPrice ? `<span class="price-old">৳${p.originalPrice}</span>` : ""}
+        <span class="price-new">৳${p.price ?? ""}</span>
+      </td>
+      <td>${p.badge ? `<span class="tag">${escapeHtml(p.badge)}</span>` : ""}</td>
+      <td>
+        ${(p.concern || []).map((c) => `<span class="tag">${escapeHtml(c)}</span>`).join("")}
+        ${(p.skinType || []).map((s) => `<span class="tag" style="background:#f0fdf4;color:#16a34a;">${escapeHtml(s)}</span>`).join("")}
+      </td>
+      <td><span class="stock-badge ${inStock ? "in" : "out"}">${inStock ? "In Stock" : "Out of Stock"}</span></td>
+      <td>
+        <button class="star-toggle ${isFeatured ? "active" : ""}" data-toggle-bestseller="${p.docId}" data-current="${isFeatured}" title="${isFeatured ? "Remove from Best Sellers" : "Add to Best Sellers"}">${isFeatured ? "★" : "☆"}</button>
+      </td>
+      <td class="row-actions">
+        <button class="btn btn-secondary btn-sm" data-edit="${p.docId}">Edit</button>
+        <button class="btn ${inStock ? "btn-danger" : "btn-success"} btn-sm btn-toggle-stock" data-toggle-stock="${p.docId}" data-current="${inStock}">${inStock ? "Mark Out of Stock" : "Mark In Stock"}</button>
+        <button class="btn btn-danger btn-sm" data-delete="${p.docId}" data-name="${escapeHtml(p.name || "")}">Delete</button>
+      </td>
+    </tr>
+  `;
+          })
+          .join("");
+
+        tbody.querySelectorAll("[data-edit]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const p = allProducts.find((x) => x.docId === btn.dataset.edit);
+            if (p) fillForm(p);
+          });
+        });
+        tbody.querySelectorAll("[data-delete]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            if (!confirm(`Delete "${btn.dataset.name}"? This can't be undone.`))
+              return;
+            await fsApi.deleteDoc(
+              fsApi.doc(db, "products", btn.dataset.delete),
+            );
+            loadProducts();
+          });
+        });
+        tbody.querySelectorAll("[data-toggle-stock]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const docId = btn.dataset.toggleStock;
+            const currentlyInStock = btn.dataset.current === "true";
+            btn.disabled = true;
+            try {
+              await fsApi.setDoc(
+                fsApi.doc(db, "products", docId),
+                { inStock: !currentlyInStock },
+                { merge: true },
+              );
+              const p = allProducts.find((x) => x.docId === docId);
+              if (p) p.inStock = !currentlyInStock;
+              renderTable();
+            } catch (err) {
+              alert("Could not update stock status: " + err.message);
+              console.error(err);
+              btn.disabled = false;
+            }
+          });
+        });
+        tbody.querySelectorAll("[data-toggle-bestseller]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const docId = btn.dataset.toggleBestseller;
+            const currentlyFeatured = btn.dataset.current === "true";
+            btn.disabled = true;
+            try {
+              await fsApi.setDoc(
+                fsApi.doc(db, "products", docId),
+                { bestSeller: !currentlyFeatured },
+                { merge: true },
+              );
+              const p = allProducts.find((x) => x.docId === docId);
+              if (p) p.bestSeller = !currentlyFeatured;
+              renderTable();
+            } catch (err) {
+              alert("Could not update Best Sellers status: " + err.message);
+              console.error(err);
+              btn.disabled = false;
+            }
+          });
+        });
+      }
+
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", renderTable);
+      document
+        .getElementById("stockFilter")
+        .addEventListener("change", renderTable);
+      document
+        .getElementById("categoryFilter")
+        .addEventListener("change", renderTable);
+      document
+        .getElementById("bestSellerFilter")
+        .addEventListener("change", renderTable);
+
+      function escapeHtml(str) {
+        return String(str).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+
+      const CATEGORY_LABELS = {
+        cleanser: "Cleanser",
+        moisturizer: "Moisturizer",
+        serum: "Serum",
+        sunscreen: "Sunscreen",
+        "eye-care": "Eye Care",
+        mask: "Mask",
+        toner: "Toner",
+        treatment: "Treatment",
+        "hair-care": "Hair Care",
+        combo: "Combo & Sets",
+      };
+      function categoryLabel(cat) {
+        return CATEGORY_LABELS[cat] || (cat ? escapeHtml(cat) : "—");
+      }
+
+      function fillForm(p) {
+        document.getElementById("formTitle").textContent = `Editing: ${p.name}`;
+        document.getElementById("f-id").value = p.docId;
+        document.getElementById("f-name").value = p.name || "";
+        document.getElementById("f-category").value = p.category || "";
+        document.getElementById("f-badge").value = p.badge || "";
+        document.getElementById("f-price").value = p.price ?? "";
+        document.getElementById("f-originalPrice").value =
+          p.originalPrice ?? "";
+        document.getElementById("f-rating").value = p.rating ?? 4.7;
+        document.getElementById("f-inStock").value =
+          p.inStock === false ? "false" : "true";
+        document.getElementById("f-bestSeller").checked =
+          p.bestSeller === true;
+        document.getElementById("f-image").value = p.image || "";
+        document.getElementById("f-skinType").value = (p.skinType || []).join(
+          ", ",
+        );
+        document.getElementById("f-concern").value = (p.concern || []).join(
+          ", ",
+        );
+        document.getElementById("f-description").value = p.description || "";
+        document.getElementById("f-ingredients").value = (
+          p.ingredients || []
+        ).join(", ");
+        document.getElementById("f-usage").value = p.usage || "";
+        document.getElementById("cancelEditBtn").style.display = "inline-flex";
+        window.scrollTo({
+          top:
+            document.getElementById("productForm").getBoundingClientRect().top +
+            window.scrollY -
+            20,
+          behavior: "smooth",
+        });
+      }
+
+      function resetForm() {
+        document.getElementById("formTitle").textContent = "Add a Product";
+        document.getElementById("productForm").reset();
+        document.getElementById("f-id").value = "";
+        document.getElementById("f-category").value = "";
+        document.getElementById("f-rating").value = 4.7;
+        document.getElementById("f-inStock").value = "true";
+        document.getElementById("f-bestSeller").checked = false;
+        document.getElementById("cancelEditBtn").style.display = "none";
+      }
+
+      document
+        .getElementById("cancelEditBtn")
+        .addEventListener("click", resetForm);
+
+      function splitList(str) {
+        return str
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+      }
+
+      document
+        .getElementById("productForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const existingDocId = document.getElementById("f-id").value;
+          const saveBtn = document.getElementById("saveBtn");
+          saveBtn.disabled = true;
+          saveBtn.textContent = "Saving…";
+          try {
+            let docId = existingDocId;
+            let numericId;
+            if (docId) {
+              numericId = Number(docId);
+            } else {
+              const snap = await fsApi.getDocs(
+                fsApi.collection(db, "products"),
+              );
+              let maxId = 0;
+              snap.forEach((d) => {
+                const n = Number(d.data().id || d.id);
+                if (n > maxId) maxId = n;
+              });
+              numericId = maxId + 1;
+              docId = String(numericId);
+            }
+            const data = {
+              id: numericId,
+              category: document.getElementById("f-category").value,
+              name: document.getElementById("f-name").value.trim(),
+              price: Number(document.getElementById("f-price").value),
+              originalPrice: document.getElementById("f-originalPrice").value
+                ? Number(document.getElementById("f-originalPrice").value)
+                : null,
+              rating: Number(document.getElementById("f-rating").value) || 4.7,
+              inStock: document.getElementById("f-inStock").value !== "false",
+              bestSeller: document.getElementById("f-bestSeller").checked,
+              badge: document.getElementById("f-badge").value.trim(),
+              skinType: splitList(document.getElementById("f-skinType").value),
+              concern: splitList(document.getElementById("f-concern").value),
+              description: document
+                .getElementById("f-description")
+                .value.trim(),
+              ingredients: splitList(
+                document.getElementById("f-ingredients").value,
+              ),
+              usage: document.getElementById("f-usage").value.trim(),
+              image: document.getElementById("f-image").value.trim(),
+            };
+            await fsApi.setDoc(fsApi.doc(db, "products", docId), data, {
+              merge: true,
+            });
+            resetForm();
+            await loadProducts();
+          } catch (err) {
+            alert("Could not save product: " + err.message);
+            console.error(err);
+          } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "Save Product";
+          }
+        });
+
+      document.getElementById("seedBtn").addEventListener("click", async () => {
+        const status = document.getElementById("seedStatus");
+        const btn = document.getElementById("seedBtn");
+        btn.disabled = true;
+        status.textContent = "Importing…";
+        try {
+          let count = 0;
+          for (const p of STARTER_CATALOG) {
+            await fsApi.setDoc(fsApi.doc(db, "products", String(p.id)), p, {
+              merge: true,
+            });
+            count++;
+            status.textContent = `Importing… ${count}/${STARTER_CATALOG.length}`;
+          }
+          status.textContent = `Done — ${count} products imported/synced.`;
+          await loadProducts();
+        } catch (err) {
+          status.textContent = "Import failed: " + err.message;
+          console.error(err);
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

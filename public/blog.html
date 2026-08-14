@@ -1,0 +1,1970 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="description"
+      content="Velmira Blog — Skincare tips, ingredient guides, and beauty insights from dermatologists."
+    />
+    <title>Blog — Velmira Premium Skincare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?w=700&h=530&fit=crop" fetchpriority="high" />
+    <style>
+      .blog-hero {
+        background: linear-gradient(135deg, #f0f7ff 0%, #edf5ff 100%);
+        padding: 140px var(--spacing-lg) var(--spacing-xl);
+        text-align: center;
+      }
+      .blog-hero h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(32px, 5vw, 56px);
+        font-weight: 300;
+      }
+      .blog-hero h1 em {
+        color: var(--primary);
+        font-style: italic;
+      }
+      .blog-hero p {
+        font-size: 15px;
+        color: var(--dark-light);
+        margin-top: var(--spacing-sm);
+      }
+      body.dark-mode .blog-hero {
+        background: linear-gradient(135deg, #0f1724 0%, #0d1a2e 100%);
+      }
+      .blog-filter-tabs {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: var(--spacing-xxl);
+      }
+      .blog-tab {
+        padding: 10px 24px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-full);
+        background: none;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--dark-light);
+        font-family: var(--font-sans);
+        transition: all var(--transition-fast);
+      }
+      .blog-tab.active,
+      .blog-tab:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+      .blog-featured {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin-bottom: var(--spacing-xxl);
+        box-shadow: var(--shadow-md);
+      }
+      .blog-featured-img {
+        aspect-ratio: 4/3;
+        overflow: hidden;
+      }
+      .blog-featured-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-slow);
+      }
+      .blog-featured:hover .blog-featured-img img {
+        transform: scale(1.04);
+      }
+      .blog-featured-content {
+        padding: var(--spacing-xxl);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .blog-featured-content .blog-category {
+        position: static;
+        margin-bottom: var(--spacing-md);
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: var(--radius-full);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .blog-featured-content h2 {
+        font-family: var(--font-serif);
+        font-size: clamp(24px, 3vw, 36px);
+        font-weight: 300;
+        margin-bottom: var(--spacing-md);
+        line-height: 1.3;
+      }
+      .blog-featured-content p {
+        font-size: 14px;
+        color: var(--dark-light);
+        line-height: 1.8;
+        margin-bottom: var(--spacing-lg);
+      }
+      .blog-meta {
+        font-size: 12px;
+        color: var(--dark-light);
+        margin-bottom: var(--spacing-sm);
+      }
+      body.dark-mode .blog-featured {
+        background: var(--white);
+      }
+      @media (max-width: 768px) {
+        .blog-featured {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── Blog article detail view ── */
+      .blog-article-hero {
+        background: linear-gradient(135deg, #f0f7ff 0%, #edf5ff 100%);
+        padding: 140px var(--spacing-lg) var(--spacing-xl);
+      }
+      body.dark-mode .blog-article-hero {
+        background: linear-gradient(135deg, #0f1724 0%, #0d1a2e 100%);
+      }
+      .blog-article-hero-inner {
+        max-width: 760px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .blog-back-link {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: var(--dark-light);
+        text-decoration: none;
+        margin-bottom: var(--spacing-md);
+        transition: color var(--transition-fast);
+      }
+      .blog-back-link:hover {
+        color: var(--primary);
+      }
+      .blog-article-hero-inner .blog-category {
+        position: static;
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: var(--radius-full);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0 0 var(--spacing-md);
+      }
+      .blog-article-hero-inner h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(28px, 4.5vw, 48px);
+        font-weight: 300;
+        line-height: 1.25;
+        margin-bottom: var(--spacing-sm);
+      }
+      .blog-article-meta {
+        font-size: 13px;
+        color: var(--dark-light);
+      }
+      .blog-article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--spacing-xxl) var(--spacing-lg);
+      }
+      .blog-article-img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin-bottom: var(--spacing-xl);
+        box-shadow: var(--shadow-md);
+      }
+      .blog-article-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .blog-article-content {
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--dark-light);
+      }
+      .blog-article-content h2 {
+        font-family: var(--font-serif);
+        font-size: clamp(20px, 2.6vw, 28px);
+        font-weight: 400;
+        color: var(--dark);
+        margin: var(--spacing-xl) 0 var(--spacing-sm);
+      }
+      body.dark-mode .blog-article-content h2 {
+        color: var(--white);
+      }
+      .blog-article-content p {
+        margin-bottom: var(--spacing-md);
+      }
+      .blog-article-content ul {
+        margin: 0 0 var(--spacing-md) var(--spacing-lg);
+        padding: 0;
+      }
+      .blog-article-content li {
+        margin-bottom: 8px;
+      }
+      .blog-article-content strong {
+        color: var(--dark);
+      }
+      body.dark-mode .blog-article-content strong {
+        color: var(--white);
+      }
+      .blog-back-btn {
+        display: inline-block;
+        margin-top: var(--spacing-lg);
+        width: fit-content;
+      }
+    
+/* ── Mobile search icon button ── */
+.mobile-search-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--dark, #1a1a1a);
+  padding: 6px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+@media (max-width: 768px) {
+  .mobile-search-btn { display: flex; }
+  .nav-right .search-wrapper { display: none; }
+}
+/* ── Mobile search overlay ── */
+.mobile-search-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: var(--white, #fff);
+  padding: 10px 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  align-items: center;
+  gap: 8px;
+  height: 58px;
+}
+.mobile-search-overlay.open { display: flex; }
+.mobile-search-overlay input {
+  flex: 1;
+  border: 1.5px solid var(--border, #e0e0e0);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  outline: none;
+  background: var(--light-gray, #f5f5f5);
+  color: var(--dark, #1a1a1a);
+  font-family: inherit;
+  min-width: 0;
+}
+.mobile-search-overlay input:focus { border-color: var(--primary); }
+.mobile-search-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--dark-light, #777); padding: 4px 6px; line-height: 1;
+  font-size: 24px; flex-shrink: 0; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-search-results {
+  position: fixed;
+  top: 58px; left: 0; right: 0;
+  z-index: 9998;
+  background: var(--white, #fff);
+  border-top: 1px solid var(--border, #e0e0e0);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  max-height: calc(100vh - 58px);
+  overflow-y: auto;
+  display: none;
+}
+.mobile-search-results.open { display: block; }
+body.dark-mode .mobile-search-overlay { background: var(--white); }
+body.dark-mode .mobile-search-overlay input { background: var(--light-gray); color: var(--dark); }
+body.dark-mode .mobile-search-results { background: var(--white); }
+</style>
+  
+
+  <link rel="modulepreload" crossorigin href="/assets/script-CbRYxaYZ.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-Db11KUSm.css">
+</head>
+  <body>
+    <script>try{if(localStorage.getItem('darkMode') === 'true')document.body.classList.add('dark-mode')}catch(e){}</script>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">        <div class="nav-logo">
+          <a href="index.html" class="logo-link">Vel<span>m</span>ira</a>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About Velmira</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="blog.html" class="nav-link active">Blog</a></li>
+            <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
+            <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            <li><a href="ingredient-guide.html" class="nav-link">Ingredient Guide</a></li>
+          </ul>
+        </div>
+        <div class="nav-right">
+                    <button class="mobile-search-btn" id="mobileSearchBtn" aria-label="Open search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+<div class="search-wrapper" style="position: relative">
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search..."
+                class="search-input"
+              />
+              <button class="search-btn" aria-label="Search">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+              </button>
+            </div>
+            <div
+              id="searchDropdown"
+              class="search-dropdown"
+              style="
+                display: none;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg);
+                z-index: 200;
+                overflow: hidden;
+              "
+            ></div>
+          </div>
+          <button
+            id="darkModeToggle"
+            class="theme-toggle"
+            title="Toggle dark mode"
+          >
+            <span class="theme-icon">
+              <svg
+                class="sun-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+              <svg
+                class="moon-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </span>
+          </button>
+          <button id="wishlistBtn" class="icon-btn" title="Wishlist">
+            <span class="badge" id="wishlistCount">0</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              />
+            </svg>
+          </button>
+          <button id="cartBtn" class="icon-btn" title="Cart">
+            <span class="badge" id="cartCount">0</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+          </button>
+        </div>
+      
+        <button class="hamburger" id="menuToggle">
+          <span></span><span></span><span></span>
+        </button>
+</div>
+    </nav>
+
+    <!-- BLOG LIST VIEW -->
+    <div id="blogListView">
+    <!-- BLOG HERO -->
+    <div class="blog-hero">
+      <h1>Skincare <em>Insights</em></h1>
+      <p>Expert tips, ingredient guides, and science-backed beauty advice</p>
+    </div>
+
+    <!-- BLOG -->
+    <section class="blog-section">
+      <!-- FEATURED ARTICLE -->
+      <div class="blog-featured reveal">
+        <div class="blog-featured-img">
+          <img
+            src="https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?w=700&h=530&fit=crop"
+            alt="Skin barrier guide"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <div class="blog-featured-content">
+          <span class="blog-category">Feature</span>
+          <p class="blog-meta">May 2026 · 8 min read</p>
+          <h2>Understanding Your Skin Barrier: The Complete Guide</h2>
+          <p>
+            Your skin barrier is your body's first line of defence. We break
+            down exactly how ceramides, fatty acids, and the acid mantle work
+            together — and which products will help when yours is compromised.
+          </p>
+          <a href="blog.html?id=1" class="btn btn-primary" style="width: fit-content"
+            >Read Article</a
+          >
+        </div>
+      </div>
+
+      <!-- FILTER TABS -->
+      <div class="blog-filter-tabs">
+        <button class="blog-tab active" data-cat="all">All</button>
+        <button class="blog-tab" data-cat="tips">Tips</button>
+        <button class="blog-tab" data-cat="ingredients">Ingredients</button>
+        <button class="blog-tab" data-cat="routine">Routine</button>
+        <button class="blog-tab" data-cat="science">Science</button>
+        <button class="blog-tab" data-cat="news">News</button>
+      </div>
+
+      <!-- BLOG GRID -->
+      <div class="blog-grid" id="blogGrid">
+        <article class="blog-card reveal" data-cat="tips">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?w=400&h=300&fit=crop"
+              alt="Morning routine"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Tips</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              April 2026 · 5 min read
+            </p>
+            <h3>The Perfect Morning Ritual</h3>
+            <p>
+              Discover the 3-step morning routine dermatologists recommend for
+              maximum protection and all-day radiance.
+            </p>
+            <a href="blog.html?id=2" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="ingredients">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3938023/pexels-photo-3938023.jpeg?w=400&h=300&fit=crop"
+              alt="Hyaluronic acid"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Ingredients</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              April 2026 · 4 min read
+            </p>
+            <h3>Hyaluronic Acid: Myth vs Reality</h3>
+            <p>
+              Uncover the truth about this powerhouse ingredient and how it
+              actually works to hydrate your skin.
+            </p>
+            <a href="blog.html?id=3" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="routine">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3807526/pexels-photo-3807526.jpeg?w=400&h=300&fit=crop"
+              alt="Night routine"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Routine</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              March 2026 · 6 min read
+            </p>
+            <h3>Build a Night Routine That Actually Works</h3>
+            <p>
+              Sleep is when your skin repairs itself. Here's how to make the
+              most of those hours with the right actives.
+            </p>
+            <a href="blog.html?id=4" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="science">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/4202325/pexels-photo-4202325.jpeg?w=400&h=300&fit=crop"
+              alt="Retinol science"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Science</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              March 2026 · 7 min read
+            </p>
+            <h3>Retinol 101: How to Start Without Irritation</h3>
+            <p>
+              Retinoids are the gold standard in anti-aging, but beginners often
+              misuse them. Our guide eases you in safely.
+            </p>
+            <a href="blog.html?id=5" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="tips">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?w=400&h=300&fit=crop"
+              alt="Sunscreen guide"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Tips</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              February 2026 · 5 min read
+            </p>
+            <h3>SPF Every Day: The Non-Negotiable Step</h3>
+            <p>
+              Sun damage accounts for 90% of skin aging. We explain why
+              sunscreen matters year-round, even indoors.
+            </p>
+            <a href="blog.html?id=6" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="ingredients">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3997386/pexels-photo-3997386.jpeg?w=400&h=300&fit=crop"
+              alt="Niacinamide"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Ingredients</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              January 2026 · 4 min read
+            </p>
+            <h3>Niacinamide: The Swiss Army Knife of Skincare</h3>
+            <p>
+              Pores, hyperpigmentation, oil control — niacinamide does it all.
+              Learn how to layer it in your routine.
+            </p>
+            <a href="blog.html?id=7" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="science">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3997390/pexels-photo-3997390.jpeg?w=400&h=300&fit=crop"
+              alt="Ceramides"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Science</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              January 2026 · 5 min read
+            </p>
+            <h3>Why Ceramides Are Essential for Every Skin Type</h3>
+            <p>
+              These lipid molecules hold your skin together. We dig into the
+              research and the products that deliver them best.
+            </p>
+            <a href="blog.html?id=8" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="routine">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3807511/pexels-photo-3807511.jpeg?w=400&h=300&fit=crop"
+              alt="Seasonal skincare"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">Routine</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              December 2025 · 6 min read
+            </p>
+            <h3>Adapting Your Skincare Routine by Season</h3>
+            <p>
+              Your skin's needs shift with the weather. Here's how to transition
+              your routine without breaking out.
+            </p>
+            <a href="blog.html?id=9" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal" data-cat="news">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?w=400&h=300&fit=crop"
+              alt="K-beauty trends"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="blog-category">News</span>
+          </div>
+          <div class="blog-content">
+            <p
+              style="
+                font-size: 11px;
+                color: var(--dark-light);
+                margin-bottom: 8px;
+              "
+            >
+              November 2025 · 3 min read
+            </p>
+            <h3>K-Beauty Trends Dominating 2026</h3>
+            <p>
+              From glass skin to skin flooding, Korean beauty innovations that
+              are reshaping global skincare routines.
+            </p>
+            <a href="blog.html?id=10" class="read-more">Read More →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+    </div>
+    <!-- /BLOG LIST VIEW -->
+
+    <!-- BLOG DETAIL VIEW -->
+    <section class="blog-article" id="blogDetailView" style="display: none">
+      <div class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+          <a href="blog.html" class="blog-back-link">← Back to Blog</a>
+          <span class="blog-category" id="articleCategory">Feature</span>
+          <h1 id="articleTitle">Article title</h1>
+          <p class="blog-article-meta" id="articleMeta">Date · Read time · Author</p>
+        </div>
+      </div>
+      <div class="blog-article-body">
+        <div class="blog-article-img">
+          <img id="articleImage" src="" alt="" />
+        </div>
+        <div class="blog-article-content" id="articleContent"></div>
+        <a href="blog.html" class="btn btn-secondary blog-back-btn">← Back to all articles</a>
+      </div>
+    </section>
+    <!-- /BLOG DETAIL VIEW -->
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter-section">
+      <div class="newsletter-content">
+        <h2>Stay in the Know</h2>
+        <p>
+          Weekly skincare tips, expert advice, and new arrivals — straight to
+          your inbox
+        </p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            required
+            class="newsletter-input"
+          />
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <p class="newsletter-note">
+          We respect your privacy. Unsubscribe anytime.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+        <footer class="footer">
+      <div class="footer-content">
+
+        <!-- Brand -->
+        <div class="footer-section footer-brand">
+          <h3 class="footer-logo">Vel<span>m</span>ira</h3>
+          <p>Premium skincare for the modern, conscious consumer. Dermatologist-tested and cruelty-free.</p>
+          <div class="social-icons">
+            <a href="https://instagram.com/velmira-dark" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61570999974718" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?special=bestseller">Best Sellers</a></li>
+            <li><a href="shop.html?special=new">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-section">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="quiz.html">Skin Quiz</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ingredient-guide.html">Ingredient Guide</a></li>
+          </ul>
+        </div>
+
+ 
+        <!-- Legal -->
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-and-conditions.html">Terms of Use</a></li>
+            <li><a href="shipping-policy.html">Shipping Info</a></li>
+            <li><a href="refund-policy.html">Returns</a></li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Velmira. All rights reserved. &nbsp;·&nbsp; Dermatologist-tested &nbsp;·&nbsp; Cruelty-free &nbsp;·&nbsp; Made by Gourov Roy</p>
+      </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Shopping Cart</h2>
+        <button class="close-cart" id="closeCart">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span><span id="subtotal">৳0</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping:</span><span id="shipping">Free</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span><span id="total">৳0</span>
+        </div>
+        <button class="btn btn-primary full-width checkout-btn">
+          Proceed to Checkout
+        </button>
+        <button
+          class="btn btn-secondary full-width"
+          id="continueShopping"
+          style="margin-top: 8px"
+        >
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="wishlist-sidebar" id="wishlistSidebar">
+      <div class="wishlist-header">
+        <h2>Your Wishlist</h2>
+        <button class="close-wishlist" id="closeWishlist">✕</button>
+      </div>
+      <div class="wishlist-items" id="wishlistItems"></div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="product-modal" id="productModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div class="modal-body">
+          <div class="modal-image">
+            <img id="modalImg" src="" alt="Product" />
+          </div>
+          <div class="modal-details">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-price">
+              <span id="modalPrice"></span
+              ><span class="original-price" id="modalOriginalPrice"></span>
+            </div>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="modal-info">
+              <h4>Key Ingredients</h4>
+              <ul id="modalIngredients"></ul>
+            </div>
+            <div class="modal-usage">
+              <h4>How to Use</h4>
+              <p id="modalUsage"></p>
+            </div>
+            <div class="quantity-selector">
+              <label>Quantity:</label>
+              <div class="quantity-controls">
+                <button type="button" id="decreaseQty">−</button>
+                <input type="number" id="quantity" min="1" value="1" />
+                <button type="button" id="increaseQty">+</button>
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="addToCartBtn">
+                Add to Cart
+              </button>
+              <button
+                class="btn btn-icon"
+                id="addToWishlistBtn"
+                title="Wishlist"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <p>✓ Free shipping over ৳5,000</p>
+              <p>✓ 30-day money-back guarantee</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+    <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+  <button class="mobile-search-close" id="mobileSearchClose" aria-label="Close search">&times;</button>
+  <input type="text" id="mobileSearchInput" placeholder="Search products..." autocomplete="off" />
+</div>
+<div class="mobile-search-results" id="mobileSearchResults"></div>
+
+<!-- ── Premium Nav Drawer ── -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+    
+
+    
+  
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<style id="velmira-navbar-unified-styles">
+  /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 991px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1100;
+      height: auto;
+      min-height: 60px;
+    }
+
+    .nav-container {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 16px !important;
+      flex-wrap: nowrap;
+      overflow: visible;
+    }
+
+    /* Logo stays on left */
+    .nav-logo {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .nav-logo .logo-link {
+      font-size: 22px !important;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+    .nav-right {
+      display: flex !important;
+      align-items: center;
+      gap: 4px !important;
+      margin-left: auto;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .nav-right .search-wrapper {
+      display: none !important;
+    }
+
+    .nav-right .mobile-search-btn {
+      display: inline-flex !important;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .theme-toggle,
+    .nav-right .mobile-search-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .nav-right .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 8px;
+      background: #e74c3c;
+      color: white;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: inline-flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 44px !important;
+      height: 44px !important;
+      padding: 11px 9px !important;
+      margin-left: 4px !important;
+      background: transparent !important;
+      border: none !important;
+      color: #1a1a1a !important;
+      z-index: 1100 !important;
+      position: relative !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: stretch !important;
+      cursor: pointer !important;
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .hamburger {
+      color: #fff !important;
+    }
+
+    .hamburger span {
+      display: block !important;
+      width: 100% !important;
+      height: 2px !important;
+      background: currentColor !important;
+      border-radius: 2px !important;
+      opacity: 1 !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Hamburger animation when menu is open */
+    body.nav-open .hamburger span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg) !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg) !important;
+    }
+
+    /* Off-canvas drawer */
+    .nav-menu {
+      position: fixed !important;
+      top: 0;
+      right: 0;
+      width: min(82vw, 360px);
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      transform: translateX(100%);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s linear 0.45s;
+      z-index: 1090;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      border: none;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    body.dark-mode .nav-menu {
+      background: #1a1a1a;
+    }
+
+    .nav-menu.active,
+    body.nav-open .nav-menu {
+      transform: translateX(0) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s;
+    }
+
+    /* Drawer header: brand + close button */
+    .nav-menu .drawer-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .nav-menu .drawer-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .drawer-brand {
+      color: #fff;
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #1a1a1a;
+      transition: transform 0.2s ease;
+    }
+
+    body.dark-mode .drawer-close {
+      color: #fff;
+    }
+
+    .drawer-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .drawer-close svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navigation links in drawer */
+    .nav-menu .nav-links {
+      list-style: none;
+      padding: 12px 0;
+      margin: 0;
+      flex: 1;
+    }
+
+    .nav-menu .nav-links li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    body.dark-mode .nav-menu .nav-links li {
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-menu .nav-link {
+      display: block;
+      padding: 16px 24px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    body.dark-mode .nav-menu .nav-link {
+      color: #ffffff;
+    }
+
+    .nav-menu .nav-link.active,
+    .nav-menu .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .nav-menu .nav-link.active,
+    body.dark-mode .nav-menu .nav-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* Remove desktop decorative pseudo-elements */
+    .nav-menu::before,
+    .nav-menu::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .nav-menu .nav-link::after {
+      display: none !important;
+    }
+
+    /* Backdrop overlay */
+    .nav-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      z-index: 1080;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    body.nav-open .nav-backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Prevent body scroll when drawer is open */
+    body.nav-open {
+      overflow: hidden !important;
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 380px) {
+    .nav-right .theme-toggle {
+      display: none !important;
+    }
+
+    .nav-container {
+      padding: 10px 12px !important;
+      gap: 4px;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .mobile-search-btn {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  /* Desktop: hide hamburger and drawer, show full menu */
+  @media (min-width: 992px) {
+    .hamburger {
+      display: none !important;
+    }
+
+    .nav-backdrop {
+      display: none !important;
+    }
+
+    .nav-menu {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: none !important;
+      z-index: auto !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+      border: none !important;
+      overflow: visible !important;
+    }
+
+    .nav-menu .drawer-header {
+      display: none !important;
+    }
+
+    .nav-menu .nav-links {
+      display: flex !important;
+      gap: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu .nav-links li {
+      border: none !important;
+    }
+
+    .nav-menu .nav-link {
+      padding: 0 16px;
+      border-bottom: none;
+    }
+
+    .nav-menu .nav-link::after {
+      display: block !important;
+    }
+
+    body.nav-open {
+      overflow: auto !important;
+    }
+  }
+  /* Drawer close button */
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .drawer-close:hover { opacity: 1; }
+  body.dark-mode .drawer-close { color: #fff; }
+
+  /* Body padding for fixed navbar */
+  body { padding-top: 60px; }
+  @media (min-width: 992px) { body { padding-top: 72px; } }
+  /* Remove carousel margin-top since body padding-top handles navbar */
+  .hero-carousel { margin-top: 0 !important; }
+
+  /* Sidebars + overlay always above fixed navbar */
+  .cart-sidebar,
+  .wishlist-sidebar {
+    z-index: 1200 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+  .overlay {
+    z-index: 1150 !important;
+  }
+</style>
+
+<script id="velmira-navbar-unified-js">
+  (function () {
+    "use strict";
+
+    // Wait for DOM to be ready
+    function initNavbar() {
+      const toggle = document.getElementById("menuToggle");
+      const menu = document.getElementById("navMenu");
+
+      if (!toggle || !menu) {
+        console.warn("Navbar elements not found");
+        return;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 1. Create backdrop once
+      // ────────────────────────────────────────────────────────────────────
+      let backdrop = document.querySelector(".nav-backdrop");
+      if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.className = "nav-backdrop";
+        document.body.appendChild(backdrop);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 2. Inject drawer header (brand + close) once, at the start
+      // ────────────────────────────────────────────────────────────────────
+      if (!menu.querySelector(".drawer-header")) {
+        const header = document.createElement("div");
+        header.className = "drawer-header";
+        header.innerHTML =
+          '<span class="drawer-brand">VELMIRA</span>' +
+          '<button type="button" class="drawer-close" aria-label="Close menu">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+          '<line x1="6" y1="6" x2="18" y2="18"/>' +
+          '<line x1="6" y1="18" x2="18" y2="6"/>' +
+          "</svg>" +
+          "</button>";
+        menu.insertBefore(header, menu.firstChild);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 3. Helper functions to open/close drawer
+      // ────────────────────────────────────────────────────────────────────
+      function closeDrawer() {
+        document.body.classList.remove("nav-open");
+        menu.classList.remove("active", "open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      function openDrawer() {
+        document.body.classList.add("nav-open");
+        menu.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+
+      function toggleDrawer(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        }
+        if (document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 4. Clean hamburger button: remove old listeners, set fresh ones
+      // ────────────────────────────────────────────────────────────────────
+      const freshToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(freshToggle, toggle);
+
+      freshToggle.setAttribute("aria-label", "Toggle menu");
+      freshToggle.setAttribute("aria-expanded", "false");
+      freshToggle.setAttribute("type", "button");
+      freshToggle.addEventListener("click", toggleDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 5. Backdrop click to close
+      // ────────────────────────────────────────────────────────────────────
+      backdrop.addEventListener("click", closeDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 6. Close button in drawer header
+      // ────────────────────────────────────────────────────────────────────
+      const closeBtn = menu.querySelector(".drawer-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 7. Nav links click to close drawer
+      // ────────────────────────────────────────────────────────────────────
+      menu.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", closeDrawer);
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 8. Escape key to close
+      // ────────────────────────────────────────────────────────────────────
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.body.classList.contains("nav-open")
+        ) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 9. Resize: close drawer on desktop
+      // ────────────────────────────────────────────────────────────────────
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 991 && document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 10. Set active nav link based on current page
+      // ────────────────────────────────────────────────────────────────────
+      updateActiveLink();
+    }
+
+    function updateActiveLink() {
+      const currentPage = window.location.pathname.split("/").pop() || "index.html";
+      
+      // Remove active from all links
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Add active to matching link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === "" && href === "index.html")) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    // Initialize on DOMContentLoaded or immediately if already loaded
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initNavbar);
+    } else {
+      initNavbar();
+    }
+
+    // Also update active link after a short delay to catch dynamic content
+    setTimeout(updateActiveLink, 100);
+  })();
+</script>
+
+<script type="module">
+  import "/assets/script-CbRYxaYZ.js";
+
+  /* ── Blog post content store ── */
+  const blogs = {
+    1: {
+      category: "Feature",
+      title: "Understanding Your Skin Barrier: The Complete Guide",
+      author: "Velmira Editorial",
+      date: "May 2026",
+      readTime: "8 min read",
+      image: "https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Your skin barrier — the outermost layer of the epidermis — is your body's first line of defence against the outside world. It keeps moisture in, irritants out, and quietly determines whether your skin looks calm and radiant or tight, red, and reactive.</p>
+        <h2>What the barrier is actually made of</h2>
+        <p>Picture a brick wall. The "bricks" are skin cells called corneocytes, and the "mortar" holding them together is a mix of ceramides, cholesterol, and fatty acids, often referred to as the lipid matrix. When this ratio is balanced, water stays where it belongs and pollutants stay out.</p>
+        <p>Sitting on top of that wall is the acid mantle, a thin, slightly acidic film made of sweat and sebum. It keeps your skin's pH around 4.5–5.5, which happens to be the ideal environment for the good bacteria that protect you and the enzymes that help skin renew itself.</p>
+        <h2>Signs your barrier is compromised</h2>
+        <ul>
+          <li>Tightness or stinging after cleansing</li>
+          <li>Sudden sensitivity to products you've used for years</li>
+          <li>Persistent redness, flaking, or rough texture</li>
+          <li>Breakouts that seem to appear out of nowhere</li>
+        </ul>
+        <p>Over-exfoliation, harsh cleansers, hot water, and skipping moisturizer are the most common culprits. The good news is that the barrier is remarkably good at repairing itself once you give it the right support.</p>
+        <h2>How to rebuild it</h2>
+        <p>Simplify your routine for a few weeks: a gentle, low-pH cleanser, a ceramide-rich moisturizer, and broad-spectrum SPF during the day. Skip active ingredients like retinoids and acids until your skin calms down, then reintroduce them slowly, one at a time.</p>
+        <p>A healthy barrier isn't glamorous, but it's the foundation everything else is built on. Get it right, and every other product in your routine works that much better.</p>
+      `,
+    },
+    2: {
+      category: "Tips",
+      title: "The Perfect Morning Ritual",
+      author: "Velmira Editorial",
+      date: "April 2026",
+      readTime: "5 min read",
+      image: "https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Mornings don't need a ten-step routine to be effective. Dermatologists consistently point to the same three steps as the ones that matter most for protection and radiance.</p>
+        <h2>Step 1: Cleanse, but gently</h2>
+        <p>Unless your skin is visibly oily, a splash of lukewarm water or a quick swipe with a gentle, hydrating cleanser is enough. Your skin barrier doesn't need to be stripped to start the day fresh.</p>
+        <h2>Step 2: Layer in antioxidants</h2>
+        <p>A vitamin C serum (or another antioxidant like ferulic acid) helps neutralize the environmental stressors — pollution, blue light, UV — your skin will face throughout the day, and it brightens tone over time.</p>
+        <h2>Step 3: Never skip SPF</h2>
+        <p>This is the non-negotiable step. Broad-spectrum SPF 30 or higher, applied generously, is the single most effective anti-aging product you can use. Reapply if you're outdoors for extended periods.</p>
+        <p>Consistency beats complexity. A short routine you actually do every day will always outperform an elaborate one you abandon after a week.</p>
+      `,
+    },
+    3: {
+      category: "Ingredients",
+      title: "Hyaluronic Acid: Myth vs Reality",
+      author: "Velmira Editorial",
+      date: "April 2026",
+      readTime: "4 min read",
+      image: "https://images.pexels.com/photos/3938023/pexels-photo-3938023.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Hyaluronic acid is one of the most talked-about ingredients in skincare, but a lot of what circulates online oversimplifies how it actually works.</p>
+        <h2>What it really does</h2>
+        <p>Hyaluronic acid is a humectant — it's naturally found in your skin and can hold up to 1,000 times its weight in water. In a serum, it draws moisture from the surrounding environment (and from deeper layers of skin, if humidity is low) into the surface layers.</p>
+        <h2>The myth: more is always better</h2>
+        <p>In very dry climates, applying hyaluronic acid without sealing it in with a moisturizer can actually pull moisture out of your skin rather than into it. That's why it should always be followed by a cream or oil that locks the hydration in place.</p>
+        <h2>Getting the molecular weight right</h2>
+        <p>Look for formulas that combine multiple molecular weights of hyaluronic acid — larger molecules hydrate the surface, while smaller ones can penetrate slightly deeper, giving you a more complete hydration effect.</p>
+        <p>Used correctly, it remains one of the safest, most universally tolerated ingredients for plumper, more comfortable skin.</p>
+      `,
+    },
+    4: {
+      category: "Routine",
+      title: "Build a Night Routine That Actually Works",
+      author: "Velmira Editorial",
+      date: "March 2026",
+      readTime: "6 min read",
+      image: "https://images.pexels.com/photos/3807526/pexels-photo-3807526.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>While you sleep, skin cell turnover increases and blood flow to the skin rises — which is exactly why nighttime is when active ingredients do their best work.</p>
+        <h2>Cleanse thoroughly</h2>
+        <p>Double cleansing — an oil-based cleanser followed by a gentle water-based one — removes sunscreen, makeup, and the day's buildup of pollution without over-stripping skin.</p>
+        <h2>Treat with actives</h2>
+        <p>This is the time for retinoids, exfoliating acids, or targeted treatments. Because skin isn't exposed to UV at night, these ingredients are more stable and less likely to cause irritation than they would be during the day.</p>
+        <h2>Seal it all in</h2>
+        <p>Finish with a richer night cream or facial oil to support the barrier while it repairs. If you're using a retinoid, this also helps buffer potential dryness or sensitivity.</p>
+        <p>Give your skin consistent nights of proper care and you'll notice the difference within four to six weeks — that's roughly how long a full cell turnover cycle takes.</p>
+      `,
+    },
+    5: {
+      category: "Science",
+      title: "Retinol 101: How to Start Without Irritation",
+      author: "Velmira Editorial",
+      date: "March 2026",
+      readTime: "7 min read",
+      image: "https://images.pexels.com/photos/4202325/pexels-photo-4202325.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Retinoids remain the most well-studied anti-aging ingredient in skincare, with decades of research backing their ability to boost collagen and accelerate cell turnover. They're also the ingredient most likely to be misused by beginners.</p>
+        <h2>Start low and slow</h2>
+        <p>Begin with a low concentration, two to three nights a week, applying a pea-sized amount to fully dry skin. Trying to "speed up" results by using it nightly from day one is the most common cause of irritation.</p>
+        <h2>Buffer if needed</h2>
+        <p>If your skin feels tight or flaky, apply moisturizer first, then your retinoid on top. This "sandwich method" slightly slows absorption and reduces irritation without reducing long-term effectiveness.</p>
+        <h2>Protect during the day</h2>
+        <p>Retinoids increase photosensitivity, making daily SPF essential — not optional — while using them.</p>
+        <p>Give it time. Most visible improvements in texture and fine lines appear after eight to twelve weeks of consistent use, not overnight.</p>
+      `,
+    },
+    6: {
+      category: "Tips",
+      title: "SPF Every Day: The Non-Negotiable Step",
+      author: "Velmira Editorial",
+      date: "February 2026",
+      readTime: "5 min read",
+      image: "https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Sun damage is responsible for the vast majority of visible skin aging — far more than the natural aging process itself. Yet sunscreen remains the step most people skip.</p>
+        <h2>Why indoors isn't "safe"</h2>
+        <p>UVA rays, which contribute to premature aging, pass through window glass. If you spend your day near a window or commuting in a car, you're still accumulating exposure.</p>
+        <h2>What to look for</h2>
+        <p>Broad-spectrum protection (covering both UVA and UVB), SPF 30 or higher, applied as the last step of your morning routine — about a nickel-sized amount for the face and neck.</p>
+        <h2>Reapplication matters</h2>
+        <p>If you're outdoors for extended periods, reapply every two hours. A setting powder or spray SPF makes this realistic to do over makeup.</p>
+        <p>If you only ever add one product to your routine, make it sunscreen. It's the foundation that protects everything else you're trying to achieve.</p>
+      `,
+    },
+    7: {
+      category: "Ingredients",
+      title: "Niacinamide: The Swiss Army Knife of Skincare",
+      author: "Velmira Editorial",
+      date: "January 2026",
+      readTime: "4 min read",
+      image: "https://images.pexels.com/photos/3997386/pexels-photo-3997386.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Few ingredients address as many concerns at once as niacinamide, a form of vitamin B3 that's become a staple in modern formulations.</p>
+        <h2>What it can help with</h2>
+        <ul>
+          <li>Regulating oil production for shine control</li>
+          <li>Visibly minimizing the appearance of pores</li>
+          <li>Fading hyperpigmentation and uneven tone</li>
+          <li>Strengthening the skin barrier over time</li>
+        </ul>
+        <h2>How to layer it</h2>
+        <p>Niacinamide is generally well tolerated alongside most other actives, including retinoids and vitamin C, though it's wise to introduce new combinations gradually if you have sensitive skin.</p>
+        <p>A concentration between 4–10% in a serum or moisturizer is typically enough to see benefits without unnecessary irritation. Consistency over several weeks is what reveals its full range of effects.</p>
+      `,
+    },
+    8: {
+      category: "Science",
+      title: "Why Ceramides Are Essential for Every Skin Type",
+      author: "Velmira Editorial",
+      date: "January 2026",
+      readTime: "5 min read",
+      image: "https://images.pexels.com/photos/3997390/pexels-photo-3997390.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Ceramides are lipid molecules that make up roughly half of the skin barrier's structure, holding skin cells together the way mortar holds bricks in place.</p>
+        <h2>The research behind them</h2>
+        <p>Studies on skin with conditions like eczema and prolonged dryness consistently show reduced ceramide levels, which correlates with increased water loss and sensitivity. Replenishing ceramides topically has been shown to improve barrier function and reduce moisture loss.</p>
+        <h2>Who benefits most</h2>
+        <p>While often marketed toward dry or sensitive skin, ceramides benefit every skin type — oily and acne-prone skin barriers can also become compromised from over-exfoliation or harsh acne treatments.</p>
+        <h2>What to look for</h2>
+        <p>Formulas that pair ceramides with cholesterol and fatty acids in a balanced ratio tend to be most effective, since this mirrors the skin's own natural lipid composition.</p>
+      `,
+    },
+    9: {
+      category: "Routine",
+      title: "Adapting Your Skincare Routine by Season",
+      author: "Velmira Editorial",
+      date: "December 2025",
+      readTime: "6 min read",
+      image: "https://images.pexels.com/photos/3807511/pexels-photo-3807511.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Skin doesn't behave the same way year-round, and a routine that works beautifully in summer can leave skin parched and irritated come winter.</p>
+        <h2>Cold, dry months</h2>
+        <p>Lower humidity and indoor heating strip moisture from the air and from your skin. This is the time to size up to a richer moisturizer, add a hydrating layering essence, and consider easing off strong exfoliants if your barrier feels compromised.</p>
+        <h2>Warm, humid months</h2>
+        <p>Higher humidity means skin produces more oil naturally. Lightweight, gel-based moisturizers and oil-control ingredients like niacinamide can help, while sunscreen needs become even more critical with increased outdoor exposure.</p>
+        <h2>Transition periods</h2>
+        <p>Spring and fall are good times to reassess. Pay attention to how your skin actually feels rather than following a rigid routine — slight tightness or excess shine are the clearest signals it's time to adjust.</p>
+      `,
+    },
+    10: {
+      category: "News",
+      title: "K-Beauty Trends Dominating 2026",
+      author: "Velmira Editorial",
+      date: "November 2025",
+      readTime: "3 min read",
+      image: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?w=1200&h=700&fit=crop",
+      content: `
+        <p>Korean skincare continues to shape global trends, and a few ideas in particular have moved from niche routines to mainstream must-knows.</p>
+        <h2>Skin flooding</h2>
+        <p>Rather than a single hydrating step, skin flooding layers multiple lightweight, water-based products — toner, essence, serum — on damp skin to maximize moisture absorption before sealing everything in with a moisturizer.</p>
+        <h2>Glass skin, redefined</h2>
+        <p>The glass skin aesthetic has shifted away from heavy makeup-driven glow toward genuinely healthy, barrier-first skin that simply reflects light evenly because it's well hydrated and smooth.</p>
+        <h2>Slugging, simplified</h2>
+        <p>Sealing in moisture overnight with an occlusive layer remains popular, though the trend has matured toward using it selectively — on particularly dry areas — rather than as a nightly, all-over step.</p>
+        <p>What ties these trends together is a focus on skin health over quick fixes, a shift that's likely to stay relevant well beyond 2026.</p>
+      `,
+    },
+  };
+
+  function renderBlogDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const listView = document.getElementById("blogListView");
+    const detailView = document.getElementById("blogDetailView");
+    if (!id || !blogs[id]) {
+      listView.style.display = "";
+      detailView.style.display = "none";
+      return;
+    }
+    const post = blogs[id];
+    listView.style.display = "none";
+    detailView.style.display = "";
+    document.getElementById("articleCategory").textContent = post.category;
+    document.getElementById("articleTitle").textContent = post.title;
+    document.getElementById("articleMeta").textContent = `${post.date} · ${post.readTime} · By ${post.author}`;
+    const img = document.getElementById("articleImage");
+    img.src = post.image;
+    img.alt = post.title;
+    document.getElementById("articleContent").innerHTML = post.content;
+    document.title = `${post.title} — Velmira Blog`;
+    window.scrollTo(0, 0);
+  }
+  renderBlogDetail();
+  window.addEventListener("popstate", renderBlogDetail);
+
+
+  /* ── Blog category filter tabs ── */
+  const tabs = document.querySelectorAll(".blog-tab");
+  const cards = document.querySelectorAll("#blogGrid .blog-card");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      const cat = tab.dataset.cat;
+      cards.forEach((card) => {
+        card.style.display = cat === "all" || card.dataset.cat === cat ? "" : "none";
+      });
+    });
+  });
+
+  (function () {
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowX = "hidden";
+
+    /* ── Broken image fallback ── */
+    window.__imgFail = function (img) {
+      img.onerror = null;
+      img.src =
+        "data:image/svg+xml," +
+        encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#f1f5f9"/><circle cx="100" cy="88" r="30" fill="#cbd5e1"/><path d="M44 168 Q100 128 156 168" stroke="#cbd5e1" stroke-width="22" fill="none" stroke-linecap="round"/></svg>'
+        );
+      img.style.opacity = "0.55";
+      img.alt = "Image unavailable";
+    };
+    document.querySelectorAll("img:not([data-fb-wired])").forEach((img) => {
+      img.dataset.fbWired = "1";
+      img.addEventListener("error", function () {
+        window.__imgFail && window.__imgFail(img);
+      });
+    });
+    new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) {
+            const imgs = node.tagName === "IMG" ? [node] : [...node.querySelectorAll("img")];
+            imgs.forEach((img) => {
+              if (!img.dataset.fbWired) {
+                img.dataset.fbWired = "1";
+                img.addEventListener("error", function () {
+                  window.__imgFail && window.__imgFail(img);
+                });
+              }
+            });
+          }
+        });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+
+    /* ── Cart / wishlist badge sync ── */
+    function syncBadges() {
+      try {
+        const cart = JSON.parse(localStorage.getItem("velmira_cart") || "[]");
+        const cartTotal = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const cartBadge = document.getElementById("cartCount");
+        if (cartBadge) cartBadge.textContent = cartTotal;
+
+        const wishlist = JSON.parse(localStorage.getItem("velmira_wishlist") || "[]");
+        const wishlistBadge = document.getElementById("wishlistCount");
+        if (wishlistBadge) wishlistBadge.textContent = wishlist.length;
+      } catch {}
+    }
+    syncBadges();
+    window.addEventListener("storage", syncBadges);
+
+    /* ── Checkout button guard ── */
+    const checkoutBtn = document.querySelector(".checkout-btn");
+    if (checkoutBtn && !checkoutBtn.dataset.wired) {
+      checkoutBtn.dataset.wired = "1";
+      checkoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        try {
+          const cart = JSON.parse(localStorage.getItem("velmira_cart") || "[]");
+          if (cart.length) {
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = "Loading...";
+            setTimeout(function () {
+              window.location.href = "checkout.html";
+            }, 300);
+          } else {
+            const toastContainer = document.getElementById("toastContainer");
+            if (toastContainer) {
+              const toast = document.createElement("div");
+              toast.style.cssText =
+                "background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,.12);margin-top:8px;";
+              toast.textContent = "Your cart is empty. Add a product before checking out.";
+              toastContainer.appendChild(toast);
+              setTimeout(function () {
+                toast.remove();
+              }, 3500);
+            }
+          }
+        } catch {
+          window.location.href = "checkout.html";
+        }
+      });
+    }
+
+    /* ── Mobile drawer scroll lock ── */
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const overlay = document.getElementById("overlay");
+    if (menuToggle && !menuToggle.dataset.scrollWired) {
+      menuToggle.dataset.scrollWired = "1";
+      menuToggle.addEventListener("click", function () {
+        setTimeout(function () {
+          document.body.style.overflow = navMenu && navMenu.classList.contains("active") ? "hidden" : "";
+        }, 0);
+      });
+    }
+    if (overlay && !overlay.dataset.scrollWired) {
+      overlay.dataset.scrollWired = "1";
+      overlay.addEventListener("click", function () {
+        document.body.style.overflow = "";
+      });
+    }
+
+    /* ── Desktop search dropdown keyboard nav ── */
+    (function () {
+      const input = document.getElementById("searchInput");
+      const dropdown = document.getElementById("searchDropdown");
+      if (!input || !dropdown) return;
+      function close() {
+        dropdown.style.display = "none";
+      }
+      new MutationObserver(function () {
+        dropdown.querySelectorAll(".search-result-item:not([tabindex])").forEach((item) => {
+          item.setAttribute("tabindex", "0");
+          item.setAttribute("role", "option");
+          item.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              item.click();
+            }
+          });
+        });
+      }).observe(dropdown, { childList: true, subtree: true });
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          close();
+          input.blur();
+          return;
+        }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          const first = dropdown.querySelector('[role="option"],.search-result-item');
+          first && first.focus();
+        }
+      });
+      dropdown.addEventListener("keydown", function (e) {
+        const items = [...dropdown.querySelectorAll('[role="option"],.search-result-item')];
+        const idx = items.indexOf(document.activeElement);
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          (items[idx + 1] || items[0])?.focus();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          idx > 0 ? items[idx - 1].focus() : input.focus();
+        } else if (e.key === "Escape") {
+          close();
+          input.focus();
+        }
+      });
+      document.addEventListener(
+        "click",
+        function (e) {
+          const wrapper = input.closest(".search-wrapper");
+          if (wrapper && !wrapper.contains(e.target)) close();
+        },
+        true
+      );
+      window.addEventListener("scroll", close, { passive: true });
+    })();
+  })();
+</script>
+
+</body>
+
+</html>

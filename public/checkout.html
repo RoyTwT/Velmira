@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Checkout — Velmira Premium Skincare">
+  <title>Checkout — Velmira Premium Skincare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: hidden; max-width: 100%; }
+
+    /* ── Progress bar ──────────────────────── */
+    .checkout-progress {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+    }
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    @media (max-width: 480px) {
+      .progress-steps {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--dark-light);
+    }
+    .progress-step.active { color: var(--primary); }
+    .progress-step.done { color: #16a34a; }
+    .step-dot {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--light-gray);
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .progress-step.active .step-dot { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .progress-step.done .step-dot { background: #16a34a; border-color: #16a34a; color: #fff; }
+    .step-connector { flex: 1; height: 2px; background: var(--border); margin: 0 8px; min-width: 32px; }
+    .step-connector.done { background: #16a34a; }
+
+    /* ── Page layout ───────────────────────── */
+    .checkout-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
+    }
+    .checkout-page h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 300;
+      margin-bottom: 32px;
+      color: var(--dark);
+    }
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Form sections ─────────────────────── */
+    .form-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .form-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-section h3 .section-num {
+      width: 22px; height: 22px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-row.full { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dark);
+      letter-spacing: 0.03em;
+    }
+    .form-label .req { color: #e11d48; margin-left: 2px; }
+    .form-input, .form-select, .form-textarea {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: var(--font-sans);
+      color: var(--dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+    }
+    .form-input.invalid, .form-select.invalid {
+      border-color: #e11d48;
+      box-shadow: 0 0 0 3px rgba(225,29,72,.07);
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .field-error {
+      font-size: 11px;
+      color: #e11d48;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+    .field-error.visible { display: flex; }
+
+    /* ── Payment options ───────────────────── */
+    .payment-options { display: flex; flex-direction: column; gap: 10px; }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+    }
+    .payment-option:has(input:checked),
+    .payment-option.selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+    .payment-option input[type="radio"] { accent-color: var(--primary); width: 16px; height: 16px; flex-shrink: 0; }
+    .payment-label { flex: 1; }
+    .payment-name { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .payment-desc { font-size: 12px; color: var(--dark-light); margin-top: 2px; }
+    .payment-option.disabled { opacity: 0.5; cursor: not-allowed; }
+    .payment-badge {
+      font-size: 10px; font-weight: 600;
+      background: var(--light-gray);
+      color: var(--dark-light);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Order summary card ────────────────── */
+    .order-summary-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: sticky;
+      top: 140px;
+    }
+    .summary-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .summary-header h3 { font-size: 13px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dark); }
+    .summary-item-count { font-size: 12px; color: var(--dark-light); }
+    .summary-items { padding: 0; max-height: 340px; overflow-y: auto; }
+    .summary-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    .summary-item:last-child { border-bottom: none; }
+    .summary-item-img {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--light-gray);
+      border: 1px solid var(--border);
+    }
+    .summary-item-info { flex: 1; min-width: 0; }
+    .summary-item-name { font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .summary-item-qty { font-size: 11px; color: var(--dark-light); margin-top: 3px; }
+    .summary-item-price { font-size: 14px; font-weight: 700; color: var(--primary); flex-shrink: 0; }
+    .summary-totals { padding: 16px 20px; background: var(--light-gray); }
+    .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--dark-light); margin-bottom: 8px; }
+    .summary-row:last-child { margin-bottom: 0; }
+    .summary-row.total { font-size: 16px; font-weight: 700; color: var(--dark); margin-top: 12px; padding-top: 12px; border-top: 1.5px solid var(--border); }
+    .summary-row.total span:last-child { color: var(--primary); }
+    .free-shipping-note { font-size: 11px; color: #16a34a; font-weight: 500; text-align: center; margin-top: 10px; }
+
+    /* ── Place Order button ─────────────────── */
+    .place-order-wrap { padding: 16px 20px; background: var(--white); border-top: 1px solid var(--border); }
+    #placeOrderBtn {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #placeOrderBtn:hover:not(:disabled) { background: var(--primary-dark, #1a6fc4); }
+    #placeOrderBtn:active:not(:disabled) { transform: scale(0.99); }
+    #placeOrderBtn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .btn-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+    #placeOrderBtn.loading .btn-spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .trust-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--dark-light);
+      margin-top: 10px;
+    }
+
+    /* ── Empty cart redirect notice ─────────── */
+    .cart-empty-notice {
+      text-align: center;
+      padding: 120px 20px;
+    }
+    .cart-empty-notice h2 {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 300;
+      margin: 16px 0 10px;
+    }
+
+    /* ── Error banner ──────────────────────── */
+    .form-error-banner {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #e11d48;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .form-error-banner.visible { display: flex; }
+
+    /* ── Dark mode ─────────────────────────── */
+    body.dark-mode .form-section,
+    body.dark-mode .order-summary-card { background: var(--white); border-color: var(--border); }
+    body.dark-mode .form-input,
+    body.dark-mode .form-select,
+    body.dark-mode .form-textarea { background: var(--white); border-color: var(--border); color: var(--dark); }
+    body.dark-mode .payment-option { border-color: var(--border); }
+    body.dark-mode .payment-option.selected { background: rgba(37,99,235,.12); }
+    body.dark-mode .summary-totals { background: rgba(255,255,255,.04); }
+    body.dark-mode .checkout-progress { background: var(--white); border-color: var(--border); }
+    body.dark-mode .place-order-wrap { background: var(--white); }
+
+    /* ── Mobile ────────────────────────────── */
+    @media (max-width: 900px) {
+      .checkout-grid { grid-template-columns: 1fr; }
+      .order-summary-card { position: static; }
+      .checkout-grid > .order-summary-card { order: -1; }
+    }
+    @media (max-width: 768px) {
+      .checkout-page { padding: 24px 16px 60px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-section { padding: 18px 16px; }
+    }
+    @media (max-width: 480px) {
+      .checkout-progress { padding: 10px 12px; top: 60px; }
+      .progress-step span:not(.step-dot) { display: none; }
+      .step-connector { min-width: 20px; }
+      .checkout-page { padding: 20px 12px 60px; }
+      .checkout-page h1 { font-size: 22px; margin-bottom: 20px; }
+      .summary-items { max-height: 200px; }
+    }
+  
+/* ── Mobile search icon button ── */
+.mobile-search-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--dark, #1a1a1a);
+  padding: 6px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+@media (max-width: 768px) {
+  .mobile-search-btn { display: flex; }
+  .nav-right .search-wrapper { display: none; }
+}
+/* ── Mobile search overlay ── */
+.mobile-search-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: var(--white, #fff);
+  padding: 10px 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  align-items: center;
+  gap: 8px;
+  height: 58px;
+}
+.mobile-search-overlay.open { display: flex; }
+.mobile-search-overlay input {
+  flex: 1;
+  border: 1.5px solid var(--border, #e0e0e0);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  outline: none;
+  background: var(--light-gray, #f5f5f5);
+  color: var(--dark, #1a1a1a);
+  font-family: inherit;
+  min-width: 0;
+}
+.mobile-search-overlay input:focus { border-color: var(--primary); }
+.mobile-search-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--dark-light, #777); padding: 4px 6px; line-height: 1;
+  font-size: 24px; flex-shrink: 0; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-search-results {
+  position: fixed;
+  top: 58px; left: 0; right: 0;
+  z-index: 9998;
+  background: var(--white, #fff);
+  border-top: 1px solid var(--border, #e0e0e0);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  max-height: calc(100vh - 58px);
+  overflow-y: auto;
+  display: none;
+}
+.mobile-search-results.open { display: block; }
+body.dark-mode .mobile-search-overlay { background: var(--white); }
+body.dark-mode .mobile-search-overlay input { background: var(--light-gray); color: var(--dark); }
+body.dark-mode .mobile-search-results { background: var(--white); }
+</style>
+  <script type="module" crossorigin src="/assets/checkout-C_0LdaKO.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/script-CbRYxaYZ.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-Db11KUSm.css">
+</head>
+<body>
+<script>try{if(localStorage.getItem('darkMode') === 'true')document.body.classList.add('dark-mode')}catch(e){}</script>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">    <div class="nav-logo"><a href="index.html" class="logo-link">Vel<span>m</span>ira</a></div>
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About Velmira</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
+            <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            <li><a href="ingredient-guide.html" class="nav-link">Ingredient Guide</a></li>
+          </ul>
+    </div>
+    <div class="nav-right">
+                <button class="mobile-search-btn" id="mobileSearchBtn" aria-label="Open search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+<div class="search-wrapper" style="position:relative;">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+          <button class="search-btn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+        </div>
+        <div id="searchDropdown" class="search-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);z-index:200;overflow:hidden;"></div>
+      </div>
+      <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+        <span class="theme-icon">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </button>
+      <button id="cartBtn" class="icon-btn" title="Cart">
+        <span class="badge" id="cartCount">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </button>
+    </div>
+  
+    <button class="hamburger" id="menuToggle"><span></span><span></span><span></span></button>
+      </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="checkout-progress">
+  <div class="progress-steps">
+    <div class="progress-step done">
+      <div class="step-dot">✓</div>
+      <span>Cart</span>
+    </div>
+    <div class="step-connector done"></div>
+    <div class="progress-step active">
+      <div class="step-dot">2</div>
+      <span>Checkout</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="progress-step">
+      <div class="step-dot">3</div>
+      <span>Confirmation</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="checkout-page" id="checkoutMain">
+  <h1>Secure Checkout</h1>
+
+  <div class="form-error-banner" id="formErrorBanner">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Please fill in all required fields correctly before placing your order.
+  </div>
+
+  <div class="checkout-grid">
+
+    <!-- FORM COLUMN -->
+    <div class="checkout-form-col">
+
+      <!-- Contact -->
+      <div class="form-section">
+        <h3><span class="section-num">1</span> Contact Information</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="fullName">Full Name <span class="req">*</span></label>
+            <input class="form-input" type="text" id="fullName" name="fullName" placeholder="Your full name" autocomplete="name" required>
+            <span class="field-error" id="err-fullName">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Please enter your full name.
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone <span class="req">*</span></label>
+            <input class="form-input" type="tel" id="phone" name="phone" placeholder="01XXXXXXXXX" autocomplete="tel" required>
+            <span class="field-error" id="err-phone">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Enter a valid phone number.
+            </span>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address <span class="req">*</span></label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <span class="field-error" id="err-email">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Enter a valid email address.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-section">
+        <h3><span class="section-num">2</span> Delivery Address</h3>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label" for="address1">Address Line 1 <span class="req">*</span></label>
+            <input class="form-input" type="text" id="address1" name="address1" placeholder="House no., road, area" autocomplete="address-line1" required>
+            <span class="field-error" id="err-address1">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Please enter your delivery address.
+            </span>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label" for="address2">Address Line 2 <span style="color:var(--dark-light);font-weight:400;">(optional)</span></label>
+            <input class="form-input" type="text" id="address2" name="address2" placeholder="Flat, floor, landmark (optional)" autocomplete="address-line2">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="city">City <span class="req">*</span></label>
+            <input class="form-input" type="text" id="city" name="city" placeholder="Dhaka" autocomplete="address-level2" required>
+            <span class="field-error" id="err-city">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Please enter your city.
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="division">Division <span class="req">*</span></label>
+            <select class="form-select" id="division" name="division" required>
+              <option value="">Select division</option>
+              <option value="Dhaka">Dhaka</option>
+              <option value="Chittagong">Chittagong</option>
+              <option value="Rajshahi">Rajshahi</option>
+              <option value="Khulna">Khulna</option>
+              <option value="Sylhet">Sylhet</option>
+              <option value="Barisal">Barisal</option>
+              <option value="Rangpur">Rangpur</option>
+              <option value="Mymensingh">Mymensingh</option>
+            </select>
+            <span class="field-error" id="err-division">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Please select your division.
+            </span>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label" for="postal">Postal Code <span class="req">*</span></label>
+            <input class="form-input" type="text" id="postal" name="postal" placeholder="1212" autocomplete="postal-code" required maxlength="6" inputmode="numeric">
+            <span class="field-error" id="err-postal">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Please enter a valid postal code.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment -->
+      <div class="form-section">
+        <h3><span class="section-num">3</span> Payment Method</h3>
+        <div class="payment-options">
+          <label class="payment-option selected" id="payOptCOD">
+            <input type="radio" name="payment" value="cod" checked>
+            <div class="payment-label">
+              <div class="payment-name">Cash on Delivery</div>
+              <div class="payment-desc">Pay when your order arrives at your door.</div>
+            </div>
+            <span class="payment-badge">Recommended</span>
+          </label>
+          <label class="payment-option disabled" id="payOptCard">
+            <input type="radio" name="payment" value="card" disabled>
+            <div class="payment-label">
+              <div class="payment-name">Credit / Debit Card</div>
+              <div class="payment-desc">Visa, Mastercard, bKash</div>
+            </div>
+            <span class="payment-badge">Coming Soon</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Order Notes -->
+      <div class="form-section">
+        <h3><span class="section-num">4</span> Order Notes <span style="font-weight:400;font-size:11px;color:var(--dark-light);letter-spacing:0;text-transform:none;">(optional)</span></h3>
+        <div class="form-group">
+          <textarea class="form-textarea" id="orderNotes" name="orderNotes" placeholder="Any special instructions for delivery..."></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ORDER SUMMARY COLUMN -->
+    <div class="order-summary-card">
+      <div class="summary-header">
+        <h3>Order Summary</h3>
+        <span class="summary-item-count" id="summaryItemCount"></span>
+      </div>
+      <div class="summary-items" id="summaryItems">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="summary-totals">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="summarySubtotal">৳0</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span id="summaryShipping">৳120</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span id="summaryTotal">৳0</span>
+        </div>
+        <p class="free-shipping-note" id="freeShippingNote" style="display:none;">
+          🎉 You qualify for free shipping!
+        </p>
+      </div>
+      <div class="place-order-wrap">
+        <button id="placeOrderBtn" type="button">
+          <span class="btn-spinner"></span>
+          <span class="btn-text">Place Order</span>
+        </button>
+        <div class="trust-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Secure &amp; encrypted checkout
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+
+        <!-- Brand -->
+        <div class="footer-section footer-brand">
+          <h3 class="footer-logo">Vel<span>m</span>ira</h3>
+          <p>Premium skincare for the modern, conscious consumer. Dermatologist-tested and cruelty-free.</p>
+          <div class="social-icons">
+            <a href="https://instagram.com/velmiraskin_bd" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61570999974718" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?special=bestseller">Best Sellers</a></li>
+            <li><a href="shop.html?special=new">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-section">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="quiz.html">Skin Quiz</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ingredient-guide.html">Ingredient Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-and-conditions.html">Terms of Use</a></li>
+            <li><a href="shipping-policy.html">Shipping Info</a></li>
+            <li><a href="refund-policy.html">Returns</a></li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Velmira. All rights reserved. &nbsp;·&nbsp; Dermatologist-tested &nbsp;·&nbsp; Cruelty-free &nbsp;·&nbsp; Made by Gourov Roy</p>
+      </div>
+    </footer>
+
+<div class="overlay" id="overlay"></div>
+<button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+  <button class="mobile-search-close" id="mobileSearchClose" aria-label="Close search">&times;</button>
+  <input type="text" id="mobileSearchInput" placeholder="Search products..." autocomplete="off" />
+</div>
+<div class="mobile-search-results" id="mobileSearchResults"></div>
+
+<!-- ============================================================
+     CHECKOUT FIX: Firestore-mandatory Place Order
+     - Detaches the broken bundled click handler (which silently
+       hangs when its dynamic firebase chunk import fails) by
+       cloning #placeOrderBtn.
+     - Loads Firebase directly from the official CDN ESM build.
+     - Awaits Firestore addDoc with no timeout. On failure, shows
+       the real error so the user (and you) can see what's wrong.
+     ============================================================ -->
+<style>
+  .checkout-error-banner {
+    display: none;
+    margin: 12px 0;
+    padding: 12px 14px;
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .checkout-error-banner.visible { display: block; }
+  body.dark-mode .checkout-error-banner {
+    background: rgba(239,68,68,0.12);
+    color: #fecaca;
+    border-color: rgba(239,68,68,0.35);
+  }
+</style>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC4iYs-YUnvPTzd0Ut8Gc6yaoeopOzuxUQ",
+    authDomain: "velmira-6bed5.firebaseapp.com",
+    projectId: "velmira-6bed5",
+    storageBucket: "velmira-6bed5.firebasestorage.app",
+    messagingSenderId: "929543908982",
+    appId: "1:929543908982:web:2a374ce24fd53815bbf957",
+    measurementId: "G-SW2DGKE3BH"
+  };
+
+  let db;
+  try {
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+  } catch (e) {
+    console.error("Firebase init failed:", e);
+  }
+
+  // ---- helpers ----
+  const $ = (id) => document.getElementById(id);
+  const val = (id) => ($(id)?.value || "").trim();
+
+  function showError(msg) {
+    const banner = $("checkoutErrorBanner");
+    if (!banner) return;
+    banner.textContent = msg;
+    banner.classList.add("visible");
+    banner.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  function clearError() {
+    const banner = $("checkoutErrorBanner");
+    if (banner) { banner.classList.remove("visible"); banner.textContent = ""; }
+  }
+
+  // Validation (mirrors original): BD phone, 4-6 digit postal, email
+  const RX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const RX_PHONE_BD = /^(?:\+?880|0)1[3-9]\d{8}$/;
+  const RX_POSTAL = /^\d{4,6}$/;
+
+  function setFieldError(id, msg) {
+    const el = $(id);
+    const err = $("err-" + id);
+    if (el) el.classList.toggle("invalid", !!msg);
+    if (err) { err.textContent = msg || ""; err.style.display = msg ? "block" : "none"; }
+    return !msg;
+  }
+
+  function validateForm() {
+    let ok = true;
+    ok = setFieldError("fullName", val("fullName").length >= 2 ? "" : "Please enter your full name.") && ok;
+    ok = setFieldError("phone",    RX_PHONE_BD.test(val("phone").replace(/[\s-]/g, "")) ? "" : "Enter a valid Bangladeshi phone (e.g. 01XXXXXXXXX).") && ok;
+    ok = setFieldError("email",    RX_EMAIL.test(val("email")) ? "" : "Enter a valid email address.") && ok;
+    ok = setFieldError("address1", val("address1").length >= 3 ? "" : "Please enter your address.") && ok;
+    ok = setFieldError("city",     val("city").length >= 2 ? "" : "Please enter your city.") && ok;
+    ok = setFieldError("division", val("division") ? "" : "Please select your division.") && ok;
+    ok = setFieldError("postal",   RX_POSTAL.test(val("postal")) ? "" : "Postal code must be 4–6 digits.") && ok;
+    return ok;
+  }
+
+  function parsePrice(text) {
+    const n = parseFloat(String(text || "").replace(/[^\d.]/g, ""));
+    return isNaN(n) ? 0 : n;
+  }
+
+  function readCart() {
+    try {
+      const raw = JSON.parse(localStorage.getItem("velmira_cart") || "[]");
+      return raw.map(i => ({
+        ...i,
+        price: Number(i.price) || 0,
+        quantity: Number(i.quantity) || 1
+      }));
+    } catch { return []; }
+  }
+
+  function friendlyMessage(err) {
+    const code = err?.code || "";
+    const msg  = err?.message || String(err);
+    let prefix = "Could not place order.";
+    if (code === "unavailable" || /network|offline|failed to fetch/i.test(msg)) {
+      prefix = "Network problem — check your connection and try again.";
+    } else if (code === "permission-denied") {
+      prefix = "Order rejected by server (permissions). Contact support.";
+    } else if (code === "failed-precondition" || /database.*not.*found|no.*database/i.test(msg)) {
+      prefix = "Order system not configured. Contact support.";
+    }
+    return `${prefix}\n[${code || "error"}] ${msg}`;
+  }
+
+  function attachHandler() {
+    const original = $("placeOrderBtn");
+    if (!original) return;
+    // Inject error banner above the button (once)
+    if (!$("checkoutErrorBanner")) {
+      const banner = document.createElement("div");
+      banner.id = "checkoutErrorBanner";
+      banner.className = "checkout-error-banner";
+      banner.setAttribute("role", "alert");
+      original.parentNode.insertBefore(banner, original);
+    }
+    // Clone to strip the bundled listener
+    const btn = original.cloneNode(true);
+    original.parentNode.replaceChild(btn, original);
+
+    btn.addEventListener("click", async () => {
+      clearError();
+      if (!validateForm()) {
+        const banner = $("formErrorBanner");
+        if (banner) banner.classList.add("visible");
+        const firstBad = document.querySelector(".form-input.invalid, .form-select.invalid");
+        if (firstBad) firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      const formBanner = $("formErrorBanner");
+      if (formBanner) formBanner.classList.remove("visible");
+
+      const items = readCart();
+      if (!items.length) {
+        showError("Your cart is empty.");
+        return;
+      }
+
+      if (!db) {
+        showError("Order system unavailable (Firebase failed to initialize). Please refresh and try again.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add("loading");
+      const textEl = btn.querySelector(".btn-text");
+      const origText = textEl ? textEl.textContent : "";
+      if (textEl) textEl.textContent = "Processing...";
+
+      const customer = {
+        name:     val("fullName"),
+        email:    val("email"),
+        phone:    val("phone"),
+        address1: val("address1"),
+        address2: val("address2"),
+        city:     val("city"),
+        division: val("division"),
+        postal:   val("postal"),
+        notes:    val("orderNotes")
+      };
+      const payment = document.querySelector('input[name="payment"]:checked')?.value || "cod";
+
+      const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+      const shipping = parsePrice($("summaryShipping")?.textContent) || (subtotal >= 1500 ? 0 : 120);
+      const total    = parsePrice($("summaryTotal")?.textContent)    || (subtotal + shipping);
+
+      const order = {
+        orderId: "VEL-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
+        customer,
+        items,
+        subtotal,
+        shipping,
+        total,
+        paymentMethod: payment,
+        status: "confirmed",
+        date: new Date().toISOString()
+      };
+
+      try {
+        const ref = await addDoc(collection(db, "orders"), {
+          ...order,
+          createdAt: serverTimestamp()
+        });
+        localStorage.setItem("velmira_last_order", JSON.stringify({ ...order, firestoreId: ref.id }));
+        localStorage.removeItem("velmira_cart");
+        window.location.href = "order-confirmation.html";
+      } catch (err) {
+        console.error("Firestore save failed:", err);
+        btn.disabled = false;
+        btn.classList.remove("loading");
+        if (textEl) textEl.textContent = origText || "Place Order";
+        showError(friendlyMessage(err));
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => setTimeout(attachHandler, 50));
+  } else {
+    setTimeout(attachHandler, 50);
+  }
+</script>
+
+<!-- ── Premium Nav Drawer ── -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+    
+
+    
+  
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<style id="velmira-navbar-unified-styles">
+  /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 991px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1100;
+      height: auto;
+      min-height: 60px;
+    }
+
+    .nav-container {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 16px !important;
+      flex-wrap: nowrap;
+      overflow: visible;
+    }
+
+    /* Logo stays on left */
+    .nav-logo {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .nav-logo .logo-link {
+      font-size: 22px !important;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+    .nav-right {
+      display: flex !important;
+      align-items: center;
+      gap: 4px !important;
+      margin-left: auto;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .nav-right .search-wrapper {
+      display: none !important;
+    }
+
+    .nav-right .mobile-search-btn {
+      display: inline-flex !important;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .theme-toggle,
+    .nav-right .mobile-search-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .nav-right .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 8px;
+      background: #e74c3c;
+      color: white;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: inline-flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 44px !important;
+      height: 44px !important;
+      padding: 11px 9px !important;
+      margin-left: 4px !important;
+      background: transparent !important;
+      border: none !important;
+      color: #1a1a1a !important;
+      z-index: 1100 !important;
+      position: relative !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: stretch !important;
+      cursor: pointer !important;
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .hamburger {
+      color: #fff !important;
+    }
+
+    .hamburger span {
+      display: block !important;
+      width: 100% !important;
+      height: 2px !important;
+      background: currentColor !important;
+      border-radius: 2px !important;
+      opacity: 1 !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Hamburger animation when menu is open */
+    body.nav-open .hamburger span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg) !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg) !important;
+    }
+
+    /* Off-canvas drawer */
+    .nav-menu {
+      position: fixed !important;
+      top: 0;
+      right: 0;
+      width: min(82vw, 360px);
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      transform: translateX(100%);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s linear 0.45s;
+      z-index: 1090;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      border: none;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    body.dark-mode .nav-menu {
+      background: #1a1a1a;
+    }
+
+    .nav-menu.active,
+    body.nav-open .nav-menu {
+      transform: translateX(0) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s;
+    }
+
+    /* Drawer header: brand + close button */
+    .nav-menu .drawer-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .nav-menu .drawer-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .drawer-brand {
+      color: #fff;
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #1a1a1a;
+      transition: transform 0.2s ease;
+    }
+
+    body.dark-mode .drawer-close {
+      color: #fff;
+    }
+
+    .drawer-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .drawer-close svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navigation links in drawer */
+    .nav-menu .nav-links {
+      list-style: none;
+      padding: 12px 0;
+      margin: 0;
+      flex: 1;
+    }
+
+    .nav-menu .nav-links li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    body.dark-mode .nav-menu .nav-links li {
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-menu .nav-link {
+      display: block;
+      padding: 16px 24px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    body.dark-mode .nav-menu .nav-link {
+      color: #ffffff;
+    }
+
+    .nav-menu .nav-link.active,
+    .nav-menu .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .nav-menu .nav-link.active,
+    body.dark-mode .nav-menu .nav-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* Remove desktop decorative pseudo-elements */
+    .nav-menu::before,
+    .nav-menu::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .nav-menu .nav-link::after {
+      display: none !important;
+    }
+
+    /* Backdrop overlay */
+    .nav-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      z-index: 1080;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    body.nav-open .nav-backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Prevent body scroll when drawer is open */
+    body.nav-open {
+      overflow: hidden !important;
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 380px) {
+    .nav-right .theme-toggle {
+      display: none !important;
+    }
+
+    .nav-container {
+      padding: 10px 12px !important;
+      gap: 4px;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .mobile-search-btn {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  /* Desktop: hide hamburger and drawer, show full menu */
+  @media (min-width: 992px) {
+    .hamburger {
+      display: none !important;
+    }
+
+    .nav-backdrop {
+      display: none !important;
+    }
+
+    .nav-menu {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: none !important;
+      z-index: auto !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+      border: none !important;
+      overflow: visible !important;
+    }
+
+    .nav-menu .drawer-header {
+      display: none !important;
+    }
+
+    .nav-menu .nav-links {
+      display: flex !important;
+      gap: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu .nav-links li {
+      border: none !important;
+    }
+
+    .nav-menu .nav-link {
+      padding: 0 16px;
+      border-bottom: none;
+    }
+
+    .nav-menu .nav-link::after {
+      display: block !important;
+    }
+
+    body.nav-open {
+      overflow: auto !important;
+    }
+  }
+  /* Drawer close button */
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .drawer-close:hover { opacity: 1; }
+  body.dark-mode .drawer-close { color: #fff; }
+
+  /* Body padding for fixed navbar */
+  body { padding-top: 60px; }
+  @media (min-width: 992px) { body { padding-top: 72px; } }
+  /* Remove carousel margin-top since body padding-top handles navbar */
+  .hero-carousel { margin-top: 0 !important; }
+
+  /* Sidebars + overlay always above fixed navbar */
+  .cart-sidebar,
+  .wishlist-sidebar {
+    z-index: 1200 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+  .overlay {
+    z-index: 1150 !important;
+  }
+</style>
+
+<script id="velmira-navbar-unified-js">
+  (function () {
+    "use strict";
+
+    // Wait for DOM to be ready
+    function initNavbar() {
+      const toggle = document.getElementById("menuToggle");
+      const menu = document.getElementById("navMenu");
+
+      if (!toggle || !menu) {
+        console.warn("Navbar elements not found");
+        return;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 1. Create backdrop once
+      // ────────────────────────────────────────────────────────────────────
+      let backdrop = document.querySelector(".nav-backdrop");
+      if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.className = "nav-backdrop";
+        document.body.appendChild(backdrop);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 2. Inject drawer header (brand + close) once, at the start
+      // ────────────────────────────────────────────────────────────────────
+      if (!menu.querySelector(".drawer-header")) {
+        const header = document.createElement("div");
+        header.className = "drawer-header";
+        header.innerHTML =
+          '<span class="drawer-brand">VELMIRA</span>' +
+          '<button type="button" class="drawer-close" aria-label="Close menu">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+          '<line x1="6" y1="6" x2="18" y2="18"/>' +
+          '<line x1="6" y1="18" x2="18" y2="6"/>' +
+          "</svg>" +
+          "</button>";
+        menu.insertBefore(header, menu.firstChild);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 3. Helper functions to open/close drawer
+      // ────────────────────────────────────────────────────────────────────
+      function closeDrawer() {
+        document.body.classList.remove("nav-open");
+        menu.classList.remove("active", "open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      function openDrawer() {
+        document.body.classList.add("nav-open");
+        menu.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+
+      function toggleDrawer(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        }
+        if (document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 4. Clean hamburger button: remove old listeners, set fresh ones
+      // ────────────────────────────────────────────────────────────────────
+      const freshToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(freshToggle, toggle);
+
+      freshToggle.setAttribute("aria-label", "Toggle menu");
+      freshToggle.setAttribute("aria-expanded", "false");
+      freshToggle.setAttribute("type", "button");
+      freshToggle.addEventListener("click", toggleDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 5. Backdrop click to close
+      // ────────────────────────────────────────────────────────────────────
+      backdrop.addEventListener("click", closeDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 6. Close button in drawer header
+      // ────────────────────────────────────────────────────────────────────
+      const closeBtn = menu.querySelector(".drawer-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 7. Nav links click to close drawer
+      // ────────────────────────────────────────────────────────────────────
+      menu.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", closeDrawer);
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 8. Escape key to close
+      // ────────────────────────────────────────────────────────────────────
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.body.classList.contains("nav-open")
+        ) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 9. Resize: close drawer on desktop
+      // ────────────────────────────────────────────────────────────────────
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 991 && document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 10. Set active nav link based on current page
+      // ────────────────────────────────────────────────────────────────────
+      updateActiveLink();
+    }
+
+    function updateActiveLink() {
+      const currentPage = window.location.pathname.split("/").pop() || "index.html";
+      
+      // Remove active from all links
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Add active to matching link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === "" && href === "index.html")) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    // Initialize on DOMContentLoaded or immediately if already loaded
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initNavbar);
+    } else {
+      initNavbar();
+    }
+
+    // Also update active link after a short delay to catch dynamic content
+    setTimeout(updateActiveLink, 100);
+  })();
+</script>
+
+
+</body>
+
+</html>

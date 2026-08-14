@@ -1,0 +1,2223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Velmira — Premium skincare for your natural glow. Dermatologist-tested, cruelty-free."
+    />
+    <meta name="theme-color" content="#f9fbfe" />
+    <title>Velmira — Premium Skincare for Your Natural Glow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preload above-the-fold hero images -->
+    <link rel="preload" as="image" href="g1.webp" fetchpriority="high" />
+
+    <style id="hero-carousel-upgrade">
+      /* ─── HERO CAROUSEL — Professional Upgrade ─── */
+
+      .hero-carousel {
+        position: relative;
+        width: 100%;
+        min-height: 640px;
+        overflow: hidden;
+        background: #0a0a0a;
+        display: block;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+        vertical-align: top;
+        /* prevent any sub-pixel gap from appearing below */
+        transform: translateZ(0);
+      }
+
+      /* Kill any gap between carousel and next section */
+      .hero-carousel + * {
+        margin-top: 0 !important;
+      }
+
+      /* The line is the body background bleeding through on mobile —
+         cover it by ensuring the carousel flush-fills with no gaps */
+      @media (max-width: 768px) {
+        .hero-carousel {
+          /* Extend slightly past its own bounds to cover any sub-pixel bleed */
+          margin-bottom: -2px !important;
+          padding-bottom: 2px;
+          clip-path: none;
+        }
+
+        .hero-carousel + .categories-section,
+        .hero-carousel + section {
+          position: relative;
+          margin-top: 0 !important;
+          padding-top: var(--spacing-xl);
+        }
+      }
+
+      /* — Track & Slides — */
+      .carousel-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+      }
+
+      .carousel-slide {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slide-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.06);
+        transition: transform 9s ease;
+        will-change: transform;
+        filter: brightness(0.85);
+      }
+
+      .carousel-slide.active .slide-image {
+        transform: scale(1);
+      }
+
+      /* — Overlay — */
+      .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          105deg,
+          rgba(4, 8, 16, 0.8) 0%,
+          rgba(4, 8, 20, 0.52) 48%,
+          rgba(4, 8, 20, 0.1) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 80px 9% 0;
+        color: #fff;
+        z-index: 2;
+      }
+
+      /* — Badge — */
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 16px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(12px);
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+        color: rgba(255, 255, 255, 0.88);
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+          opacity 0.6s ease 0.1s,
+          transform 0.6s ease 0.1s;
+      }
+
+      .hero-badge::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #c8a96e;
+        flex-shrink: 0;
+      }
+
+      .carousel-slide.active .hero-badge {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* — Slide Title — */
+      .slide-title {
+        font-family: var(--font-serif, "Cormorant Garamond", serif) !important;
+        font-size: clamp(2.8rem, 6.5vw, 5.8rem) !important;
+        font-weight: 300 !important;
+        line-height: 1.02 !important;
+        letter-spacing: -0.01em;
+        max-width: 680px;
+        margin-bottom: 22px !important;
+        color: #fff !important;
+        text-shadow: 0 4px 40px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s ease 0.25s,
+          transform 0.7s ease 0.25s;
+      }
+
+      .carousel-slide.active .slide-title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .slide-title span {
+        font-style: italic;
+        color: #c8a96e;
+      }
+
+      /* — Subtitle — */
+      .slide-subtitle {
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: clamp(0.88rem, 1.3vw, 1.08rem) !important;
+        font-weight: 300;
+        letter-spacing: 0.03em;
+        line-height: 1.85;
+        max-width: 460px;
+        margin-bottom: 36px !important;
+        color: rgba(255, 255, 255, 0.75);
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.7s ease 0.4s,
+          transform 0.7s ease 0.4s;
+      }
+
+      .carousel-slide.active .slide-subtitle {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* — CTA Buttons — */
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+          opacity 0.7s ease 0.55s,
+          transform 0.7s ease 0.55s;
+      }
+
+      .carousel-slide.active .hero-actions {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-actions a.btn,
+      .hero-actions .btn {
+        min-width: unset;
+        padding: 13px 32px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        border-radius: 2px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition:
+          background 0.25s,
+          border-color 0.25s,
+          color 0.25s,
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .hero-actions a.btn-primary,
+      .hero-actions .btn-primary {
+        background: #c8a96e;
+        color: #0a0810;
+        border: 1.5px solid #c8a96e;
+      }
+
+      .hero-actions a.btn-primary:hover,
+      .hero-actions .btn-primary:hover {
+        background: #dbbf82;
+        border-color: #dbbf82;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(200, 169, 110, 0.35);
+      }
+
+      .hero-actions a.btn-secondary,
+      .hero-actions .btn-secondary {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.9);
+        border: 1.5px solid rgba(255, 255, 255, 0.38);
+      }
+
+      .hero-actions a.btn-secondary:hover,
+      .hero-actions .btn-secondary:hover {
+        border-color: #c8a96e;
+        color: #c8a96e;
+        transform: translateY(-2px);
+      }
+
+      /* — Progress Bar — */
+      .carousel-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.08);
+        z-index: 6;
+        overflow: hidden;
+      }
+
+      .carousel-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #c8a96e, #e8d09a);
+        width: 0%;
+        transition: none;
+      }
+
+      .carousel-progress-fill.animating {
+        width: 100%;
+        transition: width 5s linear;
+      }
+
+      /* — Dots — */
+      .carousel-dots {
+        position: absolute;
+        bottom: 40px;
+        left: 9%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 5;
+      }
+
+      .carousel-dot {
+        min-width: unset !important;
+        min-height: unset !important;
+        width: 28px;
+        height: 2px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.25);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        display: block;
+      }
+
+      .carousel-dot::before {
+        display: none !important;
+      }
+
+      .carousel-dot.active {
+        width: 52px;
+        background: #c8a96e;
+        border-radius: 2px;
+      }
+
+      .carousel-dot:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      .carousel-dot.active:hover {
+        background: #dbbf82;
+      }
+
+      /* — Slide Number — */
+      .slide-number {
+        position: absolute;
+        bottom: 33px;
+        right: 9%;
+        z-index: 5;
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 0.85rem;
+      }
+
+      .slide-number .cur {
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1;
+      }
+
+      .slide-number .sep {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+      }
+
+      /* — Navigation Arrows — */
+      .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(8, 8, 16, 0.3);
+        backdrop-filter: blur(16px);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 5;
+        transition:
+          border-color 0.25s,
+          background 0.25s,
+          opacity 0.25s,
+          transform 0.25s;
+        opacity: 0.7;
+      }
+
+      .carousel-control:hover {
+        border-color: rgba(200, 169, 110, 0.6);
+        background: rgba(200, 169, 110, 0.15);
+        opacity: 1;
+        transform: translateY(-50%) scale(1.07);
+      }
+
+      .carousel-prev {
+        left: 36px;
+      }
+      .carousel-next {
+        right: 36px;
+      }
+
+      /* — Scroll hint — */
+      .scroll-hint {
+        position: absolute;
+        right: 9%;
+        bottom: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        z-index: 5;
+        color: rgba(255, 255, 255, 0.3);
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .scroll-hint-line {
+        width: 1px;
+        height: 38px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        animation: scrollPulse 2.2s ease-in-out infinite;
+      }
+
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        60% {
+          opacity: 0.75;
+          transform: scaleY(0.6);
+          transform-origin: top;
+        }
+      }
+
+      /* — Responsive — */
+      @media (max-width: 900px) {
+        .carousel-prev {
+          left: 20px;
+        }
+        .carousel-next {
+          right: 20px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-carousel {
+          height: calc(100svh - 60px);
+          min-height: 380px;
+          max-height: 600px;
+          margin-bottom: -2px !important;
+        }
+
+        .slide-overlay {
+          align-items: flex-start;
+          text-align: left;
+          padding: 16px 18px 44px;
+          justify-content: flex-end;
+          background: linear-gradient(
+            0deg,
+            rgba(4, 8, 16, 0.85) 0%,
+            rgba(4, 8, 16, 0.5) 50%,
+            rgba(4, 8, 16, 0.06) 100%
+          );
+        }
+
+        .hero-badge {
+          margin-bottom: 8px;
+          font-size: 0.58rem;
+          padding: 5px 11px;
+        }
+
+        .slide-title {
+          font-size: clamp(1.5rem, 7vw, 2.2rem) !important;
+          margin-bottom: 8px !important;
+          line-height: 1.08 !important;
+          max-width: 100%;
+        }
+
+        .slide-subtitle {
+          font-size: 0.76rem !important;
+          line-height: 1.5;
+          margin-bottom: 14px !important;
+          max-width: 100%;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .hero-actions {
+          width: 100%;
+          gap: 8px;
+        }
+
+        .hero-actions a.btn,
+        .hero-actions .btn {
+          padding: 9px 18px;
+          font-size: 0.63rem;
+          flex: 1;
+          text-align: center;
+          min-width: 0;
+          max-width: none;
+        }
+
+        .carousel-dots {
+          bottom: 10px;
+          left: 18px;
+          transform: none;
+        }
+
+        .slide-number {
+          display: none;
+        }
+        .scroll-hint {
+          display: none;
+        }
+
+        .carousel-control {
+          width: 34px;
+          height: 34px;
+          opacity: 0.6;
+        }
+        .carousel-prev {
+          left: 8px;
+        }
+        .carousel-next {
+          right: 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .slide-image {
+          transition: none;
+        }
+        .hero-badge,
+        .slide-title,
+        .slide-subtitle,
+        .hero-actions {
+          transition: opacity 0.3s;
+          transform: none;
+        }
+        .carousel-track {
+          transition: transform 0.4s;
+        }
+        .scroll-hint-line {
+          animation: none;
+        }
+      }
+
+      /* ─── SOCIAL MEDIA LINKS ─── */
+      .newsletter-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 8px;
+      }
+      .social-link-facebook,
+      .social-link-instagram {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 24px;
+        color: #fff;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        min-width: 190px;
+        justify-content: center;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .social-link-facebook {
+        background: #1877f2;
+      }
+
+      .social-link-facebook:hover,
+      .social-link-facebook:focus {
+        opacity: 0.88;
+        transform: translateY(-2px);
+      }
+
+      .social-link-instagram {
+        background: linear-gradient(
+          135deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
+      }
+
+      .social-link-instagram:hover,
+      .social-link-instagram:focus {
+        opacity: 0.88;
+        transform: translateY(-2px);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .social-link-facebook {
+          background: #0a66c2;
+        }
+
+        .social-link-instagram {
+          background: linear-gradient(
+            135deg,
+            #d43a7a 0%,
+            #c32260 25%,
+            #b01a4c 50%,
+            #9d1645 75%,
+            #8a1145 100%
+          );
+        }
+      }
+
+      @media (max-width: 480px) {
+        .newsletter-links {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+        }
+        .social-link-facebook,
+        .social-link-instagram {
+          width: 100%;
+          min-width: 0;
+        }
+      }
+
+      /* Loading placeholder */
+      .loading-placeholder {
+        text-align: center;
+        padding: 2rem;
+        color: var(--color-text-secondary, #666);
+        font-style: italic;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .loading-placeholder {
+          color: var(--color-text-secondary, #aaa);
+        }
+      }
+    </style>
+
+    <script type="module" crossorigin src="/assets/main-ClvpZv0O.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/script-CbRYxaYZ.js" />
+    <link rel="stylesheet" crossorigin href="/assets/style-Db11KUSm.css" />
+  </head>
+  <body>
+    <script>
+      try {
+        if (localStorage.getItem("darkMode") === "true")
+          document.body.classList.add("dark-mode");
+      } catch (e) {}
+    </script>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <a href="index.html" class="logo-link">Vel<span>m</span>ira</a>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link active">Home</a></li>
+            <li><a href="about.html" class="nav-link">About Velmira</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
+            <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            <li>
+              <a href="ingredient-guide.html" class="nav-link"
+                >Ingredient Guide</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="nav-right">
+          <!-- Mobile search icon — only visible on small screens -->
+          <button
+            class="mobile-search-btn"
+            id="mobileSearchBtn"
+            aria-label="Open search"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
+          <div class="search-wrapper" style="position: relative">
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search products..."
+                class="search-input"
+              />
+              <button class="search-btn" aria-label="Search">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+              </button>
+            </div>
+            <div
+              id="searchDropdown"
+              class="search-dropdown"
+              role="listbox"
+              aria-label="Search results"
+            ></div>
+          </div>
+          <button
+            id="darkModeToggle"
+            class="theme-toggle"
+            title="Toggle dark mode"
+          >
+            <span class="theme-icon">
+              <svg
+                class="sun-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+              <svg
+                class="moon-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </span>
+          </button>
+          <button id="wishlistBtn" class="icon-btn" title="Wishlist">
+            <span class="badge" id="wishlistCount">0</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              />
+            </svg>
+          </button>
+          <button id="cartBtn" class="icon-btn" title="Cart">
+            <span class="badge" id="cartCount">0</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+          </button>
+        </div>
+
+        <button class="hamburger" id="menuToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- HERO CAROUSEL -->
+    <section class="hero-carousel" id="home">
+      <div class="carousel-track" id="heroCarouselTrack">
+        <!-- SLIDE 1 -->
+        <div class="carousel-slide active">
+          <img
+            src="/assets/g1-ndTPFc2M.webp"
+            alt="Premium skincare"
+            class="slide-image"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="slide-overlay">
+            <div class="hero-badge">Premium Skincare</div>
+            <h1 class="slide-title">Reveal Your <span>Natural Glow</span></h1>
+            <p class="slide-subtitle">
+              Clinically inspired skincare powered by science and crafted for
+              lasting radiance.
+            </p>
+            <div class="hero-actions">
+              <a href="shop.html" class="btn btn-primary">Shop Collection</a>
+              <a href="#featured" class="btn btn-secondary">Best Sellers</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="carousel-slide">
+          <img
+            src="/assets/g2-BY20fDNH.webp"
+            alt="Science meets beauty skincare"
+            class="slide-image"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="slide-overlay">
+            <div class="hero-badge">Science Meets Beauty</div>
+            <h1 class="slide-title">Results You <span>Can See</span></h1>
+            <p class="slide-subtitle">
+              Advanced ingredients chosen to hydrate, repair, and visibly
+              strengthen your skin.
+            </p>
+            <div class="hero-actions">
+              <a href="shop.html" class="btn btn-primary">Explore Products</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="carousel-slide">
+          <img
+            src="/assets/g3-I6SGVvwP.webp"
+            alt="Luxury skincare ritual"
+            class="slide-image"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="slide-overlay">
+            <div class="hero-badge">Velmira Collection</div>
+            <h1 class="slide-title">Elevate Your <span>Daily Ritual</span></h1>
+            <p class="slide-subtitle">
+              Luxury skincare designed for confidence, luminosity, and long-term
+              skin health.
+            </p>
+            <div class="hero-actions">
+              <a href="shop.html" class="btn btn-primary">Discover More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow Controls -->
+      <button
+        class="carousel-control carousel-prev"
+        id="heroPrev"
+        aria-label="Previous slide"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+
+      <button
+        class="carousel-control carousel-next"
+        id="heroNext"
+        aria-label="Next slide"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+
+      <!-- Dot Navigation -->
+      <div class="carousel-dots" id="heroDots"></div>
+
+      <!-- Slide Counter -->
+      <div class="slide-number" id="heroSlideNumber">
+        <span class="cur" id="heroSlideNumCur">01</span>
+        <span class="sep">—</span>
+        <span id="heroSlideNumTotal">03</span>
+      </div>
+
+      <!-- Scroll Hint -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-hint-line"></div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="carousel-progress" aria-hidden="true">
+        <div class="carousel-progress-fill" id="heroProgressFill"></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="categories-section" id="categories">
+      <div class="section-header">
+        <div class="section-eyebrow">Browse</div>
+        <h2 class="section-title">Shop by <em>Category</em></h2>
+        <p class="section-subtitle">
+          Expertly curated product lines for every step of your routine
+        </p>
+      </div>
+      <div class="categories-grid">
+        <a
+          class="category-card reveal"
+          data-cat="cleanser"
+          href="shop.html?category=cleanser"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-1.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="moisturizer"
+          href="shop.html?category=moisturizer"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-2.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+  
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="serum"
+          href="shop.html?category=serum"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-3.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="sunscreen"
+          href="shop.html?category=sunscreen"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-4.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+ 
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="eye-care"
+          href="shop.html?category=eye-care"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-5.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+   
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="mask"
+          href="shop.html?category=mask"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-6.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="toner"
+          href="shop.html?category=toner"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-7.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="treatment"
+          href="shop.html?category=treatment"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-8.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="combo"
+          href="shop.html?category=combo"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-9.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+   
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="bestseller"
+          href="shop.html?special=bestseller"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-10.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="new"
+          href="shop.html?special=new"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/category-11.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+  
+        </a>
+        <a
+          class="category-card reveal"
+          data-cat="hair-care"
+          href="shop.html?category=hair-care"
+        >
+          <div
+            class="category-emoji-bg"
+            style="
+              background-image: url(&quot;./assets/catagory-12.webp&quot;);
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+
+        </a>
+      </div>
+    </section>
+
+    <!-- CONCERNS -->
+    <section class="concerns-section" id="concerns">
+      <div class="section-header">
+        <div class="section-eyebrow">Solutions</div>
+        <h2 class="section-title">Shop by <em>Concern</em></h2>
+        <p class="section-subtitle">
+          Find products tailored to your specific skin needs
+        </p>
+      </div>
+      <div class="concerns-grid">
+        <a
+          href="shop.html?skinType=dry"
+          class="concern-card reveal"
+          data-concern="dry"
+          style="
+            background-image: url(&quot;/assets/dry_skin-BKgRHACC.webp&quot;);
+          "
+        >
+          <div class="concern-overlay">
+            <h3>Dry Skin</h3>
+            <p>Deep hydration for lasting softness</p>
+          </div>
+        </a>
+        <a
+          href="shop.html?concern=acne"
+          class="concern-card reveal"
+          data-concern="acne"
+          style="
+            background-image: url(&quot;/assets/acne_(2)-DvlXMaGX.webp&quot;);
+          "
+        >
+          <div class="concern-overlay">
+            <h3>Acne &amp; Breakouts</h3>
+            <p>Clear, healthy skin starts here</p>
+          </div>
+        </a>
+        <a
+          href="shop.html?skinType=oily"
+          class="concern-card reveal"
+          data-concern="oily"
+          style="
+            background-image: url(&quot;/assets/darkspot-dO69xBqY.webp&quot;);
+          "
+        >
+          <div class="concern-overlay">
+            <h3>Dark Spots</h3>
+            <p>Even tone &amp; radiance</p>
+          </div>
+        </a>
+
+        <a
+          href="shop.html?concern=pore"
+          class="concern-card reveal"
+          data-concern="pore"
+          style="background-image: url(&quot;/assets/pore-DbSvnPxB.webp&quot;)"
+        >
+          <div class="concern-overlay">
+            <h3>Pore Minimizing</h3>
+            <p>Refine &amp; smooth skin texture</p>
+          </div>
+        </a>
+        <a
+          href="shop.html?concern=aging"
+          class="concern-card reveal"
+          data-concern="aging"
+          style="
+            background-image: url(&quot;/assets/anti_aging-D2vEzpJy.webp&quot;);
+          "
+        >
+          <div class="concern-overlay">
+            <h3>Anti-Aging</h3>
+            <p>Youthful, firm &amp; supple skin</p>
+          </div>
+        </a>
+        <a
+          href="shop.html?concern=brightening"
+          class="concern-card reveal"
+          data-concern="brightening"
+          style="
+            background-image: url(&quot;/assets/brightening-C5qycjXh.webp&quot;);
+          "
+        >
+          <div class="concern-overlay">
+            <h3>Brightening</h3>
+            <p>Glow &amp; luminosity for radiant skin</p>
+          </div>
+        </a>
+        <a
+          href="shop.html?skinType=oily"
+          class="concern-card reveal"
+          data-concern="oily"
+          style="background-image: url(&quot;/assets/oily-Cta0jW57.webp&quot;)"
+        >
+          <div class="concern-overlay">
+            <h3>Oily Skin</h3>
+            <p>Balanced, shine-free &amp; matte skin</p>
+          </div>
+        </a>
+        <a
+          href="shop.html?concern=hair"
+          class="concern-card reveal"
+          data-concern="hair"
+          style="
+            background-image: url(&quot;/assets/hair-care.webp&quot;);
+          "
+        >
+          <div class="concern-overlay">
+            <h3>Hair Care</h3>
+            <p>Denser, fuller &amp; healthier-looking hair</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="featured-section" id="featured">
+      <div class="section-header">
+        <div class="section-eyebrow">Editor's Choice</div>
+        <h2 class="section-title">Best <em>Sellers</em></h2>
+        <p class="section-subtitle">
+          Our most loved products, tried and trusted
+        </p>
+      </div>
+      <div class="featured-grid" id="featuredGrid">
+        <p class="loading-placeholder">Loading featured products...</p>
+      </div>
+    </section>
+
+    <!-- BLOG PREVIEW -->
+    <section class="blog-section reveal" id="blog-preview">
+      <div class="section-header">
+        <div class="section-eyebrow">Beauty Insights</div>
+        <h2 class="section-title">Skincare <em>Tips &amp; Tricks</em></h2>
+      </div>
+      <div class="blog-grid">
+        <article class="blog-card reveal">
+          <div class="blog-image">
+            <img
+              src="/assets/g1-ndTPFc2M.webp"
+              alt="Skin barrier"
+              loading="lazy"
+            />
+            <span class="blog-category">Tips</span>
+          </div>
+          <div class="blog-content">
+            <h3>Understanding Your Skin Barrier</h3>
+            <p>
+              Learn why your skin barrier is crucial and how ceramide-rich
+              formulas help restore it for long-lasting hydration.
+            </p>
+            <a href="blog.html" class="read-more">Read More →</a>
+          </div>
+        </article>
+        <article class="blog-card reveal">
+          <div class="blog-image">
+            <img
+              src="/assets/g2-BY20fDNH.webp"
+              alt="Morning routine"
+              loading="lazy"
+            />
+            <span class="blog-category">Routine</span>
+          </div>
+          <div class="blog-content">
+            <h3>The Perfect Morning Ritual</h3>
+            <p>
+              Discover the 3-step morning routine dermatologists recommend for
+              maximum protection and all-day glow.
+            </p>
+            <a href="blog.html" class="read-more">Read More →</a>
+          </div>
+        </article>
+        <article class="blog-card reveal">
+          <div class="blog-image">
+            <picture>
+              <source srcset="/assets/g3-I6SGVvwP.webp" type="image/webp" />
+              <img
+                src="/assets/g3-I6SGVvwP.webp"
+                alt="Hyaluronic acid"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <span class="blog-category">Ingredients</span>
+          </div>
+          <div class="blog-content">
+            <h3>Hyaluronic Acid: Myth vs Reality</h3>
+            <p>
+              Uncover the truth about this popular ingredient and how it works
+              in modern skincare formulations.
+            </p>
+            <a href="blog.html" class="read-more">Read More →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- STAY IN THE KNOW — SOCIAL -->
+    <section class="newsletter-section">
+      <div class="newsletter-content">
+        <h2>Stay in the Know</h2>
+        <p>
+          Follow us for exclusive skincare tips, new launches &amp;
+          behind-the-scenes content
+        </p>
+        <div class="newsletter-links">
+          <a
+            href="https://www.facebook.com/profile.php?id=61570999974718"
+            target="_blank"
+            rel="noopener"
+            class="social-link-facebook"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+            Follow on Facebook
+          </a>
+          <a
+            href="https://www.instagram.com/velmiraskin_bd/"
+            target="_blank"
+            rel="noopener"
+            class="social-link-instagram"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+              />
+            </svg>
+            Follow on Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+        <!-- Brand -->
+        <div class="footer-section footer-brand">
+          <h3 class="footer-logo">Vel<span>m</span>ira</h3>
+          <p>
+            Premium skincare for the modern, conscious consumer.
+            Dermatologist-tested and cruelty-free.
+          </p>
+          <div class="social-icons">
+            <a
+              href="https://www.instagram.com/velmiraskin_bd/"
+              target="_blank"
+              rel="noopener"
+              title="Instagram"
+              aria-label="Instagram"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61570999974718"
+              target="_blank"
+              rel="noopener"
+              title="Facebook"
+              aria-label="Facebook"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?special=bestseller">Best Sellers</a></li>
+            <li><a href="shop.html?special=new">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-section">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="quiz.html">Skin Quiz</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ingredient-guide.html">Ingredient Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-and-conditions.html">Terms of Use</a></li>
+            <li><a href="shipping-policy.html">Shipping Info</a></li>
+            <li><a href="refund-policy.html">Returns</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 Velmira. All rights reserved. &nbsp;·&nbsp;
+          Dermatologist-tested &nbsp;·&nbsp; Cruelty-free &nbsp;·&nbsp; Made by
+          Gourov Roy
+        </p>
+      </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Shopping Cart</h2>
+        <button class="close-cart" id="closeCart">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span><span id="subtotal">৳0</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping:</span><span id="shipping">Free</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span><span id="total">৳0</span>
+        </div>
+        <button class="btn btn-primary full-width checkout-btn">
+          Proceed to Checkout
+        </button>
+        <button
+          class="btn btn-secondary full-width"
+          id="continueShopping"
+          style="margin-top: 8px"
+        >
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="wishlist-sidebar" id="wishlistSidebar">
+      <div class="wishlist-header">
+        <h2>Your Wishlist</h2>
+        <button class="close-wishlist" id="closeWishlist">✕</button>
+      </div>
+      <div class="wishlist-items" id="wishlistItems"></div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="product-modal" id="productModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div class="modal-body">
+          <div class="modal-image">
+            <img id="modalImg" src="" alt="Product" />
+          </div>
+          <div class="modal-details">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-price">
+              <span class="price" id="modalPrice"></span>
+              <span class="original-price" id="modalOriginalPrice"></span>
+            </div>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="modal-info">
+              <h4>Key Ingredients</h4>
+              <ul id="modalIngredients"></ul>
+            </div>
+            <div class="modal-usage">
+              <h4>How to Use</h4>
+              <p id="modalUsage"></p>
+            </div>
+            <div class="quantity-selector">
+              <label>Quantity:</label>
+              <div class="quantity-controls">
+                <button type="button" id="decreaseQty">−</button>
+                <input type="number" id="quantity" min="1" value="1" />
+                <button type="button" id="increaseQty">+</button>
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="addToCartBtn">
+                Add to Cart
+              </button>
+              <button
+                class="btn btn-icon"
+                id="addToWishlistBtn"
+                title="Add to Wishlist"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <p>✓ Free shipping on orders over ৳5,000</p>
+              <p>✓ 30-day money-back guarantee</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ── Mobile Search Overlay ─────────────────────────── -->
+    <div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+      <button
+        class="mobile-search-close"
+        id="mobileSearchClose"
+        aria-label="Close search"
+      >
+        &times;
+      </button>
+      <input
+        type="text"
+        id="mobileSearchInput"
+        placeholder="Search products..."
+        autocomplete="off"
+      />
+    </div>
+    <div class="mobile-search-results" id="mobileSearchResults"></div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         VELMIRA — PREMIUM REFINEMENT PATCH
+         · Editor's Choice wishlist heart fix (event delegation)
+         · Concerns dark-mode fix (no washed-out images, legible text)
+         · Premium hero carousel (refined typography + elegant controls)
+         · Premium mobile navigation drawer
+         ════════════════════════════════════════════════════════════════ -->
+
+    <!-- ============================================================
+         MOBILE FIXES — Hero Carousel + Navbar (final overrides)
+         These rules win over earlier blocks because they appear last.
+         ============================================================ -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <style id="velmira-navbar-unified-styles">
+      /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+      @media (max-width: 991px) {
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1100;
+          height: auto;
+          min-height: 60px;
+        }
+
+        .nav-container {
+          display: flex !important;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          padding: 12px 16px !important;
+          flex-wrap: nowrap;
+          overflow: visible;
+        }
+
+        /* Logo stays on left */
+        .nav-logo {
+          flex: 0 0 auto;
+          min-width: 0;
+        }
+
+        .nav-logo .logo-link {
+          font-size: 22px !important;
+          letter-spacing: 2px;
+          white-space: nowrap;
+        }
+
+        /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+        .nav-right {
+          display: flex !important;
+          align-items: center;
+          gap: 4px !important;
+          margin-left: auto;
+          flex-shrink: 1;
+          min-width: 0;
+        }
+
+        .nav-right .search-wrapper {
+          display: none !important;
+        }
+
+        .nav-right .mobile-search-btn {
+          display: inline-flex !important;
+        }
+
+        .nav-right .icon-btn,
+        .nav-right .theme-toggle,
+        .nav-right .mobile-search-btn {
+          width: 40px;
+          height: 40px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: none;
+          padding: 0;
+          position: relative;
+          flex-shrink: 0;
+          cursor: pointer;
+        }
+
+        .nav-right .badge {
+          position: absolute;
+          top: 4px;
+          right: 4px;
+          min-width: 16px;
+          height: 16px;
+          padding: 0 4px;
+          font-size: 10px;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 8px;
+          background: #e74c3c;
+          color: white;
+        }
+
+        /* Hamburger button */
+        .hamburger {
+          display: inline-flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 44px !important;
+          height: 44px !important;
+          padding: 11px 9px !important;
+          margin-left: 4px !important;
+          background: transparent !important;
+          border: none !important;
+          color: #1a1a1a !important;
+          z-index: 1100 !important;
+          position: relative !important;
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          align-items: stretch !important;
+          cursor: pointer !important;
+          flex-shrink: 0;
+        }
+
+        body.dark-mode .hamburger {
+          color: #fff !important;
+        }
+
+        .hamburger span {
+          display: block !important;
+          width: 100% !important;
+          height: 2px !important;
+          background: currentColor !important;
+          border-radius: 2px !important;
+          opacity: 1 !important;
+          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        /* Hamburger animation when menu is open */
+        body.nav-open .hamburger span:nth-child(1) {
+          transform: translateY(10px) rotate(45deg) !important;
+        }
+
+        body.nav-open .hamburger span:nth-child(2) {
+          opacity: 0 !important;
+        }
+
+        body.nav-open .hamburger span:nth-child(3) {
+          transform: translateY(-10px) rotate(-45deg) !important;
+        }
+
+        /* Off-canvas drawer */
+        .nav-menu {
+          position: fixed !important;
+          top: 0;
+          right: 0;
+          width: min(82vw, 360px);
+          height: 100vh;
+          height: 100dvh;
+          background: #ffffff;
+          transform: translateX(100%);
+          visibility: hidden;
+          pointer-events: none;
+          transition:
+            transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+            visibility 0s linear 0.45s;
+          z-index: 1090;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+          border: none;
+          box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+          overflow-y: auto;
+        }
+
+        body.dark-mode .nav-menu {
+          background: #1a1a1a;
+        }
+
+        .nav-menu.active,
+        body.nav-open .nav-menu {
+          transform: translateX(0) !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transition:
+            transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+            visibility 0s;
+        }
+
+        /* Drawer header: brand + close button */
+        .nav-menu .drawer-header {
+          display: flex !important;
+          align-items: center;
+          justify-content: space-between;
+          padding: 18px 24px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+          flex-shrink: 0;
+        }
+
+        body.dark-mode .nav-menu .drawer-header {
+          border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .drawer-brand {
+          font-size: 18px;
+          font-weight: 600;
+          letter-spacing: 2px;
+          color: #1a1a1a;
+        }
+
+        body.dark-mode .drawer-brand {
+          color: #fff;
+        }
+
+        /* Drawer close button */
+        .drawer-close {
+          background: none;
+          border: none;
+          font-size: 20px;
+          color: #1a1a1a;
+          cursor: pointer;
+          padding: 4px 8px;
+          line-height: 1;
+          opacity: 0.6;
+        }
+        .drawer-close:hover {
+          opacity: 1;
+        }
+        body.dark-mode .drawer-close {
+          color: #fff;
+        }
+
+        /* Navigation links in drawer */
+        .nav-menu .nav-links {
+          list-style: none;
+          padding: 12px 0;
+          margin: 0;
+          flex: 1;
+        }
+
+        .nav-menu .nav-links li {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        body.dark-mode .nav-menu .nav-links li {
+          border-bottom-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-menu .nav-link {
+          display: block;
+          padding: 16px 24px;
+          color: #1a1a1a;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        body.dark-mode .nav-menu .nav-link {
+          color: #ffffff;
+        }
+
+        .nav-menu .nav-link.active,
+        .nav-menu .nav-link:hover {
+          background: rgba(0, 0, 0, 0.04);
+          color: #1a1a1a;
+        }
+
+        body.dark-mode .nav-menu .nav-link.active,
+        body.dark-mode .nav-menu .nav-link:hover {
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+        }
+
+        /* Remove desktop decorative pseudo-elements */
+        .nav-menu::before,
+        .nav-menu::after {
+          content: none !important;
+          display: none !important;
+        }
+
+        .nav-menu .nav-link::after {
+          display: none !important;
+        }
+
+        /* Backdrop overlay */
+        .nav-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0);
+          z-index: 1080;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+          pointer-events: none;
+        }
+
+        body.nav-open .nav-backdrop {
+          background: rgba(0, 0, 0, 0.5);
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+
+        /* Prevent body scroll when drawer is open */
+        body.nav-open {
+          overflow: hidden !important;
+        }
+      }
+
+      /* Extra small screens */
+      @media (max-width: 380px) {
+        .nav-right .theme-toggle {
+          display: none !important;
+        }
+
+        .nav-container {
+          padding: 10px 12px !important;
+          gap: 4px;
+        }
+
+        .nav-right .icon-btn,
+        .nav-right .mobile-search-btn {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      /* Desktop: hide hamburger and drawer, show full menu */
+      @media (min-width: 992px) {
+        .hamburger {
+          display: none !important;
+        }
+
+        .nav-backdrop {
+          display: none !important;
+        }
+
+        .nav-menu {
+          position: relative !important;
+          top: auto !important;
+          right: auto !important;
+          width: auto !important;
+          height: auto !important;
+          transform: none !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transition: none !important;
+          z-index: auto !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          flex-direction: row !important;
+          padding: 0 !important;
+          border: none !important;
+          overflow: visible !important;
+        }
+
+        .nav-menu .drawer-header {
+          display: none !important;
+        }
+
+        .nav-menu .nav-links {
+          display: flex !important;
+          gap: 0;
+          padding: 0;
+          margin: 0;
+        }
+
+        .nav-menu .nav-links li {
+          border: none !important;
+        }
+
+        .nav-menu .nav-link {
+          padding: 0 16px;
+          border-bottom: none;
+        }
+
+        .nav-menu .nav-link::after {
+          display: block !important;
+        }
+
+        body.nav-open {
+          overflow: auto !important;
+        }
+      }
+      /* Wishlist item action buttons */
+      .wishlist-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        flex-wrap: wrap;
+      }
+      .wishlist-item-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+      .wishlist-item-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .wishlist-item-name {
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      .wishlist-item-price {
+        font-size: 13px;
+        color: #888;
+      }
+      .wish-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding-left: 72px;
+        margin-top: 4px;
+      }
+      .wish-add-cart-btn {
+        font-size: 12px !important;
+        padding: 6px 14px !important;
+        flex: 1;
+      }
+      .remove-wish-btn {
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #aaa;
+        cursor: pointer;
+        padding: 4px 8px;
+        flex-shrink: 0;
+      }
+      .remove-wish-btn:hover {
+        color: #e74c3c;
+      }
+      /* Body padding for fixed navbar (60px mobile, 72px desktop) */
+      body {
+        padding-top: 60px;
+      }
+      @media (min-width: 992px) {
+        body {
+          padding-top: 72px;
+        }
+      }
+      /* Remove carousel margin-top since body padding-top now handles navbar offset */
+      .hero-carousel {
+        margin-top: 0 !important;
+      }
+
+      /* Sidebars + overlay always above fixed navbar */
+      .cart-sidebar,
+      .wishlist-sidebar {
+        z-index: 1200 !important;
+        top: 0 !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+      }
+      .overlay {
+        z-index: 1150 !important;
+      }
+    </style>
+
+    <script id="velmira-navbar-unified-js">
+      (function () {
+        "use strict";
+
+        // Wait for DOM to be ready
+        function initNavbar() {
+          const toggle = document.getElementById("menuToggle");
+          const menu = document.getElementById("navMenu");
+
+          if (!toggle || !menu) {
+            console.warn("Navbar elements not found");
+            return;
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 1. Create backdrop once
+          // ────────────────────────────────────────────────────────────────────
+          let backdrop = document.querySelector(".nav-backdrop");
+          if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.className = "nav-backdrop";
+            document.body.appendChild(backdrop);
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 2. Inject drawer header (brand + close) once, at the start
+          // ────────────────────────────────────────────────────────────────────
+          if (!menu.querySelector(".drawer-header")) {
+            const header = document.createElement("div");
+            header.className = "drawer-header";
+            header.innerHTML =
+              '<span class="drawer-brand">VELMIRA</span><button class="drawer-close" aria-label="Close menu" type="button">✕</button>';
+            menu.insertBefore(header, menu.firstChild);
+          }
+
+          // Wire close button inside drawer
+          const drawerClose = menu.querySelector(".drawer-close");
+          if (drawerClose) {
+            drawerClose.addEventListener("click", closeDrawer);
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 3. Helper functions to open/close drawer
+          // ────────────────────────────────────────────────────────────────────
+          function closeDrawer() {
+            document.body.classList.remove("nav-open");
+            menu.classList.remove("active", "open");
+            toggle.setAttribute("aria-expanded", "false");
+          }
+
+          function openDrawer() {
+            document.body.classList.add("nav-open");
+            menu.classList.add("active");
+            toggle.setAttribute("aria-expanded", "true");
+          }
+
+          function toggleDrawer(e) {
+            if (e) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            }
+            if (document.body.classList.contains("nav-open")) {
+              closeDrawer();
+            } else {
+              openDrawer();
+            }
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 4. Clean hamburger button: remove old listeners, set fresh ones
+          // ────────────────────────────────────────────────────────────────────
+          const freshToggle = toggle.cloneNode(true);
+          toggle.parentNode.replaceChild(freshToggle, toggle);
+
+          freshToggle.setAttribute("aria-label", "Toggle menu");
+          freshToggle.setAttribute("aria-expanded", "false");
+          freshToggle.setAttribute("type", "button");
+          freshToggle.addEventListener("click", toggleDrawer);
+
+          // ────────────────────────────────────────────────────────────────────
+          // 5. Backdrop click to close
+          // ────────────────────────────────────────────────────────────────────
+          backdrop.addEventListener("click", closeDrawer);
+
+          // 6. Close button in drawer header - REMOVED (drawer-close button no longer exists)
+          // Users can close by clicking backdrop or nav links
+
+          // ────────────────────────────────────────────────────────────────────
+          // 7. Nav links click to close drawer
+          // ────────────────────────────────────────────────────────────────────
+          menu.querySelectorAll(".nav-link").forEach((link) => {
+            link.addEventListener("click", closeDrawer);
+          });
+
+          // ────────────────────────────────────────────────────────────────────
+          // 8. Escape key to close
+          // ────────────────────────────────────────────────────────────────────
+          document.addEventListener("keydown", (e) => {
+            if (
+              e.key === "Escape" &&
+              document.body.classList.contains("nav-open")
+            ) {
+              closeDrawer();
+            }
+          });
+
+          // ────────────────────────────────────────────────────────────────────
+          // 9. Resize: close drawer on desktop
+          // ────────────────────────────────────────────────────────────────────
+          window.addEventListener("resize", () => {
+            if (
+              window.innerWidth > 991 &&
+              document.body.classList.contains("nav-open")
+            ) {
+              closeDrawer();
+            }
+          });
+
+          // ────────────────────────────────────────────────────────────────────
+          // 10. Set active nav link based on current page
+          // ────────────────────────────────────────────────────────────────────
+          updateActiveLink();
+        }
+
+        function updateActiveLink() {
+          const currentPage =
+            window.location.pathname.split("/").pop() || "index.html";
+
+          // Remove active from all links
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            link.classList.remove("active");
+          });
+
+          // Add active to matching link
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            const href = link.getAttribute("href");
+            if (
+              href === currentPage ||
+              (currentPage === "" && href === "index.html")
+            ) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Initialize on DOMContentLoaded or immediately if already loaded
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initNavbar);
+        } else {
+          initNavbar();
+        }
+
+        // Also update active link after a short delay to catch dynamic content
+        setTimeout(updateActiveLink, 100);
+      })();
+    </script>
+  </body>
+</html>

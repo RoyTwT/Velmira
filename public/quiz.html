@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Velmira Skin Quiz — Find out your skin type and get personalized product recommendations.">
+  <title>Skin Quiz — Velmira Premium Skincare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <script type="module" crossorigin src="/assets/quiz-BGqXCN_S.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/script-CbRYxaYZ.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-Db11KUSm.css">
+</head>
+<body>
+<script>try{if(localStorage.getItem('darkMode') === 'true')document.body.classList.add('dark-mode')}catch(e){}</script>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">    <div class="nav-logo"><a href="index.html" class="logo-link">Vel<span>m</span>ira</a></div>
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About Velmira</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="quiz.html" class="nav-link active">Skin Quiz</a></li>
+            <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            <li><a href="ingredient-guide.html" class="nav-link">Ingredient Guide</a></li>
+          </ul>
+    </div>
+    <div class="nav-right">
+                <button class="mobile-search-btn" id="mobileSearchBtn" aria-label="Open search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+<div class="search-wrapper" style="position:relative;">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+          <button class="search-btn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+        </div>
+        <div id="searchDropdown" class="search-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);z-index:200;overflow:hidden;"></div>
+      </div>
+      <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+        <span class="theme-icon">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </button>
+      <button id="wishlistBtn" class="icon-btn" title="Wishlist">
+        <span class="badge" id="wishlistCount">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button id="cartBtn" class="icon-btn" title="Cart">
+        <span class="badge" id="cartCount">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </button>
+    </div>
+  
+    <button class="hamburger" id="menuToggle"><span></span><span></span><span></span></button>
+      </div>
+</nav>
+
+<!-- QUIZ SECTION -->
+<section class="quiz-section">
+  <div class="quiz-container">
+
+    <!-- INTRO -->
+    <div style="text-align:center;margin-bottom:var(--spacing-xxl);">
+      <div class="section-eyebrow">Personalized</div>
+      <h1 style="font-family:var(--font-serif);font-size:clamp(32px,5vw,56px);font-weight:300;line-height:1.15;margin-bottom:var(--spacing-md);">Find Your <em style="color:var(--primary);font-style:italic;">Perfect</em> Routine</h1>
+      <p style="font-size:15px;color:var(--dark-light);max-width:500px;margin:0 auto;">Answer 5 quick questions and we'll match you with skincare formulated exactly for your skin.</p>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="quiz-progress">
+      <div class="quiz-progress-step active"></div>
+      <div class="quiz-progress-step"></div>
+      <div class="quiz-progress-step"></div>
+      <div class="quiz-progress-step"></div>
+      <div class="quiz-progress-step"></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="quiz-step active" data-step="1">
+      <div class="quiz-eyebrow">Question 1 of 5</div>
+      <h2 class="quiz-question">How would you describe your skin first thing in the morning?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="radiant">Radiant and comfortable — not too oily or dry</button>
+        <button class="quiz-option" data-value="tight">Tight, flaky, or in need of moisture</button>
+        <button class="quiz-option" data-value="shiny">Shiny and oily all over</button>
+        <button class="quiz-option" data-value="mixed">Oily in my T-zone, dry or normal on cheeks</button>
+        <button class="quiz-option" data-value="reactive">Red or irritated — my skin reacts easily</button>
+      </div>
+      <div class="quiz-nav">
+        <span class="quiz-step-label">Step 1 of 5</span>
+        <button class="btn btn-primary quiz-next">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="quiz-step" data-step="2">
+      <div class="quiz-eyebrow">Question 2 of 5</div>
+      <h2 class="quiz-question">How does your skin feel by midday?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="oily">Noticeably oily and shiny</button>
+        <button class="quiz-option" data-value="tzone">Shiny only in the T-zone (forehead, nose, chin)</button>
+        <button class="quiz-option" data-value="tight">Still tight or slightly dry in some areas</button>
+        <button class="quiz-option" data-value="comfortable">Comfortable — about the same as morning</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary quiz-prev">← Back</button>
+        <span class="quiz-step-label">Step 2 of 5</span>
+        <button class="btn btn-primary quiz-next">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="quiz-step" data-step="3">
+      <div class="quiz-eyebrow">Question 3 of 5</div>
+      <h2 class="quiz-question">How often do you experience breakouts or blemishes?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="frequently">Frequently — it's an ongoing issue</button>
+        <button class="quiz-option" data-value="monthly">Around my period or when stressed</button>
+        <button class="quiz-option" data-value="rarely">Rarely — mostly clear skin</button>
+        <button class="quiz-option" data-value="never">Almost never</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary quiz-prev">← Back</button>
+        <span class="quiz-step-label">Step 3 of 5</span>
+        <button class="btn btn-primary quiz-next">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="quiz-step" data-step="4">
+      <div class="quiz-eyebrow">Question 4 of 5</div>
+      <h2 class="quiz-question">How does your skin react to new products?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="always">Almost always reacts with redness or irritation</button>
+        <button class="quiz-option" data-value="sometimes">Sometimes — I'm careful with fragrances and actives</button>
+        <button class="quiz-option" data-value="rarely">Rarely reacts</button>
+        <button class="quiz-option" data-value="never">Never — I can use most products without issue</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary quiz-prev">← Back</button>
+        <span class="quiz-step-label">Step 4 of 5</span>
+        <button class="btn btn-primary quiz-next">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="quiz-step" data-step="5">
+      <div class="quiz-eyebrow">Question 5 of 5</div>
+      <h2 class="quiz-question">What's your primary skincare goal?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="hydration">Deep hydration and plumpness</button>
+        <button class="quiz-option" data-value="anti-aging">Reduce fine lines and firmness</button>
+        <button class="quiz-option" data-value="brightening">Even skin tone and glow</button>
+        <button class="quiz-option" data-value="acne">Clear skin and pore minimizing</button>
+        <button class="quiz-option" data-value="protection">Long-term skin health and protection</button>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary quiz-prev">← Back</button>
+        <span class="quiz-step-label">Step 5 of 5</span>
+        <button class="btn btn-primary quiz-next">See My Results ✓</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="quiz-results" id="quizResults">
+      <div class="quiz-result-header">
+        <div class="section-eyebrow">Your Results</div>
+        <p id="quizSkinType" class="quiz-skin-type">Combination Skin</p>
+        <p id="quizDescription" class="quiz-description">Your personalized analysis goes here.</p>
+        <a href="shop.html" class="btn btn-secondary">Browse All Products</a>
+      </div>
+      <div class="quiz-recommendations">
+        <h3>Recommended for You</h3>
+        <div class="quiz-products-grid" id="quizProductsGrid"></div>
+      </div>
+      <div class="quiz-restart">
+        <button class="btn btn-secondary" id="quizRestart">Retake Quiz</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+
+        <!-- Brand -->
+        <div class="footer-section footer-brand">
+          <h3 class="footer-logo">Vel<span>m</span>ira</h3>
+          <p>Premium skincare for the modern, conscious consumer. Dermatologist-tested and cruelty-free.</p>
+          <div class="social-icons">
+            <a href="https://instagram.com/velmiraskin_bd" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61570999974718" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?special=bestseller">Best Sellers</a></li>
+            <li><a href="shop.html?special=new">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-section">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="quiz.html">Skin Quiz</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ingredient-guide.html">Ingredient Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-and-conditions.html">Terms of Use</a></li>
+            <li><a href="shipping-policy.html">Shipping Info</a></li>
+            <li><a href="refund-policy.html">Returns</a></li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Velmira. All rights reserved. &nbsp;·&nbsp; Dermatologist-tested &nbsp;·&nbsp; Cruelty-free &nbsp;·&nbsp; Made by Gourov Roy</p>
+      </div>
+    </footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><h2>Shopping Cart</h2><button class="close-cart" id="closeCart">✕</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-summary">
+    <div class="summary-row"><span>Subtotal:</span><span id="subtotal">৳0</span></div>
+    <div class="summary-row"><span>Shipping:</span><span id="shipping">Free</span></div>
+    <div class="summary-row total"><span>Total:</span><span id="total">৳0</span></div>
+    <button class="btn btn-primary full-width checkout-btn">Proceed to Checkout</button>
+    <button class="btn btn-secondary full-width" id="continueShopping" style="margin-top:8px;">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- WISHLIST SIDEBAR -->
+<div class="wishlist-sidebar" id="wishlistSidebar">
+  <div class="wishlist-header"><h2>Your Wishlist</h2><button class="close-wishlist" id="closeWishlist">✕</button></div>
+  <div class="wishlist-items" id="wishlistItems"></div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="product-modal" id="productModal">
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-body">
+      <div class="modal-image"><img id="modalImg" src="" alt="Product"></div>
+      <div class="modal-details">
+        <h2 id="modalTitle"></h2>
+        <div class="modal-price"><span id="modalPrice"></span><span class="original-price" id="modalOriginalPrice"></span></div>
+        <p class="modal-description" id="modalDescription"></p>
+        <div class="modal-info"><h4>Key Ingredients</h4><ul id="modalIngredients"></ul></div>
+        <div class="modal-usage"><h4>How to Use</h4><p id="modalUsage"></p></div>
+        <div class="quantity-selector">
+          <label>Quantity:</label>
+          <div class="quantity-controls">
+            <button type="button" id="decreaseQty">−</button>
+            <input type="number" id="quantity" min="1" value="1">
+            <button type="button" id="increaseQty">+</button>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
+          <button class="btn btn-icon" id="addToWishlistBtn" title="Wishlist"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        </div>
+        <div class="modal-footer"><p>✓ Free shipping over ৳5,000</p><p>✓ 30-day money-back guarantee</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+  <button class="mobile-search-close" id="mobileSearchClose" aria-label="Close search">&times;</button>
+  <input type="text" id="mobileSearchInput" placeholder="Search products..." autocomplete="off" />
+</div>
+<div class="mobile-search-results" id="mobileSearchResults"></div>
+
+<!-- ── Premium Nav Drawer ── -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+    
+
+    
+  
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<style id="velmira-navbar-unified-styles">
+  /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 991px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1100;
+      height: auto;
+      min-height: 60px;
+    }
+
+    .nav-container {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 16px !important;
+      flex-wrap: nowrap;
+      overflow: visible;
+    }
+
+    /* Logo stays on left */
+    .nav-logo {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .nav-logo .logo-link {
+      font-size: 22px !important;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+    .nav-right {
+      display: flex !important;
+      align-items: center;
+      gap: 4px !important;
+      margin-left: auto;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .nav-right .search-wrapper {
+      display: none !important;
+    }
+
+    .nav-right .mobile-search-btn {
+      display: inline-flex !important;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .theme-toggle,
+    .nav-right .mobile-search-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .nav-right .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 8px;
+      background: #e74c3c;
+      color: white;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: inline-flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 44px !important;
+      height: 44px !important;
+      padding: 11px 9px !important;
+      margin-left: 4px !important;
+      background: transparent !important;
+      border: none !important;
+      color: #1a1a1a !important;
+      z-index: 1100 !important;
+      position: relative !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: stretch !important;
+      cursor: pointer !important;
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .hamburger {
+      color: #fff !important;
+    }
+
+    .hamburger span {
+      display: block !important;
+      width: 100% !important;
+      height: 2px !important;
+      background: currentColor !important;
+      border-radius: 2px !important;
+      opacity: 1 !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Hamburger animation when menu is open */
+    body.nav-open .hamburger span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg) !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg) !important;
+    }
+
+    /* Off-canvas drawer */
+    .nav-menu {
+      position: fixed !important;
+      top: 0;
+      right: 0;
+      width: min(82vw, 360px);
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      transform: translateX(100%);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s linear 0.45s;
+      z-index: 1090;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      border: none;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    body.dark-mode .nav-menu {
+      background: #1a1a1a;
+    }
+
+    .nav-menu.active,
+    body.nav-open .nav-menu {
+      transform: translateX(0) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s;
+    }
+
+    /* Drawer header: brand + close button */
+    .nav-menu .drawer-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .nav-menu .drawer-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .drawer-brand {
+      color: #fff;
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #1a1a1a;
+      transition: transform 0.2s ease;
+    }
+
+    body.dark-mode .drawer-close {
+      color: #fff;
+    }
+
+    .drawer-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .drawer-close svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navigation links in drawer */
+    .nav-menu .nav-links {
+      list-style: none;
+      padding: 12px 0;
+      margin: 0;
+      flex: 1;
+    }
+
+    .nav-menu .nav-links li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    body.dark-mode .nav-menu .nav-links li {
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-menu .nav-link {
+      display: block;
+      padding: 16px 24px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    body.dark-mode .nav-menu .nav-link {
+      color: #ffffff;
+    }
+
+    .nav-menu .nav-link.active,
+    .nav-menu .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .nav-menu .nav-link.active,
+    body.dark-mode .nav-menu .nav-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* Remove desktop decorative pseudo-elements */
+    .nav-menu::before,
+    .nav-menu::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .nav-menu .nav-link::after {
+      display: none !important;
+    }
+
+    /* Backdrop overlay */
+    .nav-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      z-index: 1080;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    body.nav-open .nav-backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Prevent body scroll when drawer is open */
+    body.nav-open {
+      overflow: hidden !important;
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 380px) {
+    .nav-right .theme-toggle {
+      display: none !important;
+    }
+
+    .nav-container {
+      padding: 10px 12px !important;
+      gap: 4px;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .mobile-search-btn {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  /* Desktop: hide hamburger and drawer, show full menu */
+  @media (min-width: 992px) {
+    .hamburger {
+      display: none !important;
+    }
+
+    .nav-backdrop {
+      display: none !important;
+    }
+
+    .nav-menu {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: none !important;
+      z-index: auto !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+      border: none !important;
+      overflow: visible !important;
+    }
+
+    .nav-menu .drawer-header {
+      display: none !important;
+    }
+
+    .nav-menu .nav-links {
+      display: flex !important;
+      gap: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu .nav-links li {
+      border: none !important;
+    }
+
+    .nav-menu .nav-link {
+      padding: 0 16px;
+      border-bottom: none;
+    }
+
+    .nav-menu .nav-link::after {
+      display: block !important;
+    }
+
+    body.nav-open {
+      overflow: auto !important;
+    }
+  }
+  /* Drawer close button */
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .drawer-close:hover { opacity: 1; }
+  body.dark-mode .drawer-close { color: #fff; }
+
+  /* Body padding for fixed navbar */
+  body { padding-top: 60px; }
+  @media (min-width: 992px) { body { padding-top: 72px; } }
+  /* Remove carousel margin-top since body padding-top handles navbar */
+  .hero-carousel { margin-top: 0 !important; }
+
+  /* Sidebars + overlay always above fixed navbar */
+  .cart-sidebar,
+  .wishlist-sidebar {
+    z-index: 1200 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+  .overlay {
+    z-index: 1150 !important;
+  }
+</style>
+
+<script id="velmira-navbar-unified-js">
+  (function () {
+    "use strict";
+
+    // Wait for DOM to be ready
+    function initNavbar() {
+      const toggle = document.getElementById("menuToggle");
+      const menu = document.getElementById("navMenu");
+
+      if (!toggle || !menu) {
+        console.warn("Navbar elements not found");
+        return;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 1. Create backdrop once
+      // ────────────────────────────────────────────────────────────────────
+      let backdrop = document.querySelector(".nav-backdrop");
+      if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.className = "nav-backdrop";
+        document.body.appendChild(backdrop);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 2. Inject drawer header (brand + close) once, at the start
+      // ────────────────────────────────────────────────────────────────────
+      if (!menu.querySelector(".drawer-header")) {
+        const header = document.createElement("div");
+        header.className = "drawer-header";
+        header.innerHTML =
+          '<span class="drawer-brand">VELMIRA</span>' +
+          '<button type="button" class="drawer-close" aria-label="Close menu">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+          '<line x1="6" y1="6" x2="18" y2="18"/>' +
+          '<line x1="6" y1="18" x2="18" y2="6"/>' +
+          "</svg>" +
+          "</button>";
+        menu.insertBefore(header, menu.firstChild);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 3. Helper functions to open/close drawer
+      // ────────────────────────────────────────────────────────────────────
+      function closeDrawer() {
+        document.body.classList.remove("nav-open");
+        menu.classList.remove("active", "open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      function openDrawer() {
+        document.body.classList.add("nav-open");
+        menu.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+
+      function toggleDrawer(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        }
+        if (document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 4. Clean hamburger button: remove old listeners, set fresh ones
+      // ────────────────────────────────────────────────────────────────────
+      const freshToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(freshToggle, toggle);
+
+      freshToggle.setAttribute("aria-label", "Toggle menu");
+      freshToggle.setAttribute("aria-expanded", "false");
+      freshToggle.setAttribute("type", "button");
+      freshToggle.addEventListener("click", toggleDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 5. Backdrop click to close
+      // ────────────────────────────────────────────────────────────────────
+      backdrop.addEventListener("click", closeDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 6. Close button in drawer header
+      // ────────────────────────────────────────────────────────────────────
+      const closeBtn = menu.querySelector(".drawer-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 7. Nav links click to close drawer
+      // ────────────────────────────────────────────────────────────────────
+      menu.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", closeDrawer);
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 8. Escape key to close
+      // ────────────────────────────────────────────────────────────────────
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.body.classList.contains("nav-open")
+        ) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 9. Resize: close drawer on desktop
+      // ────────────────────────────────────────────────────────────────────
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 991 && document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 10. Set active nav link based on current page
+      // ────────────────────────────────────────────────────────────────────
+      updateActiveLink();
+    }
+
+    function updateActiveLink() {
+      const currentPage = window.location.pathname.split("/").pop() || "index.html";
+      
+      // Remove active from all links
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Add active to matching link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === "" && href === "index.html")) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    // Initialize on DOMContentLoaded or immediately if already loaded
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initNavbar);
+    } else {
+      initNavbar();
+    }
+
+    // Also update active link after a short delay to catch dynamic content
+    setTimeout(updateActiveLink, 100);
+  })();
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1405 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Velmira FAQ — Answers to your most common skincare questions." />
+    <meta name="theme-color" content="#f9fbfe" />
+    <title>FAQ — Velmira Skincare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { overflow-x: hidden; max-width: 100%; }
+
+      /* ── PAGE HERO ── */
+      .page-hero {
+        background: linear-gradient(135deg, #f0f7ff 0%, #e8f3fc 60%, #f4f0ff 100%);
+        padding: 120px 24px 64px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,87,168,0.08);
+      }
+      .page-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--primary, #0057a8);
+        margin-bottom: 14px;
+      }
+      .page-title {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: clamp(40px, 6vw, 72px);
+        font-weight: 300;
+        color: var(--dark, #1a1a2e);
+        margin: 0 0 18px;
+        line-height: 1.1;
+      }
+      .page-subtitle {
+        font-size: 16px;
+        color: var(--dark-light, #3a4a5c);
+        max-width: 520px;
+        margin: 0 auto 32px;
+        line-height: 1.7;
+        font-weight: 300;
+      }
+      .faq-search-wrap {
+        max-width: 440px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .faq-search {
+        width: 100%;
+        padding: 14px 48px 14px 20px;
+        border: 1.5px solid rgba(0,87,168,0.18);
+        border-radius: 999px;
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 14px;
+        color: var(--dark, #1a1a2e);
+        background: #fff;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .faq-search:focus { border-color: var(--primary, #0057a8); box-shadow: 0 0 0 3px rgba(0,87,168,0.08); }
+      .faq-search-icon {
+        position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+        color: var(--dark-light, #3a4a5c); pointer-events: none;
+      }
+
+      /* ── MAIN LAYOUT ── */
+      .faq-main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 60px 24px 80px;
+      }
+
+      /* ── CATEGORY TABS ── */
+      .faq-tabs {
+        display: flex; flex-wrap: wrap; gap: 8px;
+        margin-bottom: 40px; justify-content: center;
+      }
+      .faq-tab {
+        padding: 8px 20px; border-radius: 999px;
+        border: 1.5px solid rgba(0,87,168,0.15);
+        background: #fff; color: var(--dark-light, #3a4a5c);
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 13px; font-weight: 500;
+        cursor: pointer; transition: all 0.2s;
+      }
+      .faq-tab:hover { border-color: var(--primary, #0057a8); color: var(--primary, #0057a8); }
+      .faq-tab.active { background: var(--primary, #0057a8); color: #fff; border-color: var(--primary, #0057a8); }
+
+      /* ── FAQ GROUPS ── */
+      .faq-group { margin-bottom: 48px; }
+      .faq-group-title {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: 26px; font-weight: 400;
+        color: var(--dark, #1a1a2e);
+        margin: 0 0 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(0,87,168,0.1);
+        display: flex; align-items: center; gap: 10px;
+      }
+      .faq-group-title .group-icon { font-size: 22px; }
+
+      /* ── ACCORDION ── */
+      .faq-item {
+        border: 1px solid rgba(0,87,168,0.1);
+        border-radius: 14px;
+        margin-bottom: 10px;
+        background: #fff;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+      }
+      .faq-item:hover { box-shadow: 0 4px 20px rgba(0,87,168,0.08); }
+      .faq-item.open { box-shadow: 0 6px 24px rgba(0,87,168,0.1); }
+      .faq-question {
+        width: 100%; background: none; border: none;
+        padding: 20px 24px;
+        display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        cursor: pointer; text-align: left;
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 15px; font-weight: 500;
+        color: var(--dark, #1a1a2e);
+        transition: color 0.2s;
+      }
+      .faq-item.open .faq-question { color: var(--primary, #0057a8); }
+      .faq-chevron {
+        flex-shrink: 0; width: 20px; height: 20px;
+        color: var(--dark-light, #3a4a5c);
+        transition: transform 0.3s ease;
+      }
+      .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--primary, #0057a8); }
+      .faq-answer {
+        max-height: 0; overflow: hidden;
+        transition: max-height 0.35s ease, padding 0.2s;
+        padding: 0 24px;
+      }
+      .faq-answer-inner {
+        padding-bottom: 20px;
+        font-size: 14px; line-height: 1.8;
+        color: var(--dark-light, #3a4a5c);
+        font-weight: 300;
+      }
+      .faq-answer-inner a { color: var(--primary, #0057a8); text-decoration: none; }
+      .faq-answer-inner a:hover { text-decoration: underline; }
+      .faq-answer-inner ul { padding-left: 20px; margin: 10px 0; }
+      .faq-answer-inner ul li { margin-bottom: 6px; }
+      .faq-item.open .faq-answer { max-height: 600px; }
+
+      /* ── NO RESULTS ── */
+      .faq-empty { text-align: center; padding: 60px 20px; color: var(--dark-light, #3a4a5c); display: none; }
+      .faq-empty.visible { display: block; }
+
+      /* ── CONTACT CTA ── */
+      .faq-contact {
+        background: linear-gradient(135deg, #f0f7ff, #e8f3fc);
+        border: 1px solid rgba(0,87,168,0.1);
+        border-radius: 20px;
+        padding: 48px 40px;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .faq-contact h3 {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: 30px; font-weight: 400;
+        color: var(--dark, #1a1a2e); margin: 0 0 12px;
+      }
+      .faq-contact p { font-size: 14px; color: var(--dark-light, #3a4a5c); margin: 0 0 28px; line-height: 1.7; }
+      .faq-contact .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 14px 32px; border-radius: 999px;
+        background: var(--primary, #0057a8); color: #fff;
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 14px; font-weight: 500;
+        text-decoration: none; transition: background 0.2s, transform 0.2s;
+        border: none; cursor: pointer;
+      }
+      .faq-contact .btn:hover { background: #004a8f; transform: translateY(-1px); }
+
+      /* ── FOOTER ── */
+      .footer { background: var(--dark, #1a1a2e); color: rgba(255,255,255,0.7); padding: 48px 24px 24px; }
+      .footer-content { display: flex; flex-wrap: wrap; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+      .footer-section h3.footer-logo { font-family: var(--font-serif, "Cormorant Garamond", serif); font-size: 28px; font-weight: 300; color: #fff; margin: 0 0 12px; }
+      .footer-logo span { color: var(--primary, #0057a8); }
+      .footer-section h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin: 0 0 16px; }
+      .footer-section p { font-size: 13px; line-height: 1.7; margin: 0; }
+      .footer-section ul { list-style: none; padding: 0; margin: 0; }
+      .footer-section ul li { margin-bottom: 10px; }
+      .footer-section ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+      .footer-section ul li a:hover { color: #fff; }
+      .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 12px; max-width: 1200px; margin: 0 auto; }
+
+      /* ── MOBILE ── */
+      @media (max-width: 600px) {
+        .page-hero { padding: 100px 16px 48px; }
+        .faq-main { padding: 40px 16px 60px; }
+        .faq-question { padding: 16px 18px; font-size: 14px; }
+        .faq-answer { padding: 0 18px; }
+        .faq-contact { padding: 36px 24px; }
+      }
+    
+/* ── Mobile search icon button ── */
+.mobile-search-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--dark, #1a1a1a);
+  padding: 6px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+@media (max-width: 768px) {
+  .mobile-search-btn { display: flex; }
+  .nav-right .search-wrapper { display: none; }
+}
+/* ── Mobile search overlay ── */
+.mobile-search-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: var(--white, #fff);
+  padding: 10px 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  align-items: center;
+  gap: 8px;
+  height: 58px;
+}
+.mobile-search-overlay.open { display: flex; }
+.mobile-search-overlay input {
+  flex: 1;
+  border: 1.5px solid var(--border, #e0e0e0);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  outline: none;
+  background: var(--light-gray, #f5f5f5);
+  color: var(--dark, #1a1a1a);
+  font-family: inherit;
+  min-width: 0;
+}
+.mobile-search-overlay input:focus { border-color: var(--primary); }
+.mobile-search-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--dark-light, #777); padding: 4px 6px; line-height: 1;
+  font-size: 24px; flex-shrink: 0; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-search-results {
+  position: fixed;
+  top: 58px; left: 0; right: 0;
+  z-index: 9998;
+  background: var(--white, #fff);
+  border-top: 1px solid var(--border, #e0e0e0);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  max-height: calc(100vh - 58px);
+  overflow-y: auto;
+  display: none;
+}
+.mobile-search-results.open { display: block; }
+body.dark-mode .mobile-search-overlay { background: var(--white); }
+body.dark-mode .mobile-search-overlay input { background: var(--light-gray); color: var(--dark); }
+body.dark-mode .mobile-search-results { background: var(--white); }
+
+      /* ── FAQ DARK MODE STYLES ── */
+      body.dark-mode .page-hero {
+        background: linear-gradient(135deg, #0f1724, #0d1a2e);
+        border-bottom-color: rgba(126, 200, 255, 0.1);
+      }
+      body.dark-mode .page-eyebrow {
+        color: #7ec8ff;
+      }
+      body.dark-mode .page-title {
+        color: #ffffff;
+      }
+      body.dark-mode .page-subtitle {
+        color: #c4d1df;
+      }
+      body.dark-mode .faq-search {
+        background: #1a2332;
+        color: #ffffff;
+        border-color: rgba(126, 200, 255, 0.25);
+      }
+      body.dark-mode .faq-search::placeholder {
+        color: #7a8fa4;
+      }
+      body.dark-mode .faq-search-icon {
+        color: #7a8fa4;
+      }
+      body.dark-mode .faq-tab {
+        background: #1a2332;
+        color: #c4d1df;
+        border-color: rgba(126, 200, 255, 0.2);
+      }
+      body.dark-mode .faq-tab:hover {
+        color: #7ec8ff;
+        border-color: #7ec8ff;
+      }
+      body.dark-mode .faq-tab.active {
+        background: #0057a8;
+        color: #ffffff;
+      }
+      body.dark-mode .faq-group-title {
+        color: #ffffff;
+        border-bottom-color: rgba(126, 200, 255, 0.15);
+      }
+      body.dark-mode .faq-item {
+        background: #1a2332;
+        border-color: rgba(126, 200, 255, 0.15);
+      }
+      body.dark-mode .faq-item.open {
+        box-shadow: 0 6px 24px rgba(126, 200, 255, 0.12);
+      }
+      body.dark-mode .faq-question {
+        color: #ffffff;
+      }
+      body.dark-mode .faq-item.open .faq-question,
+      body.dark-mode .faq-question:hover {
+        color: #7ec8ff;
+      }
+      body.dark-mode .faq-answer-inner {
+        color: #c4d1df;
+      }
+      body.dark-mode .faq-answer-inner a {
+        color: #7ec8ff;
+      }
+      body.dark-mode .faq-chevron {
+        color: #7a8fa4;
+      }
+      body.dark-mode .faq-item.open .faq-chevron {
+        color: #7ec8ff;
+      }
+      body.dark-mode .faq-contact {
+        background: linear-gradient(135deg, #1a2844, #1a1f2e);
+        border-color: rgba(126, 200, 255, 0.1);
+      }
+      body.dark-mode .faq-contact h3 {
+        color: #ffffff;
+      }
+      body.dark-mode .faq-contact p {
+        color: #c4d1df;
+      }
+</style>
+    <link rel="stylesheet" crossorigin href="/assets/style-Db11KUSm.css">
+  </head>
+  <body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">        <div class="nav-logo">
+          <a href="index.html" class="logo-link">Vel<span>m</span>ira</a>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About Velmira</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
+            <li><a href="faq.html" class="nav-link active">FAQ</a></li>
+            <li><a href="ingredient-guide.html" class="nav-link">Ingredient Guide</a></li>
+          </ul>
+        </div>
+        <div class="nav-right">
+          <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+            <span class="theme-icon">
+              <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+          </button>
+          <button id="wishlistBtn" class="icon-btn" title="Wishlist">
+            <span class="badge" id="wishlistCount" style="display:none">0</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button id="cartBtn" class="icon-btn" title="Cart">
+            <span class="badge" id="cartCount" style="display:none">0</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </button>
+        </div>
+      
+        <button class="hamburger" id="menuToggle"><span></span><span></span><span></span></button>
+</div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="page-eyebrow">Help Center</div>
+      <h1 class="page-title">Frequently Asked <em>Questions</em></h1>
+      <p class="page-subtitle">Everything you need to know about our products, orders, and skincare routines.</p>
+      <div class="faq-search-wrap">
+        <input type="text" class="faq-search" id="faqSearch" placeholder="Search questions…" />
+        <svg class="faq-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="faq-main">
+
+      <!-- TABS -->
+      <div class="faq-tabs" id="faqTabs">
+        <button class="faq-tab active" data-group="all">All</button>
+        <button class="faq-tab" data-group="orders">Orders & Shipping</button>
+        <button class="faq-tab" data-group="products">Products</button>
+        <button class="faq-tab" data-group="routine">Skincare Routine</button>
+        <button class="faq-tab" data-group="returns">Returns & Refunds</button>
+        <button class="faq-tab" data-group="account">Account</button>
+      </div>
+
+      <div id="faqEmpty" class="faq-empty">
+        <p style="font-size:32px;margin-bottom:12px;">🔍</p>
+        <p style="font-size:16px;font-weight:500;color:#1a1a2e;">No results found</p>
+        <p style="font-size:14px;margin-top:6px;">Try a different search term or browse by category.</p>
+      </div>
+
+      <!-- ORDERS & SHIPPING -->
+      <div class="faq-group" data-group="orders">
+        <h2 class="faq-group-title"><span class="group-icon">📦</span> Orders &amp; Shipping</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">How long does delivery take?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We offer standard delivery (3–5 business days) and express delivery (1–2 business days) across Bangladesh. Orders placed before 2 PM are dispatched the same day. International shipping is available to select countries and typically takes 7–14 business days.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Do you offer free shipping?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes! Orders over ৳1,500 qualify for free standard shipping within Bangladesh. For orders below that, a flat shipping fee of ৳120 applies.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I track my order?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Once your order is dispatched, you'll receive an email and/or SMS with a tracking number and a link to follow your shipment in real time. You can also check your order status by logging into your Velmira account.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Can I change or cancel my order after placing it?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">You can modify or cancel your order within 1 hour of placing it. After that, the order enters processing and cannot be changed. Please contact our support team immediately at <a href="mailto:support@velmira.com">support@velmira.com</a> if you need assistance.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Do you ship internationally?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Currently we ship to Bangladesh, India, and the UAE. We're actively expanding — sign up for our newsletter to be notified when we reach your country.</div></div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="faq-group" data-group="products">
+        <h2 class="faq-group-title"><span class="group-icon">✨</span> Products</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">Are Velmira products dermatologist-tested?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">All products we carry are dermatologist-tested and meet strict safety and efficacy standards. We partner with brands that provide clinical evidence for their formulas, and many are recommended by skincare professionals.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Are the products cruelty-free and vegan?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We prioritise cruelty-free brands. Each product page clearly indicates whether it is cruelty-free and/or vegan. Look for the 🐰 and 🌿 badges on product listings. If you're unsure, feel free to contact us.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I know which products are right for my skin?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Take our free <a href="quiz.html">Skin Quiz</a> — it takes under 2 minutes and gives you a personalised product routine based on your skin type, concerns, and goals. You can also browse by concern on our <a href="shop.html">Shop</a> page.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">What is the shelf life of the products?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Most skincare products have a shelf life of 12–24 months unopened. Once opened, look for the Period After Opening (PAO) symbol on the packaging — it's a small jar icon with a number and "M" (months). We only ship products with at least 6 months remaining before expiry.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Are your products suitable for sensitive skin?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Many of our products are formulated for sensitive skin — including our Cetaphil and CeraVe ranges. Each product page lists key ingredients and highlights if it's fragrance-free, hypoallergenic, or suitable for sensitive skin. We recommend doing a patch test before full application.</div></div>
+        </div>
+      </div>
+
+      <!-- SKINCARE ROUTINE -->
+      <div class="faq-group" data-group="routine">
+        <h2 class="faq-group-title"><span class="group-icon">🌿</span> Skincare Routine</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">What is the correct order to apply skincare products?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">The general rule is to go from thinnest to thickest consistency. A standard routine looks like:
+            <ul>
+              <li><strong>Morning:</strong> Cleanser → Toner → Serum → Moisturiser → Sunscreen</li>
+              <li><strong>Evening:</strong> Cleanser → Toner → Treatment/Serum → Eye Cream → Moisturiser</li>
+            </ul>
+            Check out our <a href="ingredient-guide.html">Ingredient Guide</a> for details on layering actives safely.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How long before I see results from a new skincare product?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Skincare takes time. You may notice hydration improvements within a few days, but for concerns like acne, dark spots, or fine lines, it typically takes 4–12 weeks of consistent use to see meaningful results. Patience and consistency are key.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Can I use multiple active ingredients at once?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Some actives work well together; others clash. As a general guide:
+            <ul>
+              <li>✅ Vitamin C + SPF — great morning combo</li>
+              <li>✅ Niacinamide + most actives — very tolerant</li>
+              <li>⚠️ Retinol + AHA/BHA — can cause irritation; use on alternate nights</li>
+              <li>⚠️ Vitamin C + Niacinamide — fine for most, but layer separately if sensitive</li>
+            </ul>
+            Visit our <a href="ingredient-guide.html">Ingredient Guide</a> for a full compatibility chart.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Do I need to wear sunscreen every day?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Absolutely — yes. UV damage occurs even on cloudy days and through windows. Daily SPF 30+ is the single most important step in any skincare routine for preventing premature ageing, dark spots, and skin cancer.</div></div>
+        </div>
+      </div>
+
+      <!-- RETURNS & REFUNDS -->
+      <div class="faq-group" data-group="returns">
+        <h2 class="faq-group-title"><span class="group-icon">↩️</span> Returns &amp; Refunds</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">What is your return policy?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We accept returns within 14 days of delivery for unopened, unused products in their original packaging. Due to hygiene reasons, we cannot accept returns on opened skincare products unless they are faulty or you received the wrong item.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">I received a damaged or wrong item — what do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We're so sorry! Please email <a href="mailto:support@velmira.com">support@velmira.com</a> with your order number and a photo of the item within 48 hours of receiving it. We'll send a replacement or issue a full refund at no extra cost to you.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How long does a refund take?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Once we receive and inspect the returned item, refunds are processed within 3–5 business days. The time it takes to appear in your account depends on your bank or payment provider — typically another 3–5 business days.</div></div>
+        </div>
+      </div>
+
+      <!-- ACCOUNT -->
+      <div class="faq-group" data-group="account">
+        <h2 class="faq-group-title"><span class="group-icon">👤</span> Account</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">Do I need an account to place an order?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">No, you can check out as a guest. However, creating an account lets you track orders, save your wishlist, earn loyalty points, and get personalised product recommendations based on your skin profile.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I reset my password?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Click "Forgot Password" on the login page and enter your email address. You'll receive a reset link within a few minutes. Check your spam folder if it doesn't arrive. The link is valid for 24 hours.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I delete my account?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><div class="faq-answer-inner">To request account deletion, email us at <a href="mailto:support@velmira.com">support@velmira.com</a> with the subject "Account Deletion Request." We'll process it within 7 business days in accordance with our <a href="privacy-policy.html">Privacy Policy</a>.</div></div>
+        </div>
+      </div>
+
+      <!-- CONTACT CTA -->
+      <div class="faq-contact">
+        <h3>Still have questions?</h3>
+        <p>Our skincare experts are happy to help. Reach out anytime — we typically respond within a few hours.</p>
+        <a href="mailto:support@velmira.com" class="btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact Support
+        </a>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+        <footer class="footer">
+      <div class="footer-content">
+
+        <!-- Brand -->
+        <div class="footer-section footer-brand">
+          <h3 class="footer-logo">Vel<span>m</span>ira</h3>
+          <p>Premium skincare for the modern, conscious consumer. Dermatologist-tested and cruelty-free.</p>
+          <div class="social-icons">
+            <a href="https://instagram.com/velmiraskin_bd" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61570999974718" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?special=bestseller">Best Sellers</a></li>
+            <li><a href="shop.html?special=new">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-section">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="quiz.html">Skin Quiz</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ingredient-guide.html">Ingredient Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-and-conditions.html">Terms of Use</a></li>
+            <li><a href="shipping-policy.html">Shipping Info</a></li>
+            <li><a href="refund-policy.html">Returns</a></li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Velmira. All rights reserved. &nbsp;·&nbsp; Dermatologist-tested &nbsp;·&nbsp; Cruelty-free &nbsp;·&nbsp; Made by Gourov Roy</p>
+      </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Shopping Cart</h2>
+        <button class="close-cart" id="closeCart">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span><span id="subtotal">৳0</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping:</span><span id="shipping">Free</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span><span id="total">৳0</span>
+        </div>
+        <button class="btn btn-primary full-width checkout-btn">
+          Proceed to Checkout
+        </button>
+        <button
+          class="btn btn-secondary full-width"
+          id="continueShopping"
+          style="margin-top: 8px"
+        >
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="wishlist-sidebar" id="wishlistSidebar">
+      <div class="wishlist-header">
+        <h2>Your Wishlist</h2>
+        <button class="close-wishlist" id="closeWishlist">✕</button>
+      </div>
+      <div class="wishlist-items" id="wishlistItems"></div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="product-modal" id="productModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div class="modal-body">
+          <div class="modal-image">
+            <img id="modalImg" src="" alt="Product" />
+          </div>
+          <div class="modal-details">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-price">
+              <span id="modalPrice"></span
+              ><span class="original-price" id="modalOriginalPrice"></span>
+            </div>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="modal-info">
+              <h4>Key Ingredients</h4>
+              <ul id="modalIngredients"></ul>
+            </div>
+            <div class="modal-usage">
+              <h4>How to Use</h4>
+              <p id="modalUsage"></p>
+            </div>
+            <div class="quantity-selector">
+              <label>Quantity:</label>
+              <div class="quantity-controls">
+                <button type="button" id="decreaseQty">−</button>
+                <input type="number" id="quantity" min="1" value="1" />
+                <button type="button" id="increaseQty">+</button>
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="addToCartBtn">
+                Add to Cart
+              </button>
+              <button
+                class="btn btn-icon"
+                id="addToWishlistBtn"
+                title="Add to Wishlist"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <p>✓ Free shipping on orders over ৳5,000</p>
+              <p>✓ 30-day money-back guarantee</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script type="module" src="/assets/script-CbRYxaYZ.js"></script>
+
+    <script>
+      /* ── Navbar scroll ── */
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+      /* ── Dark mode ── */
+      const dmToggle = document.getElementById('darkModeToggle');
+      if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+      dmToggle?.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('velmira_dark', document.body.classList.contains('dark-mode') ? '1' : '0');
+      });
+
+      /* ── Badge sync ── */
+      function syncBadges() {
+        try {
+          const cart = JSON.parse(localStorage.getItem('velmira_cart') || '[]');
+          const total = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+          const cb = document.getElementById('cartCount');
+          if (cb) { cb.textContent = total; cb.style.display = total > 0 ? '' : 'none'; }
+          const wl = JSON.parse(localStorage.getItem('velmira_wishlist') || '[]');
+          const wb = document.getElementById('wishlistCount');
+          if (wb) { wb.textContent = wl.length; wb.style.display = wl.length > 0 ? '' : 'none'; }
+        } catch(e) {}
+      }
+      syncBadges();
+      window.addEventListener('storage', syncBadges);
+
+      /* ── FAQ Accordion ── */
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item');
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+          if (!isOpen) item.classList.add('open');
+        });
+      });
+
+      /* ── Category tabs ── */
+      document.getElementById('faqTabs').addEventListener('click', e => {
+        const tab = e.target.closest('.faq-tab');
+        if (!tab) return;
+        document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const group = tab.dataset.group;
+        document.querySelectorAll('.faq-group').forEach(g => {
+          g.style.display = (group === 'all' || g.dataset.group === group) ? '' : 'none';
+        });
+      });
+
+      /* ── Search ── */
+      document.getElementById('faqSearch').addEventListener('input', function() {
+        const q = this.value.toLowerCase().trim();
+        let anyVisible = false;
+        document.querySelectorAll('.faq-item').forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const show = !q || text.includes(q);
+          item.style.display = show ? '' : 'none';
+          if (show) anyVisible = true;
+        });
+        document.querySelectorAll('.faq-group').forEach(g => {
+          const visibleItems = [...g.querySelectorAll('.faq-item')].some(i => i.style.display !== 'none');
+          g.style.display = visibleItems ? '' : 'none';
+        });
+        document.getElementById('faqEmpty').classList.toggle('visible', !anyVisible);
+        // Reset tabs to "all" when searching
+        document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-group="all"]').classList.add('active');
+      });
+    </script>
+  <!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+  <button class="mobile-search-close" id="mobileSearchClose" aria-label="Close search">&times;</button>
+  <input type="text" id="mobileSearchInput" placeholder="Search products..." autocomplete="off" />
+</div>
+<div class="mobile-search-results" id="mobileSearchResults"></div>
+
+<!-- ── Premium Nav Drawer ── -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+    
+
+    
+  
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+<style id="velmira-navbar-unified-styles">
+  /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 991px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1100;
+      height: auto;
+      min-height: 60px;
+    }
+
+    .nav-container {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 16px !important;
+      flex-wrap: nowrap;
+      overflow: visible;
+    }
+
+    /* Logo stays on left */
+    .nav-logo {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .nav-logo .logo-link {
+      font-size: 22px !important;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+    .nav-right {
+      display: flex !important;
+      align-items: center;
+      gap: 4px !important;
+      margin-left: auto;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .nav-right .search-wrapper {
+      display: none !important;
+    }
+
+    .nav-right .mobile-search-btn {
+      display: inline-flex !important;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .theme-toggle,
+    .nav-right .mobile-search-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .nav-right .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 8px;
+      background: #e74c3c;
+      color: white;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: inline-flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 44px !important;
+      height: 44px !important;
+      padding: 11px 9px !important;
+      margin-left: 4px !important;
+      background: transparent !important;
+      border: none !important;
+      color: #1a1a1a !important;
+      z-index: 1100 !important;
+      position: relative !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: stretch !important;
+      cursor: pointer !important;
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .hamburger {
+      color: #fff !important;
+    }
+
+    .hamburger span {
+      display: block !important;
+      width: 100% !important;
+      height: 2px !important;
+      background: currentColor !important;
+      border-radius: 2px !important;
+      opacity: 1 !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Hamburger animation when menu is open */
+    body.nav-open .hamburger span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg) !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    body.nav-open .hamburger span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg) !important;
+    }
+
+    /* Off-canvas drawer */
+    .nav-menu {
+      position: fixed !important;
+      top: 0;
+      right: 0;
+      width: min(82vw, 360px);
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      transform: translateX(100%);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s linear 0.45s;
+      z-index: 1090;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      border: none;
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    body.dark-mode .nav-menu {
+      background: #1a1a1a;
+    }
+
+    .nav-menu.active,
+    body.nav-open .nav-menu {
+      transform: translateX(0) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0s;
+    }
+
+    /* Drawer header: brand + close button */
+    .nav-menu .drawer-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .nav-menu .drawer-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .drawer-brand {
+      color: #fff;
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: #1a1a1a;
+      transition: transform 0.2s ease;
+    }
+
+    body.dark-mode .drawer-close {
+      color: #fff;
+    }
+
+    .drawer-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .drawer-close svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navigation links in drawer */
+    .nav-menu .nav-links {
+      list-style: none;
+      padding: 12px 0;
+      margin: 0;
+      flex: 1;
+    }
+
+    .nav-menu .nav-links li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    body.dark-mode .nav-menu .nav-links li {
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-menu .nav-link {
+      display: block;
+      padding: 16px 24px;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    body.dark-mode .nav-menu .nav-link {
+      color: #ffffff;
+    }
+
+    .nav-menu .nav-link.active,
+    .nav-menu .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1a1a1a;
+    }
+
+    body.dark-mode .nav-menu .nav-link.active,
+    body.dark-mode .nav-menu .nav-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* Remove desktop decorative pseudo-elements */
+    .nav-menu::before,
+    .nav-menu::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .nav-menu .nav-link::after {
+      display: none !important;
+    }
+
+    /* Backdrop overlay */
+    .nav-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0);
+      z-index: 1080;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    body.nav-open .nav-backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Prevent body scroll when drawer is open */
+    body.nav-open {
+      overflow: hidden !important;
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 380px) {
+    .nav-right .theme-toggle {
+      display: none !important;
+    }
+
+    .nav-container {
+      padding: 10px 12px !important;
+      gap: 4px;
+    }
+
+    .nav-right .icon-btn,
+    .nav-right .mobile-search-btn {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  /* Desktop: hide hamburger and drawer, show full menu */
+  @media (min-width: 992px) {
+    .hamburger {
+      display: none !important;
+    }
+
+    .nav-backdrop {
+      display: none !important;
+    }
+
+    .nav-menu {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition: none !important;
+      z-index: auto !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+      border: none !important;
+      overflow: visible !important;
+    }
+
+    .nav-menu .drawer-header {
+      display: none !important;
+    }
+
+    .nav-menu .nav-links {
+      display: flex !important;
+      gap: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu .nav-links li {
+      border: none !important;
+    }
+
+    .nav-menu .nav-link {
+      padding: 0 16px;
+      border-bottom: none;
+    }
+
+    .nav-menu .nav-link::after {
+      display: block !important;
+    }
+
+    body.nav-open {
+      overflow: auto !important;
+    }
+  }
+  /* Drawer close button */
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .drawer-close:hover { opacity: 1; }
+  body.dark-mode .drawer-close { color: #fff; }
+
+  /* Body padding for fixed navbar */
+  body { padding-top: 60px; }
+  @media (min-width: 992px) { body { padding-top: 72px; } }
+  /* Remove carousel margin-top since body padding-top handles navbar */
+  .hero-carousel { margin-top: 0 !important; }
+
+  /* Sidebars + overlay always above fixed navbar */
+  .cart-sidebar,
+  .wishlist-sidebar {
+    z-index: 1200 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+  .overlay {
+    z-index: 1150 !important;
+  }
+</style>
+
+<script id="velmira-navbar-unified-js">
+  (function () {
+    "use strict";
+
+    // Wait for DOM to be ready
+    function initNavbar() {
+      const toggle = document.getElementById("menuToggle");
+      const menu = document.getElementById("navMenu");
+
+      if (!toggle || !menu) {
+        console.warn("Navbar elements not found");
+        return;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 1. Create backdrop once
+      // ────────────────────────────────────────────────────────────────────
+      let backdrop = document.querySelector(".nav-backdrop");
+      if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.className = "nav-backdrop";
+        document.body.appendChild(backdrop);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 2. Inject drawer header (brand + close) once, at the start
+      // ────────────────────────────────────────────────────────────────────
+      if (!menu.querySelector(".drawer-header")) {
+        const header = document.createElement("div");
+        header.className = "drawer-header";
+        header.innerHTML =
+          '<span class="drawer-brand">VELMIRA</span>' +
+          '<button type="button" class="drawer-close" aria-label="Close menu">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+          '<line x1="6" y1="6" x2="18" y2="18"/>' +
+          '<line x1="6" y1="18" x2="18" y2="6"/>' +
+          "</svg>" +
+          "</button>";
+        menu.insertBefore(header, menu.firstChild);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 3. Helper functions to open/close drawer
+      // ────────────────────────────────────────────────────────────────────
+      function closeDrawer() {
+        document.body.classList.remove("nav-open");
+        menu.classList.remove("active", "open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      function openDrawer() {
+        document.body.classList.add("nav-open");
+        menu.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+
+      function toggleDrawer(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        }
+        if (document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 4. Clean hamburger button: remove old listeners, set fresh ones
+      // ────────────────────────────────────────────────────────────────────
+      const freshToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(freshToggle, toggle);
+
+      freshToggle.setAttribute("aria-label", "Toggle menu");
+      freshToggle.setAttribute("aria-expanded", "false");
+      freshToggle.setAttribute("type", "button");
+      freshToggle.addEventListener("click", toggleDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 5. Backdrop click to close
+      // ────────────────────────────────────────────────────────────────────
+      backdrop.addEventListener("click", closeDrawer);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 6. Close button in drawer header
+      // ────────────────────────────────────────────────────────────────────
+      const closeBtn = menu.querySelector(".drawer-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // 7. Nav links click to close drawer
+      // ────────────────────────────────────────────────────────────────────
+      menu.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", closeDrawer);
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 8. Escape key to close
+      // ────────────────────────────────────────────────────────────────────
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.body.classList.contains("nav-open")
+        ) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 9. Resize: close drawer on desktop
+      // ────────────────────────────────────────────────────────────────────
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 991 && document.body.classList.contains("nav-open")) {
+          closeDrawer();
+        }
+      });
+
+      // ────────────────────────────────────────────────────────────────────
+      // 10. Set active nav link based on current page
+      // ────────────────────────────────────────────────────────────────────
+      updateActiveLink();
+    }
+
+    function updateActiveLink() {
+      const currentPage = window.location.pathname.split("/").pop() || "index.html";
+      
+      // Remove active from all links
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      // Add active to matching link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === "" && href === "index.html")) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    // Initialize on DOMContentLoaded or immediately if already loaded
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initNavbar);
+    } else {
+      initNavbar();
+    }
+
+    // Also update active link after a short delay to catch dynamic content
+    setTimeout(updateActiveLink, 100);
+  })();
+</script>
+
+
+</body>
+
+</html>

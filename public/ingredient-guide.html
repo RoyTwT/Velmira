@@ -1,0 +1,2874 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Velmira Ingredient Guide — Learn what's in your skincare and how to use actives safely."
+    />
+    <meta name="theme-color" content="#f9fbfe" />
+    <title>Ingredient Guide — Velmira Skincare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+
+      /* ── PAGE HERO ── */
+      .page-hero {
+        background: linear-gradient(
+          135deg,
+          #f5f0ff 0%,
+          #ede8fc 50%,
+          #f0f7ff 100%
+        );
+        padding: 120px 24px 64px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 87, 168, 0.08);
+      }
+      .page-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--primary, #0057a8);
+        margin-bottom: 14px;
+      }
+      .page-title {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: clamp(38px, 6vw, 68px);
+        font-weight: 300;
+        color: var(--dark, #1a1a2e);
+        margin: 0 0 18px;
+        line-height: 1.1;
+      }
+      .page-subtitle {
+        font-size: 16px;
+        color: var(--dark-light, #3a4a5c);
+        max-width: 560px;
+        margin: 0 auto 32px;
+        line-height: 1.7;
+        font-weight: 300;
+      }
+      .hero-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .hero-pill {
+        padding: 7px 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 87, 168, 0.15);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--dark-light, #3a4a5c);
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+      }
+      .hero-pill:hover {
+        background: var(--primary, #0057a8);
+        color: #fff;
+        border-color: var(--primary, #0057a8);
+      }
+
+      /* ── LAYOUT ── */
+      .ig-main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 64px 24px 80px;
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 48px;
+        align-items: start;
+      }
+
+      /* ── SIDEBAR ── */
+      .ig-sidebar {
+        position: sticky;
+        top: 90px;
+      }
+      .ig-sidebar-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dark-light, #3a4a5c);
+        margin-bottom: 14px;
+      }
+      .ig-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .ig-nav li {
+        margin-bottom: 4px;
+      }
+      .ig-nav a {
+        display: block;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm, 8px);
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--dark-light, #3a4a5c);
+        text-decoration: none;
+        transition: all 0.2s;
+        border-left: 2px solid transparent;
+      }
+      .ig-nav a:hover,
+      .ig-nav a.active {
+        background: rgba(0, 87, 168, 0.06);
+        color: var(--primary, #0057a8);
+        border-left-color: var(--primary, #0057a8);
+      }
+      .ig-sidebar-divider {
+        height: 1px;
+        background: rgba(0, 87, 168, 0.08);
+        margin: 16px 0;
+      }
+      .ig-compatibility-btn {
+        width: 100%;
+        padding: 11px 16px;
+        background: var(--primary, #0057a8);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius-sm, 8px);
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: center;
+      }
+      .ig-compatibility-btn:hover {
+        background: #004a8f;
+      }
+
+      /* ── CONTENT ── */
+      .ig-content section {
+        margin-bottom: 64px;
+      }
+
+      .ig-intro {
+        background: linear-gradient(135deg, #f0f7ff, #f5f0ff);
+        border: 1px solid rgba(0, 87, 168, 0.08);
+        border-radius: 20px;
+        padding: 36px 40px;
+        margin-bottom: 48px;
+      }
+      .ig-intro p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--dark-light, #3a4a5c);
+        margin: 0;
+      }
+      .ig-intro strong {
+        color: var(--dark, #1a1a2e);
+      }
+
+      .ig-section-title {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: 32px;
+        font-weight: 400;
+        color: var(--dark, #1a1a2e);
+        margin: 0 0 24px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(0, 87, 168, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      /* ── INGREDIENT CARDS ── */
+      .ingredient-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .ingredient-card {
+        border: 1px solid rgba(0, 87, 168, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        background: #fff;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+      .ingredient-card:hover {
+        box-shadow: 0 6px 24px rgba(0, 87, 168, 0.1);
+        transform: translateY(-2px);
+      }
+      .ing-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .ing-name {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--dark, #1a1a2e);
+        margin: 0;
+      }
+      .ing-badge {
+        font-size: 10px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 999px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .badge-star {
+        background: #fff8e6;
+        color: #a07000;
+        border: 1px solid #f5d97a;
+      }
+      .badge-gentle {
+        background: #e8f8ef;
+        color: #1a7a4a;
+        border: 1px solid #a3e0bb;
+      }
+      .badge-active {
+        background: #eff6ff;
+        color: #0057a8;
+        border: 1px solid #bfdbfe;
+      }
+      .badge-caution {
+        background: #fff1f2;
+        color: #c0392b;
+        border: 1px solid #fecdd3;
+      }
+      .ing-also {
+        font-size: 11px;
+        color: var(--dark-light, #3a4a5c);
+        margin-bottom: 10px;
+        font-style: italic;
+      }
+      .ing-desc {
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--dark-light, #3a4a5c);
+        margin-bottom: 14px;
+      }
+      .ing-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .ing-tag {
+        font-size: 11px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: var(--light-gray, #f4f8fc);
+        color: var(--dark-light, #3a4a5c);
+        border: 1px solid rgba(0, 87, 168, 0.08);
+      }
+      .ing-tip {
+        margin-top: 14px;
+        padding: 10px 14px;
+        background: #fff8e6;
+        border-left: 3px solid #f5a623;
+        border-radius: 0 8px 8px 0;
+        font-size: 12px;
+        color: #7a5000;
+        line-height: 1.6;
+      }
+      .ing-tip strong {
+        color: #7a5000;
+      }
+
+      /* ── COMPATIBILITY TABLE ── */
+      .compat-section {
+        margin-bottom: 64px;
+      }
+      .compat-table-wrap {
+        overflow-x: auto;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 87, 168, 0.1);
+      }
+      table.compat-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 520px;
+      }
+      .compat-table th {
+        padding: 14px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--dark-light, #3a4a5c);
+        background: var(--light-gray, #f4f8fc);
+        text-align: left;
+        white-space: nowrap;
+      }
+      .compat-table td {
+        padding: 13px 16px;
+        font-size: 13px;
+        border-top: 1px solid rgba(0, 87, 168, 0.07);
+        vertical-align: middle;
+      }
+      .compat-table tr:hover td {
+        background: #fafbff;
+      }
+      .compat-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 999px;
+      }
+      .compat-yes {
+        background: #e8f8ef;
+        color: #1a7a4a;
+      }
+      .compat-no {
+        background: #fff1f2;
+        color: #c0392b;
+      }
+      .compat-caution {
+        background: #fff8e6;
+        color: #a07000;
+      }
+      .compat-note {
+        font-size: 12px;
+        color: var(--dark-light, #3a4a5c);
+        line-height: 1.5;
+      }
+
+      /* ── ROUTINE BUILDER ── */
+      .routine-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .routine-tab {
+        padding: 9px 22px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(0, 87, 168, 0.15);
+        background: #fff;
+        color: var(--dark-light, #3a4a5c);
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .routine-tab.active {
+        background: var(--primary, #0057a8);
+        color: #fff;
+        border-color: var(--primary, #0057a8);
+      }
+      .routine-steps {
+        display: none;
+      }
+      .routine-steps.active {
+        display: block;
+      }
+      .routine-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 18px 20px;
+        border-radius: 14px;
+        border: 1px solid rgba(0, 87, 168, 0.08);
+        margin-bottom: 10px;
+        background: #fff;
+        transition: box-shadow 0.2s;
+      }
+      .routine-step:hover {
+        box-shadow: 0 4px 16px rgba(0, 87, 168, 0.08);
+      }
+      .step-num {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: var(--primary, #0057a8);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .step-info h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--dark, #1a1a2e);
+        margin: 0 0 4px;
+      }
+      .step-info p {
+        font-size: 13px;
+        color: var(--dark-light, #3a4a5c);
+        margin: 0;
+        line-height: 1.6;
+      }
+      .step-info .step-eg {
+        font-size: 11px;
+        color: var(--primary, #0057a8);
+        margin-top: 4px;
+        font-style: italic;
+      }
+
+      /* ── GLOSSARY ── */
+      .glossary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .glossary-item {
+        padding: 16px 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 87, 168, 0.08);
+        background: #fff;
+      }
+      .glossary-term {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--dark, #1a1a2e);
+        margin-bottom: 5px;
+      }
+      .glossary-def {
+        font-size: 13px;
+        color: var(--dark-light, #3a4a5c);
+        line-height: 1.6;
+      }
+
+      /* ── CTA BANNER ── */
+      .ig-cta {
+        background: linear-gradient(135deg, #1a1a2e, #2d3a5c);
+        border-radius: 20px;
+        padding: 52px 48px;
+        text-align: center;
+        color: #fff;
+        margin-top: 20px;
+      }
+      .ig-cta h3 {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: 34px;
+        font-weight: 300;
+        margin: 0 0 12px;
+      }
+      .ig-cta p {
+        font-size: 14px;
+        opacity: 0.75;
+        margin: 0 0 28px;
+        line-height: 1.7;
+      }
+      .ig-cta-btns {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .ig-cta .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 30px;
+        border-radius: 999px;
+        font-family: var(--font-sans, "Jost", sans-serif);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-light {
+        background: #fff;
+        color: var(--dark, #1a1a2e);
+      }
+      .btn-light:hover {
+        background: #f0f7ff;
+        transform: translateY(-1px);
+      }
+      .btn-outline-white {
+        background: transparent;
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+      }
+      .btn-outline-white:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* ── FOOTER ── */
+      .footer {
+        background: var(--dark, #1a1a2e);
+        color: rgba(255, 255, 255, 0.7);
+        padding: 48px 24px 24px;
+      }
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto 40px;
+      }
+      .footer-section h3.footer-logo {
+        font-family: var(--font-serif, "Cormorant Garamond", serif);
+        font-size: 28px;
+        font-weight: 300;
+        color: #fff;
+        margin: 0 0 12px;
+      }
+      .footer-logo span {
+        color: var(--primary, #0057a8);
+      }
+      .footer-section h4 {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0 0 16px;
+      }
+      .footer-section p {
+        font-size: 13px;
+        line-height: 1.7;
+        margin: 0;
+      }
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-section ul li {
+        margin-bottom: 10px;
+      }
+      .footer-section ul li a {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.2s;
+      }
+      .footer-section ul li a:hover {
+        color: #fff;
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 24px;
+        text-align: center;
+        font-size: 12px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* ── MOBILE ── */
+      @media (max-width: 860px) {
+        .ig-main {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .ig-sidebar {
+          position: static;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .ig-sidebar-title,
+        .ig-sidebar-divider,
+        .ig-compatibility-btn {
+          display: none;
+        }
+        .ig-nav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .ig-nav li {
+          margin: 0;
+        }
+        .ig-nav a {
+          padding: 6px 14px;
+          border-left: none;
+          border-radius: 999px;
+          border: 1px solid rgba(0, 87, 168, 0.12);
+          font-size: 12px;
+        }
+        .ingredient-grid,
+        .glossary-grid {
+          grid-template-columns: 1fr;
+        }
+        .ig-intro {
+          padding: 24px;
+        }
+        .ig-cta {
+          padding: 36px 24px;
+        }
+      }
+      @media (max-width: 480px) {
+        .page-hero {
+          padding: 100px 16px 48px;
+        }
+        .page-title {
+          font-size: clamp(28px, 7vw, 40px);
+        }
+        .page-subtitle {
+          font-size: 13px;
+          padding: 0 12px;
+        }
+        .hero-pills {
+          gap: 6px;
+        }
+        .hero-pill {
+          padding: 6px 14px;
+          font-size: 11px;
+        }
+        .ig-main {
+          padding: 40px 16px 60px;
+          gap: 24px;
+        }
+        .ig-section-title {
+          font-size: 22px;
+          margin-bottom: 18px;
+        }
+        .ingredient-grid,
+        .glossary-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .ingredient-card {
+          padding: 14px;
+        }
+        .ingredient-icon {
+          font-size: 32px;
+          min-width: 32px;
+          height: 32px;
+        }
+        .ingredient-details h4 {
+          font-size: 13px;
+        }
+        .ingredient-description {
+          font-size: 12px;
+          line-height: 1.6;
+        }
+        .ig-intro {
+          padding: 16px;
+          border-radius: 12px;
+          margin-bottom: 32px;
+        }
+        .ig-intro p {
+          font-size: 14px;
+        }
+        .ig-cta {
+          padding: 24px 16px;
+        }
+        .ig-cta-title {
+          font-size: 20px;
+        }
+        .ig-cta-description {
+          font-size: 13px;
+        }
+        .benefit-item {
+          padding: 10px 0;
+          font-size: 12px;
+        }
+      }
+
+      /* ── Mobile search icon button ── */
+      .mobile-search-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--dark, #1a1a1a);
+        padding: 6px;
+        line-height: 1;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      @media (max-width: 768px) {
+        .mobile-search-btn {
+          display: flex;
+        }
+        .nav-right .search-wrapper {
+          display: none;
+        }
+      }
+      /* ── Mobile search overlay ── */
+      .mobile-search-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        background: var(--white, #fff);
+        padding: 10px 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        align-items: center;
+        gap: 8px;
+        height: 58px;
+      }
+      .mobile-search-overlay.open {
+        display: flex;
+      }
+      .mobile-search-overlay input {
+        flex: 1;
+        border: 1.5px solid var(--border, #e0e0e0);
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 14px;
+        outline: none;
+        background: var(--light-gray, #f5f5f5);
+        color: var(--dark, #1a1a1a);
+        font-family: inherit;
+        min-width: 0;
+      }
+      .mobile-search-overlay input:focus {
+        border-color: var(--primary);
+      }
+      .mobile-search-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--dark-light, #777);
+        padding: 4px 6px;
+        line-height: 1;
+        font-size: 24px;
+        flex-shrink: 0;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mobile-search-results {
+        position: fixed;
+        top: 58px;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+        background: var(--white, #fff);
+        border-top: 1px solid var(--border, #e0e0e0);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 58px);
+        overflow-y: auto;
+        display: none;
+      }
+      .mobile-search-results.open {
+        display: block;
+      }
+      body.dark-mode .mobile-search-overlay {
+        background: var(--white);
+      }
+      body.dark-mode .mobile-search-overlay input {
+        background: var(--light-gray);
+        color: var(--dark);
+      }
+      body.dark-mode .mobile-search-results {
+        background: var(--white);
+      }
+
+      /* ── INGREDIENT GUIDE DARK MODE STYLES ── */
+      body.dark-mode .page-hero {
+        background: linear-gradient(135deg, #0f1724, #0d1a2e);
+        border-bottom-color: rgba(126, 200, 255, 0.1);
+      }
+      body.dark-mode .page-eyebrow {
+        color: #7ec8ff;
+      }
+      body.dark-mode .page-title {
+        color: #ffffff;
+      }
+      body.dark-mode .page-subtitle {
+        color: #c4d1df;
+      }
+      body.dark-mode .hero-pill {
+        background: rgba(26, 35, 50, 0.8);
+        color: #c4d1df;
+        border-color: rgba(126, 200, 255, 0.2);
+      }
+      body.dark-mode .hero-pill:hover {
+        background: #0057a8;
+        color: #ffffff;
+      }
+      body.dark-mode .ig-sidebar-title {
+        color: #7a8fa4;
+      }
+      body.dark-mode .ig-nav a {
+        color: #c4d1df;
+        border-left-color: transparent;
+      }
+      body.dark-mode .ig-nav a:hover,
+      body.dark-mode .ig-nav a.active {
+        background: rgba(126, 200, 255, 0.15);
+        color: #7ec8ff;
+        border-left-color: #7ec8ff;
+      }
+      body.dark-mode .ig-sidebar-divider {
+        background: rgba(126, 200, 255, 0.1);
+      }
+      body.dark-mode .ig-intro {
+        background: linear-gradient(135deg, #1a2844, #1a1f2e);
+        border-color: rgba(126, 200, 255, 0.1);
+      }
+      body.dark-mode .ig-intro p {
+        color: #c4d1df;
+      }
+      body.dark-mode .ig-intro strong {
+        color: #ffffff;
+      }
+      body.dark-mode .ig-section-title {
+        color: #ffffff;
+      }
+      body.dark-mode .ingredient-card {
+        background: #1a2332;
+        border-color: rgba(126, 200, 255, 0.15);
+      }
+      body.dark-mode .ing-name {
+        color: #ffffff;
+      }
+      body.dark-mode .ing-also,
+      body.dark-mode .ing-desc,
+      body.dark-mode .ing-tip,
+      body.dark-mode .glossary-definition,
+      body.dark-mode .ig-cta-description {
+        color: #c4d1df;
+      }
+      body.dark-mode .ing-tip {
+        background: rgba(245, 166, 35, 0.14);
+        border-left-color: #f5a623;
+        color: #fbd38d;
+      }
+      body.dark-mode .ing-tip strong {
+        color: #ffd98a;
+      }
+      body.dark-mode .ing-tag {
+        background: rgba(126, 200, 255, 0.14);
+        color: #dce8f3;
+        border-color: rgba(126, 200, 255, 0.2);
+      }
+      body.dark-mode .compat-table-wrap {
+        border-color: rgba(126, 200, 255, 0.15);
+      }
+      body.dark-mode .compat-table th {
+        background: #1f2b3d;
+        color: #9fb0c0;
+      }
+      body.dark-mode .compat-table td {
+        color: #c4d1df;
+      }
+      body.dark-mode .compat-table tr:hover td {
+        background: rgba(126, 200, 255, 0.08);
+      }
+      body.dark-mode .glossary-term {
+        color: #ffffff;
+      }
+      body.dark-mode .ig-cta {
+        background: linear-gradient(135deg, #1a2844, #1a1f2e);
+        border-color: rgba(126, 200, 255, 0.1);
+      }
+      body.dark-mode .ig-cta-title {
+        color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        body.dark-mode .ig-sidebar {
+          background: rgba(15, 23, 36, 0.95);
+          border: 1px solid rgba(126, 200, 255, 0.14);
+          border-radius: 14px;
+          padding: 10px 12px;
+        }
+        body.dark-mode .ig-nav a {
+          color: #dce8f3;
+        }
+        body.dark-mode .ig-intro {
+          padding: 24px 20px;
+        }
+      }
+
+/* ─────────────────────────────
+   PERFECT MOBILE OPTIMIZATION
+   ───────────────────────────── */
+
+@media (max-width: 768px) {
+
+  .ig-main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 14px 50px;
+  }
+
+  .ig-sidebar {
+    position: static;
+    top: auto;
+    order: 2;
+  }
+
+  .ig-sidebar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .ig-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ig-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 6px;
+  }
+
+  .ig-nav a {
+    white-space: nowrap;
+  }
+
+  /* Ingredient cards */
+  .ingredient-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-card {
+    padding: 18px;
+  }
+
+  .ing-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ing-badge {
+    align-self: flex-start;
+  }
+
+  .ing-name {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  /* Routine tabs */
+  .routine-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .routine-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .routine-tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Routine steps */
+  .routine-step {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  /* CTA buttons stack nicely */
+  .ig-cta-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ig-cta-btns .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Compatibility table */
+  .compat-table-wrap {
+    border-radius: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compat-table {
+    min-width: 620px;
+  }
+
+  /* Footer */
+  .footer-content {
+    flex-direction: column;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .page-title {
+    font-size: 34px;
+    line-height: 1.1;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  .hero-pill {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+
+  .ingredient-card {
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .ing-desc {
+    font-size: 12px;
+  }
+
+  .ing-tags {
+    gap: 4px;
+  }
+
+  .ing-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .ig-section-title {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .routine-step {
+    padding: 12px;
+  }
+
+  .step-info h4 {
+    font-size: 13px;
+  }
+
+  .step-info p {
+    font-size: 12px;
+  }
+
+  .ig-cta h3 {
+    font-size: 26px;
+  }
+
+  .ig-cta p {
+    font-size: 13px;
+  }
+
+  .ig-main {
+    padding: 24px 12px 40px;
+  }
+}
+
+
+
+
+
+
+    </style>
+    <link rel="stylesheet" crossorigin href="/assets/style-Db11KUSm.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <a href="index.html" class="logo-link">Vel<span>m</span>ira</a>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About Velmira</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
+            <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            <li>
+              <a href="ingredient-guide.html" class="nav-link active"
+                >Ingredient Guide</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="nav-right">
+          <button
+            id="darkModeToggle"
+            class="theme-toggle"
+            title="Toggle dark mode"
+          >
+            <span class="theme-icon">
+              <svg
+                class="sun-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+              <svg
+                class="moon-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </span>
+          </button>
+          <button id="wishlistBtn" class="icon-btn" title="Wishlist">
+            <span class="badge" id="wishlistCount" style="display: none"
+              >0</span
+            >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              />
+            </svg>
+          </button>
+          <button id="cartBtn" class="icon-btn" title="Cart">
+            <span class="badge" id="cartCount" style="display: none">0</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+          </button>
+        </div>
+
+        <button class="hamburger" id="menuToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="page-eyebrow">Education</div>
+      <h1 class="page-title">Ingredient <em>Guide</em></h1>
+      <p class="page-subtitle">
+        Decode your labels. Understand what actives do, how to layer them, and
+        what to avoid mixing.
+      </p>
+      <div class="hero-pills">
+        <a href="#hydrators" class="hero-pill">💧 Hydrators</a>
+        <a href="#actives" class="hero-pill">⚗️ Actives</a>
+        <a href="#brighteners" class="hero-pill">✨ Brighteners</a>
+        <a href="#anti-aging" class="hero-pill">⏳ Anti-Aging</a>
+        <a href="#compatibility" class="hero-pill">🔬 Compatibility</a>
+        <a href="#routine" class="hero-pill">📋 Routine Order</a>
+      </div>
+    </section>
+
+    <!-- MAIN -->
+    <div class="ig-main">
+      <!-- SIDEBAR -->
+      <aside class="ig-sidebar">
+        <p class="ig-sidebar-title">Jump to</p>
+        <ul class="ig-nav">
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#hydrators">Hydrators</a></li>
+          <li><a href="#actives">Actives</a></li>
+          <li><a href="#brighteners">Brighteners</a></li>
+          <li><a href="#anti-aging">Anti-Aging</a></li>
+          <li><a href="#spf">SPF</a></li>
+          <li><a href="#compatibility">Compatibility</a></li>
+          <li><a href="#routine">Routine Order</a></li>
+          <li><a href="#glossary">Glossary</a></li>
+        </ul>
+        <div class="ig-sidebar-divider"></div>
+        <a href="quiz.html" class="ig-compatibility-btn"
+          >Take the Skin Quiz →</a
+        >
+      </aside>
+
+      <!-- CONTENT -->
+      <div class="ig-content">
+        <!-- INTRO -->
+        <div class="ig-intro" id="intro">
+          <p>
+            Skincare labels can feel like a chemistry exam. This guide breaks
+            down the most important ingredients you'll find in your Velmira
+            products — what they do, how to use them, and how to layer them
+            safely. <strong>Knowledge is the best skincare tool.</strong>
+          </p>
+        </div>
+
+        <!-- HYDRATORS -->
+        <section id="hydrators">
+          <h2 class="ig-section-title">💧 Hydrators &amp; Moisturisers</h2>
+          <div class="ingredient-grid">
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Hyaluronic Acid</h3>
+                <span class="ing-badge badge-star">Must-Have</span>
+              </div>
+              <p class="ing-also">Also listed as: Sodium Hyaluronate</p>
+              <p class="ing-desc">
+                A humectant that can hold up to 1,000× its weight in water.
+                Draws moisture from the environment and deeper skin layers to
+                the surface, plumping and smoothing fine lines instantly.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">All skin types</span>
+                <span class="ing-tag">Fragrance-free</span>
+                <span class="ing-tag">Serum / Moisturiser</span>
+              </div>
+              <div class="ing-tip">
+                <strong>Pro tip:</strong> Apply to damp skin for maximum
+                hydration — it needs water to work.
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Ceramides</h3>
+                <span class="ing-badge badge-gentle">Barrier</span>
+              </div>
+              <p class="ing-also">Also listed as: Ceramide NP, AP, EOP</p>
+              <p class="ing-desc">
+                Lipids that make up ~50% of the skin's protective barrier. They
+                lock moisture in and keep irritants out. Ceramide-rich
+                moisturisers are ideal for dry, sensitive, or compromised skin
+                barriers.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Dry skin</span>
+                <span class="ing-tag">Sensitive skin</span>
+                <span class="ing-tag">Moisturiser</span>
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Glycerin</h3>
+                <span class="ing-badge badge-gentle">Gentle</span>
+              </div>
+              <p class="ing-also">Also listed as: Glycerol</p>
+              <p class="ing-desc">
+                One of the most effective and well-studied humectants. Draws
+                moisture into the skin and helps maintain the skin barrier.
+                Found in almost every moisturiser for good reason.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">All skin types</span>
+                <span class="ing-tag">Toner / Moisturiser</span>
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Squalane</h3>
+                <span class="ing-badge badge-gentle">Gentle</span>
+              </div>
+              <p class="ing-also">Also listed as: Hydrogenated Olive Oil</p>
+              <p class="ing-desc">
+                A lightweight, plant-derived oil that mimics the skin's natural
+                sebum. Non-comedogenic and excellent for all skin types
+                including oily skin — it balances oil production without
+                clogging pores.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">All skin types</span>
+                <span class="ing-tag">Non-comedogenic</span>
+                <span class="ing-tag">Face oil</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ACTIVES -->
+        <section id="actives">
+          <h2 class="ig-section-title">⚗️ Exfoliating Actives</h2>
+          <div class="ingredient-grid">
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Niacinamide</h3>
+                <span class="ing-badge badge-star">Superstar</span>
+              </div>
+              <p class="ing-also">Also listed as: Vitamin B3, Nicotinamide</p>
+              <p class="ing-desc">
+                One of skincare's most versatile actives. Minimises pores,
+                regulates oil, fades dark spots, strengthens the barrier, and
+                reduces redness. Works for virtually every skin concern.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">All skin types</span>
+                <span class="ing-tag">5–10% concentration</span>
+                <span class="ing-tag">AM &amp; PM</span>
+              </div>
+              <div class="ing-tip">
+                <strong>Pairs well with:</strong> Retinol, Hyaluronic Acid,
+                AHAs, SPF.
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">AHAs</h3>
+                <span class="ing-badge badge-active">Exfoliant</span>
+              </div>
+              <p class="ing-also">Glycolic Acid, Lactic Acid, Mandelic Acid</p>
+              <p class="ing-desc">
+                Water-soluble acids that exfoliate the skin's surface, improving
+                texture, brightness, and fading dark spots. Glycolic is the
+                strongest; lactic and mandelic are gentler and better for
+                sensitive skin.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Normal–oily–dry</span>
+                <span class="ing-tag">PM use</span>
+                <span class="ing-tag">Follow with SPF</span>
+              </div>
+              <div class="ing-tip">
+                <strong>Caution:</strong> Increases sun sensitivity — always
+                wear SPF the next morning.
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">BHAs</h3>
+                <span class="ing-badge badge-active">Exfoliant</span>
+              </div>
+              <p class="ing-also">Salicylic Acid, Beta Hydroxy Acid</p>
+              <p class="ing-desc">
+                Oil-soluble acids that penetrate deep into pores to dissolve
+                sebum and dead skin cells. Ideal for oily, acne-prone, and
+                congested skin. Also has anti-inflammatory properties.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Oily / Acne-prone</span>
+                <span class="ing-tag">0.5–2% concentration</span>
+                <span class="ing-tag">PM use</span>
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Centella Asiatica</h3>
+                <span class="ing-badge badge-gentle">Calming</span>
+              </div>
+              <p class="ing-also">Also listed as: Cica, Gotu Kola, TECA</p>
+              <p class="ing-desc">
+                A medicinal herb with powerful anti-inflammatory and
+                wound-healing properties. Soothes redness, repairs the barrier,
+                and is especially good for post-acne skin and sensitivity.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Sensitive skin</span>
+                <span class="ing-tag">Post-acne</span>
+                <span class="ing-tag">AM &amp; PM</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BRIGHTENERS -->
+        <section id="brighteners">
+          <h2 class="ig-section-title">
+            ✨ Brighteners &amp; Dark Spot Fighters
+          </h2>
+          <div class="ingredient-grid">
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Vitamin C</h3>
+                <span class="ing-badge badge-star">Must-Have</span>
+              </div>
+              <p class="ing-also">L-Ascorbic Acid, Ascorbyl Glucoside, SAP</p>
+              <p class="ing-desc">
+                A potent antioxidant that brightens skin, fades
+                hyperpigmentation, boosts collagen, and protects against UV
+                damage. L-Ascorbic Acid is the most potent but least stable
+                form.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">AM use</span>
+                <span class="ing-tag">10–20% concentration</span>
+                <span class="ing-tag">Pair with SPF</span>
+              </div>
+              <div class="ing-tip">
+                <strong>Storage:</strong> Keep in a cool, dark place. Discard if
+                it turns orange.
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Alpha Arbutin</h3>
+                <span class="ing-badge badge-gentle">Gentle</span>
+              </div>
+              <p class="ing-also">
+                Also listed as: 4-Hydroxyphenyl-alpha-D-glucopyranoside
+              </p>
+              <p class="ing-desc">
+                A stable, gentle ingredient that inhibits melanin production to
+                fade dark spots and hyperpigmentation. Slower-acting than
+                Vitamin C but much more tolerable for sensitive skin.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">All skin types</span>
+                <span class="ing-tag">AM &amp; PM</span>
+                <span class="ing-tag">1–2% concentration</span>
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Kojic Acid</h3>
+                <span class="ing-badge badge-caution">Use carefully</span>
+              </div>
+              <p class="ing-also">Derived from fungi during fermentation</p>
+              <p class="ing-desc">
+                Inhibits melanin production and brightens dark spots. Effective
+                but can cause irritation at higher concentrations. Often found
+                in serums and spot treatments.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Normal–oily skin</span>
+                <span class="ing-tag">1% concentration</span>
+                <span class="ing-tag">PM use</span>
+              </div>
+              <div class="ing-tip">
+                <strong>Note:</strong> Patch-test first. Avoid if skin is
+                irritated or compromised.
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Azelaic Acid</h3>
+                <span class="ing-badge badge-gentle">Gentle</span>
+              </div>
+              <p class="ing-also">Naturally occurring in wheat, rye, barley</p>
+              <p class="ing-desc">
+                Multi-tasking ingredient that reduces redness, fades post-acne
+                marks, fights acne-causing bacteria, and brightens skin. Safe
+                during pregnancy (consult your doctor).
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Sensitive / Acne-prone</span>
+                <span class="ing-tag">10–20%</span>
+                <span class="ing-tag">AM &amp; PM</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ANTI-AGING -->
+        <section id="anti-aging">
+          <h2 class="ig-section-title">⏳ Anti-Aging</h2>
+          <div class="ingredient-grid">
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Retinol</h3>
+                <span class="ing-badge badge-active">Powerhouse</span>
+              </div>
+              <p class="ing-also">Vitamin A, Retinoids, Retinal, Tretinoin</p>
+              <p class="ing-desc">
+                The gold standard for anti-aging. Accelerates cell turnover,
+                boosts collagen, fades dark spots, and smooths wrinkles. Start
+                low (0.025–0.05%) and build up frequency gradually.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">PM use only</span>
+                <span class="ing-tag">Start 1×/week</span>
+                <span class="ing-tag">Always use SPF</span>
+              </div>
+              <div class="ing-tip">
+                <strong>Beginners:</strong> Start 1–2 nights per week,
+                moisturise over it to minimise irritation.
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Peptides</h3>
+                <span class="ing-badge badge-gentle">Gentle</span>
+              </div>
+              <p class="ing-also">Matrixyl, Argireline, Copper Peptides</p>
+              <p class="ing-desc">
+                Short chains of amino acids that signal the skin to produce more
+                collagen and elastin. Gentle and effective for firming,
+                plumping, and reducing the appearance of fine lines.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">All skin types</span>
+                <span class="ing-tag">AM &amp; PM</span>
+                <span class="ing-tag">Serum / Moisturiser</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SPF -->
+        <section id="spf">
+          <h2 class="ig-section-title">☀️ Sunscreen</h2>
+          <div class="ingredient-grid">
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Chemical SPF</h3>
+                <span class="ing-badge badge-active">Active</span>
+              </div>
+              <p class="ing-also">Avobenzone, Octinoxate, Tinosorb S/M</p>
+              <p class="ing-desc">
+                Absorbs UV rays and converts them to heat. Lightweight,
+                invisible finish — ideal for daily use under makeup. Apply 15–20
+                minutes before sun exposure.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Normal–oily skin</span>
+                <span class="ing-tag">SPF 30–50+</span>
+                <span class="ing-tag">Reapply every 2hr</span>
+              </div>
+            </div>
+
+            <div class="ingredient-card">
+              <div class="ing-header">
+                <h3 class="ing-name">Mineral SPF</h3>
+                <span class="ing-badge badge-gentle">Gentle</span>
+              </div>
+              <p class="ing-also">Zinc Oxide, Titanium Dioxide</p>
+              <p class="ing-desc">
+                Sits on top of the skin and physically reflects UV rays.
+                Immediate protection, reef-safe, and gentle for sensitive or
+                reactive skin. May leave a white cast on deeper skin tones.
+              </p>
+              <div class="ing-tags">
+                <span class="ing-tag">Sensitive skin</span>
+                <span class="ing-tag">Pregnancy-safe</span>
+                <span class="ing-tag">SPF 30–50+</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- COMPATIBILITY -->
+        <section class="compat-section" id="compatibility">
+          <h2 class="ig-section-title">🔬 Ingredient Compatibility</h2>
+          <div class="compat-table-wrap">
+            <table class="compat-table">
+              <thead>
+                <tr>
+                  <th>Combination</th>
+                  <th>Compatible?</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Vitamin C + SPF</strong></td>
+                  <td><span class="compat-pill compat-yes">✓ Yes</span></td>
+                  <td class="compat-note">
+                    Powerful antioxidant + UV protection synergy. Apply Vitamin
+                    C first, let it absorb, then SPF.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Niacinamide + Retinol</strong></td>
+                  <td><span class="compat-pill compat-yes">✓ Yes</span></td>
+                  <td class="compat-note">
+                    Niacinamide helps buffer retinol irritation. Apply together
+                    in PM.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Niacinamide + Vitamin C</strong></td>
+                  <td>
+                    <span class="compat-pill compat-caution">⚠ Caution</span>
+                  </td>
+                  <td class="compat-note">
+                    Generally fine for most skin types. Layer separately or use
+                    different times if sensitive.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>AHA + BHA</strong></td>
+                  <td>
+                    <span class="compat-pill compat-caution">⚠ Caution</span>
+                  </td>
+                  <td class="compat-note">
+                    Can be layered for enhanced exfoliation, but may irritate
+                    sensitive skin. Start slowly.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Retinol + AHA/BHA</strong></td>
+                  <td><span class="compat-pill compat-no">✗ Avoid</span></td>
+                  <td class="compat-note">
+                    Both are exfoliating — together they cause irritation and
+                    barrier damage. Use on alternate nights.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Retinol + Vitamin C</strong></td>
+                  <td><span class="compat-pill compat-no">✗ Avoid</span></td>
+                  <td class="compat-note">
+                    Different pH requirements reduce efficacy. Use Vitamin C in
+                    AM, Retinol in PM.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Hyaluronic Acid + Everything</strong></td>
+                  <td><span class="compat-pill compat-yes">✓ Yes</span></td>
+                  <td class="compat-note">
+                    Works harmoniously with all actives. Always a safe addition
+                    to any routine.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Peptides + AHAs</strong></td>
+                  <td>
+                    <span class="compat-pill compat-caution">⚠ Caution</span>
+                  </td>
+                  <td class="compat-note">
+                    Acids can degrade peptides at low pH. Layer peptides after
+                    acids have fully absorbed.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Niacinamide + AHA/BHA</strong></td>
+                  <td><span class="compat-pill compat-yes">✓ Yes</span></td>
+                  <td class="compat-note">
+                    Niacinamide helps soothe post-exfoliation redness. Apply
+                    after acid has absorbed.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ROUTINE ORDER -->
+        <section id="routine">
+          <h2 class="ig-section-title">📋 Routine Order</h2>
+          <div class="routine-tabs">
+            <button class="routine-tab active" data-tab="am">☀️ Morning</button>
+            <button class="routine-tab" data-tab="pm">🌙 Evening</button>
+          </div>
+
+          <div class="routine-steps active" id="tab-am">
+            <div class="routine-step">
+              <div class="step-num">1</div>
+              <div class="step-info">
+                <h4>Cleanser</h4>
+                <p>
+                  Start with a gentle, pH-balanced cleanser to remove overnight
+                  products and prepare skin.
+                </p>
+                <p class="step-eg">
+                  e.g. CeraVe Hydrating Cleanser, Cetaphil Gentle Cleanser
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">2</div>
+              <div class="step-info">
+                <h4>Toner (optional)</h4>
+                <p>
+                  Balance pH and add a first layer of hydration. Skip if your
+                  cleanser doesn't disrupt your barrier.
+                </p>
+                <p class="step-eg">e.g. Hydrating toner or essence</p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">3</div>
+              <div class="step-info">
+                <h4>Vitamin C Serum</h4>
+                <p>
+                  Your antioxidant protection. Apply on clean, slightly damp
+                  skin and let it absorb for 1–2 minutes.
+                </p>
+                <p class="step-eg">
+                  e.g. L-Ascorbic Acid 10–15%, Ascorbyl Glucoside
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">4</div>
+              <div class="step-info">
+                <h4>Treatment Serum</h4>
+                <p>
+                  Niacinamide, hyaluronic acid, or peptides. Thinner formulas go
+                  before thicker ones.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">5</div>
+              <div class="step-info">
+                <h4>Eye Cream</h4>
+                <p>
+                  Apply with your ring finger — the lightest touch — to avoid
+                  tugging delicate skin.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">6</div>
+              <div class="step-info">
+                <h4>Moisturiser</h4>
+                <p>
+                  Lock in all the layers. Choose your formula based on skin
+                  type: gel for oily, cream for dry.
+                </p>
+                <p class="step-eg">e.g. CeraVe Moisturising Cream</p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">7</div>
+              <div class="step-info">
+                <h4>Sunscreen SPF 30+</h4>
+                <p>
+                  The most important step. Apply generously — about a teaspoon
+                  for face and neck. Reapply every 2 hours outdoors.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="routine-steps" id="tab-pm">
+            <div class="routine-step">
+              <div class="step-num">1</div>
+              <div class="step-info">
+                <h4>Double Cleanse</h4>
+                <p>
+                  Oil cleanser first to remove SPF and makeup; then a
+                  water-based cleanser for a thorough cleanse.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">2</div>
+              <div class="step-info">
+                <h4>Toner / Essence</h4>
+                <p>
+                  Hydrating toner or essence to prep skin for treatment
+                  products.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">3</div>
+              <div class="step-info">
+                <h4>Exfoliant (2–3× per week)</h4>
+                <p>
+                  AHA or BHA — not every night. On non-exfoliant nights, use
+                  your treatment serum instead.
+                </p>
+                <p class="step-eg">
+                  e.g. Glycolic Acid 5–7%, Salicylic Acid 1–2%
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">4</div>
+              <div class="step-info">
+                <h4>Treatment Serum</h4>
+                <p>
+                  Retinol, Niacinamide, peptides, or targeted actives. Never use
+                  Retinol on the same night as AHAs/BHAs.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">5</div>
+              <div class="step-info">
+                <h4>Eye Cream</h4>
+                <p>
+                  If using a retinoid near the eyes, apply a plain moisturiser
+                  as a buffer first.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">6</div>
+              <div class="step-info">
+                <h4>Moisturiser / Night Cream</h4>
+                <p>
+                  Richer formulas are great for PM — your skin repairs itself
+                  overnight. Seal in all treatments.
+                </p>
+              </div>
+            </div>
+            <div class="routine-step">
+              <div class="step-num">7</div>
+              <div class="step-info">
+                <h4>Face Oil (optional)</h4>
+                <p>
+                  Apply oil last — it seals everything below. A few drops of
+                  squalane for extra nourishment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GLOSSARY -->
+        <section id="glossary">
+          <h2 class="ig-section-title">📖 Glossary</h2>
+          <div class="glossary-grid">
+            <div class="glossary-item">
+              <div class="glossary-term">Humectant</div>
+              <div class="glossary-def">
+                Draws water from the environment or deeper skin layers to
+                hydrate the surface. Examples: Hyaluronic acid, glycerin.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Emollient</div>
+              <div class="glossary-def">
+                Softens and smooths skin by filling gaps between cells.
+                Examples: Squalane, shea butter, fatty acids.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Occlusive</div>
+              <div class="glossary-def">
+                Forms a barrier on skin to prevent moisture loss. Examples:
+                Petrolatum, dimethicone, beeswax.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Non-comedogenic</div>
+              <div class="glossary-def">
+                Formulated not to clog pores. Important for oily or acne-prone
+                skin types.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Antioxidant</div>
+              <div class="glossary-def">
+                Neutralises free radicals from pollution and UV exposure.
+                Prevents premature aging. Examples: Vitamin C, E, resveratrol.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">PAO</div>
+              <div class="glossary-def">
+                Period After Opening — the small jar symbol showing how many
+                months a product is safe to use after opening.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">pH</div>
+              <div class="glossary-def">
+                Skin's natural pH is ~5.5 (slightly acidic). Cleansers and
+                actives that match this work best and cause least disruption.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Skin Barrier</div>
+              <div class="glossary-def">
+                The outermost layer of skin that protects against external
+                irritants and retains moisture. Ceramides and fatty acids
+                maintain it.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Hyperpigmentation</div>
+              <div class="glossary-def">
+                Darkening of skin patches caused by excess melanin — triggered
+                by sun, acne, hormones, or injury.
+              </div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Cell Turnover</div>
+              <div class="glossary-def">
+                The process by which old skin cells shed and new ones emerge.
+                Slows with age; retinoids and AHAs speed it up.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="ig-cta">
+          <h3>Not sure which products to use?</h3>
+          <p>
+            Take our 2-minute Skin Quiz for a personalised routine, or explore
+            our full range in the shop.
+          </p>
+          <div class="ig-cta-btns">
+            <a href="quiz.html" class="btn btn-light">Take the Skin Quiz</a>
+            <a href="shop.html" class="btn btn-outline-white"
+              >Browse Products</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+        <!-- Brand -->
+        <div class="footer-section footer-brand">
+          <h3 class="footer-logo">Vel<span>m</span>ira</h3>
+          <p>
+            Premium skincare for the modern, conscious consumer.
+            Dermatologist-tested and cruelty-free.
+          </p>
+          <div class="social-icons">
+            <a
+              href="https://instagram.com/velmiraskin_bd"
+              target="_blank"
+              rel="noopener"
+              title="Instagram"
+              aria-label="Instagram"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61570999974718"
+              target="_blank"
+              rel="noopener"
+              title="Facebook"
+              aria-label="Facebook"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?special=bestseller">Best Sellers</a></li>
+            <li><a href="shop.html?special=new">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-section">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="quiz.html">Skin Quiz</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="ingredient-guide.html">Ingredient Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-and-conditions.html">Terms of Use</a></li>
+            <li><a href="shipping-policy.html">Shipping Info</a></li>
+            <li><a href="refund-policy.html">Returns</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 Velmira. All rights reserved. &nbsp;·&nbsp;
+          Dermatologist-tested &nbsp;·&nbsp; Cruelty-free &nbsp;·&nbsp; Made by
+          Gourov Roy
+        </p>
+      </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Shopping Cart</h2>
+        <button class="close-cart" id="closeCart">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span><span id="subtotal">৳0</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping:</span><span id="shipping">Free</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span><span id="total">৳0</span>
+        </div>
+        <button class="btn btn-primary full-width checkout-btn">
+          Proceed to Checkout
+        </button>
+        <button
+          class="btn btn-secondary full-width"
+          id="continueShopping"
+          style="margin-top: 8px"
+        >
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="wishlist-sidebar" id="wishlistSidebar">
+      <div class="wishlist-header">
+        <h2>Your Wishlist</h2>
+        <button class="close-wishlist" id="closeWishlist">✕</button>
+      </div>
+      <div class="wishlist-items" id="wishlistItems"></div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="product-modal" id="productModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div class="modal-body">
+          <div class="modal-image">
+            <img id="modalImg" src="" alt="Product" />
+          </div>
+          <div class="modal-details">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-price">
+              <span id="modalPrice"></span
+              ><span class="original-price" id="modalOriginalPrice"></span>
+            </div>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="modal-info">
+              <h4>Key Ingredients</h4>
+              <ul id="modalIngredients"></ul>
+            </div>
+            <div class="modal-usage">
+              <h4>How to Use</h4>
+              <p id="modalUsage"></p>
+            </div>
+            <div class="quantity-selector">
+              <label>Quantity:</label>
+              <div class="quantity-controls">
+                <button type="button" id="decreaseQty">−</button>
+                <input type="number" id="quantity" min="1" value="1" />
+                <button type="button" id="increaseQty">+</button>
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="addToCartBtn">
+                Add to Cart
+              </button>
+              <button
+                class="btn btn-icon"
+                id="addToWishlistBtn"
+                title="Add to Wishlist"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <p>✓ Free shipping on orders over ৳5,000</p>
+              <p>✓ 30-day money-back guarantee</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script type="module" src="/assets/script-CbRYxaYZ.js"></script>
+
+    <script>
+      /* ── Navbar scroll ── */
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () =>
+        navbar.classList.toggle("scrolled", window.scrollY > 20),
+      );
+
+      /* ── Dark mode ── */
+      const dmToggle = document.getElementById("darkModeToggle");
+      if (localStorage.getItem("darkMode") === "true")
+        document.body.classList.add("dark-mode");
+      dmToggle?.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "velmira_dark",
+          document.body.classList.contains("dark-mode") ? "1" : "0",
+        );
+      });
+
+      /* ── Badge sync ── */
+      function syncBadges() {
+        try {
+          const cart = JSON.parse(localStorage.getItem("velmira_cart") || "[]");
+          const total = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+          const cb = document.getElementById("cartCount");
+          if (cb) {
+            cb.textContent = total;
+            cb.style.display = total > 0 ? "" : "none";
+          }
+          const wl = JSON.parse(
+            localStorage.getItem("velmira_wishlist") || "[]",
+          );
+          const wb = document.getElementById("wishlistCount");
+          if (wb) {
+            wb.textContent = wl.length;
+            wb.style.display = wl.length > 0 ? "" : "none";
+          }
+        } catch (e) {}
+      }
+      syncBadges();
+      window.addEventListener("storage", syncBadges);
+
+      /* ── Smooth scroll for anchor links ── */
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      /* ── Sticky sidebar active state ── */
+      const sections = document.querySelectorAll(
+        ".ig-content section[id], #intro",
+      );
+      const navLinks = document.querySelectorAll(".ig-nav a");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navLinks.forEach((l) => l.classList.remove("active"));
+              const link = document.querySelector(
+                `.ig-nav a[href="#${entry.target.id}"]`,
+              );
+              if (link) link.classList.add("active");
+            }
+          });
+        },
+        { rootMargin: "-20% 0px -70% 0px" },
+      );
+      sections.forEach((s) => observer.observe(s));
+
+      /* ── Routine tabs ── */
+      document.querySelectorAll(".routine-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".routine-tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".routine-steps")
+            .forEach((s) => s.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .getElementById("tab-" + tab.dataset.tab)
+            .classList.add("active");
+        });
+      });
+    </script>
+    <!-- Mobile Search Overlay -->
+    <div class="mobile-search-overlay" id="mobileSearchOverlay" role="search">
+      <button
+        class="mobile-search-close"
+        id="mobileSearchClose"
+        aria-label="Close search"
+      >
+        &times;
+      </button>
+      <input
+        type="text"
+        id="mobileSearchInput"
+        placeholder="Search products..."
+        autocomplete="off"
+      />
+    </div>
+    <div class="mobile-search-results" id="mobileSearchResults"></div>
+
+    <!-- ── Premium Nav Drawer ── -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VELMIRA — FINAL BUG FIXES (loaded last, overrides everything)
+         1) Hamburger always visible on mobile
+         2) Single X (no duplicate drawer-close vs hamburger)
+         3) Drawer covers navbar; clean header alignment
+         4/5) Cart + wishlist sidebars cleared from fixed navbar
+         6) Hero carousel: shorter, professional proportions
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+     VELMIRA — UNIFIED NAVBAR FIX
+     Replaces all conflicting hamburger/drawer patches with a single, clean solution
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <style id="velmira-navbar-unified-styles">
+      /* ──────────────────────────────────────────────────────────────────────────────
+     MOBILE NAVBAR — Fixed position with proper z-stacking
+     ────────────────────────────────────────────────────────────────────────────── */
+      @media (max-width: 991px) {
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1100;
+          height: auto;
+          min-height: 60px;
+        }
+
+        .nav-container {
+          display: flex !important;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          padding: 12px 16px !important;
+          flex-wrap: nowrap;
+          overflow: visible;
+        }
+
+        /* Logo stays on left */
+        .nav-logo {
+          flex: 0 0 auto;
+          min-width: 0;
+        }
+
+        .nav-logo .logo-link {
+          font-size: 22px !important;
+          letter-spacing: 2px;
+          white-space: nowrap;
+        }
+
+        /* Right icon cluster (search, theme, wishlist, cart, hamburger) */
+        .nav-right {
+          display: flex !important;
+          align-items: center;
+          gap: 4px !important;
+          margin-left: auto;
+          flex-shrink: 1;
+          min-width: 0;
+        }
+
+        .nav-right .search-wrapper {
+          display: none !important;
+        }
+
+        .nav-right .mobile-search-btn {
+          display: inline-flex !important;
+        }
+
+        .nav-right .icon-btn,
+        .nav-right .theme-toggle,
+        .nav-right .mobile-search-btn {
+          width: 40px;
+          height: 40px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: none;
+          padding: 0;
+          position: relative;
+          flex-shrink: 0;
+          cursor: pointer;
+        }
+
+        .nav-right .badge {
+          position: absolute;
+          top: 4px;
+          right: 4px;
+          min-width: 16px;
+          height: 16px;
+          padding: 0 4px;
+          font-size: 10px;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 8px;
+          background: #e74c3c;
+          color: white;
+        }
+
+        /* Hamburger button */
+        .hamburger {
+          display: inline-flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 44px !important;
+          height: 44px !important;
+          padding: 11px 9px !important;
+          margin-left: 4px !important;
+          background: transparent !important;
+          border: none !important;
+          color: #1a1a1a !important;
+          z-index: 1100 !important;
+          position: relative !important;
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          align-items: stretch !important;
+          cursor: pointer !important;
+          flex-shrink: 0;
+        }
+
+        body.dark-mode .hamburger {
+          color: #fff !important;
+        }
+
+        .hamburger span {
+          display: block !important;
+          width: 100% !important;
+          height: 2px !important;
+          background: currentColor !important;
+          border-radius: 2px !important;
+          opacity: 1 !important;
+          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        /* Hamburger animation when menu is open */
+        body.nav-open .hamburger span:nth-child(1) {
+          transform: translateY(10px) rotate(45deg) !important;
+        }
+
+        body.nav-open .hamburger span:nth-child(2) {
+          opacity: 0 !important;
+        }
+
+        body.nav-open .hamburger span:nth-child(3) {
+          transform: translateY(-10px) rotate(-45deg) !important;
+        }
+
+        /* Off-canvas drawer */
+        .nav-menu {
+          position: fixed !important;
+          top: 0;
+          right: 0;
+          width: min(82vw, 360px);
+          height: 100vh;
+          height: 100dvh;
+          background: #ffffff;
+          transform: translateX(100%);
+          visibility: hidden;
+          pointer-events: none;
+          transition:
+            transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+            visibility 0s linear 0.45s;
+          z-index: 1090;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+          border: none;
+          box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+          overflow-y: auto;
+        }
+
+        body.dark-mode .nav-menu {
+          background: #1a1a1a;
+        }
+
+        .nav-menu.active,
+        body.nav-open .nav-menu {
+          transform: translateX(0) !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transition:
+            transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+            visibility 0s;
+        }
+
+        /* Drawer header: brand + close button */
+        .nav-menu .drawer-header {
+          display: flex !important;
+          align-items: center;
+          justify-content: space-between;
+          padding: 18px 24px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+          flex-shrink: 0;
+        }
+
+        body.dark-mode .nav-menu .drawer-header {
+          border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .drawer-brand {
+          font-size: 18px;
+          font-weight: 600;
+          letter-spacing: 2px;
+          color: #1a1a1a;
+        }
+
+        body.dark-mode .drawer-brand {
+          color: #fff;
+        }
+
+        .drawer-close {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          color: #1a1a1a;
+          transition: transform 0.2s ease;
+        }
+
+        body.dark-mode .drawer-close {
+          color: #fff;
+        }
+
+        .drawer-close:hover {
+          transform: rotate(90deg);
+        }
+
+        .drawer-close svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        /* Navigation links in drawer */
+        .nav-menu .nav-links {
+          list-style: none;
+          padding: 12px 0;
+          margin: 0;
+          flex: 1;
+        }
+
+        .nav-menu .nav-links li {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        body.dark-mode .nav-menu .nav-links li {
+          border-bottom-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-menu .nav-link {
+          display: block;
+          padding: 16px 24px;
+          color: #1a1a1a;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        body.dark-mode .nav-menu .nav-link {
+          color: #ffffff;
+        }
+
+        .nav-menu .nav-link.active,
+        .nav-menu .nav-link:hover {
+          background: rgba(0, 0, 0, 0.04);
+          color: #1a1a1a;
+        }
+
+        body.dark-mode .nav-menu .nav-link.active,
+        body.dark-mode .nav-menu .nav-link:hover {
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+        }
+
+        /* Remove desktop decorative pseudo-elements */
+        .nav-menu::before,
+        .nav-menu::after {
+          content: none !important;
+          display: none !important;
+        }
+
+        .nav-menu .nav-link::after {
+          display: none !important;
+        }
+
+        /* Backdrop overlay */
+        .nav-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0);
+          z-index: 1080;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+          pointer-events: none;
+        }
+
+        body.nav-open .nav-backdrop {
+          background: rgba(0, 0, 0, 0.5);
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+
+        /* Prevent body scroll when drawer is open */
+        body.nav-open {
+          overflow: hidden !important;
+        }
+      }
+
+      /* Extra small screens */
+      @media (max-width: 380px) {
+        .nav-right .theme-toggle {
+          display: none !important;
+        }
+
+        .nav-container {
+          padding: 10px 12px !important;
+          gap: 4px;
+        }
+
+        .nav-right .icon-btn,
+        .nav-right .mobile-search-btn {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      /* Desktop: hide hamburger and drawer, show full menu */
+      @media (min-width: 992px) {
+        .hamburger {
+          display: none !important;
+        }
+
+        .nav-backdrop {
+          display: none !important;
+        }
+
+        .nav-menu {
+          position: relative !important;
+          top: auto !important;
+          right: auto !important;
+          width: auto !important;
+          height: auto !important;
+          transform: none !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transition: none !important;
+          z-index: auto !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          flex-direction: row !important;
+          padding: 0 !important;
+          border: none !important;
+          overflow: visible !important;
+        }
+
+        .nav-menu .drawer-header {
+          display: none !important;
+        }
+
+        .nav-menu .nav-links {
+          display: flex !important;
+          gap: 0;
+          padding: 0;
+          margin: 0;
+        }
+
+        .nav-menu .nav-links li {
+          border: none !important;
+        }
+
+        .nav-menu .nav-link {
+          padding: 0 16px;
+          border-bottom: none;
+        }
+
+        .nav-menu .nav-link::after {
+          display: block !important;
+        }
+
+        body.nav-open {
+          overflow: auto !important;
+        }
+      }
+      /* Drawer close button */
+      .drawer-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: #1a1a1a;
+        cursor: pointer;
+        padding: 4px 8px;
+        line-height: 1;
+        opacity: 0.6;
+      }
+      .drawer-close:hover {
+        opacity: 1;
+      }
+      body.dark-mode .drawer-close {
+        color: #fff;
+      }
+
+      /* Body padding for fixed navbar */
+      body {
+        padding-top: 60px;
+      }
+      @media (min-width: 992px) {
+        body {
+          padding-top: 72px;
+        }
+      }
+      /* Remove carousel margin-top since body padding-top handles navbar */
+      .hero-carousel {
+        margin-top: 0 !important;
+      }
+
+      /* Sidebars + overlay always above fixed navbar */
+      .cart-sidebar,
+      .wishlist-sidebar {
+        z-index: 1200 !important;
+        top: 0 !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+      }
+      .overlay {
+        z-index: 1150 !important;
+      }
+    </style>
+
+    <script id="velmira-navbar-unified-js">
+      (function () {
+        "use strict";
+
+        // Wait for DOM to be ready
+        function initNavbar() {
+          const toggle = document.getElementById("menuToggle");
+          const menu = document.getElementById("navMenu");
+
+          if (!toggle || !menu) {
+            console.warn("Navbar elements not found");
+            return;
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 1. Create backdrop once
+          // ────────────────────────────────────────────────────────────────────
+          let backdrop = document.querySelector(".nav-backdrop");
+          if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.className = "nav-backdrop";
+            document.body.appendChild(backdrop);
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 2. Inject drawer header (brand + close) once, at the start
+          // ────────────────────────────────────────────────────────────────────
+          if (!menu.querySelector(".drawer-header")) {
+            const header = document.createElement("div");
+            header.className = "drawer-header";
+            header.innerHTML =
+              '<span class="drawer-brand">VELMIRA</span>' +
+              '<button type="button" class="drawer-close" aria-label="Close menu">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+              '<line x1="6" y1="6" x2="18" y2="18"/>' +
+              '<line x1="6" y1="18" x2="18" y2="6"/>' +
+              "</svg>" +
+              "</button>";
+            menu.insertBefore(header, menu.firstChild);
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 3. Helper functions to open/close drawer
+          // ────────────────────────────────────────────────────────────────────
+          function closeDrawer() {
+            document.body.classList.remove("nav-open");
+            menu.classList.remove("active", "open");
+            toggle.setAttribute("aria-expanded", "false");
+          }
+
+          function openDrawer() {
+            document.body.classList.add("nav-open");
+            menu.classList.add("active");
+            toggle.setAttribute("aria-expanded", "true");
+          }
+
+          function toggleDrawer(e) {
+            if (e) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            }
+            if (document.body.classList.contains("nav-open")) {
+              closeDrawer();
+            } else {
+              openDrawer();
+            }
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 4. Clean hamburger button: remove old listeners, set fresh ones
+          // ────────────────────────────────────────────────────────────────────
+          const freshToggle = toggle.cloneNode(true);
+          toggle.parentNode.replaceChild(freshToggle, toggle);
+
+          freshToggle.setAttribute("aria-label", "Toggle menu");
+          freshToggle.setAttribute("aria-expanded", "false");
+          freshToggle.setAttribute("type", "button");
+          freshToggle.addEventListener("click", toggleDrawer);
+
+          // ────────────────────────────────────────────────────────────────────
+          // 5. Backdrop click to close
+          // ────────────────────────────────────────────────────────────────────
+          backdrop.addEventListener("click", closeDrawer);
+
+          // ────────────────────────────────────────────────────────────────────
+          // 6. Close button in drawer header
+          // ────────────────────────────────────────────────────────────────────
+          const closeBtn = menu.querySelector(".drawer-close");
+          if (closeBtn) {
+            closeBtn.addEventListener("click", closeDrawer);
+          }
+
+          // ────────────────────────────────────────────────────────────────────
+          // 7. Nav links click to close drawer
+          // ────────────────────────────────────────────────────────────────────
+          menu.querySelectorAll(".nav-link").forEach((link) => {
+            link.addEventListener("click", closeDrawer);
+          });
+
+          // ────────────────────────────────────────────────────────────────────
+          // 8. Escape key to close
+          // ────────────────────────────────────────────────────────────────────
+          document.addEventListener("keydown", (e) => {
+            if (
+              e.key === "Escape" &&
+              document.body.classList.contains("nav-open")
+            ) {
+              closeDrawer();
+            }
+          });
+
+          // ────────────────────────────────────────────────────────────────────
+          // 9. Resize: close drawer on desktop
+          // ────────────────────────────────────────────────────────────────────
+          window.addEventListener("resize", () => {
+            if (
+              window.innerWidth > 991 &&
+              document.body.classList.contains("nav-open")
+            ) {
+              closeDrawer();
+            }
+          });
+
+          // ────────────────────────────────────────────────────────────────────
+          // 10. Set active nav link based on current page
+          // ────────────────────────────────────────────────────────────────────
+          updateActiveLink();
+        }
+
+        function updateActiveLink() {
+          const currentPage =
+            window.location.pathname.split("/").pop() || "index.html";
+
+          // Remove active from all links
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            link.classList.remove("active");
+          });
+
+          // Add active to matching link
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            const href = link.getAttribute("href");
+            if (
+              href === currentPage ||
+              (currentPage === "" && href === "index.html")
+            ) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Initialize on DOMContentLoaded or immediately if already loaded
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initNavbar);
+        } else {
+          initNavbar();
+        }
+
+        // Also update active link after a short delay to catch dynamic content
+        setTimeout(updateActiveLink, 100);
+      })();
+    </script>
+  </body>
+</html>
